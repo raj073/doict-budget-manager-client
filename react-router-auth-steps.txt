@@ -1,0 +1,59 @@
+React Router & Firebase Authentication Project 
+_necessary_links
+
+Create React + Vite New Project
+1. https://reactrouter.com/en/main/start/tutorial#setup
+
+Install TailwindCSS with Vite using React
+2. https://tailwindcss.com/docs/guides/vite#react
+
+Install daisyUI as a Tailwind CSS plugin
+3. https://daisyui.com/docs/install/
+
+Adding a router
+4. https://reactrouter.com/en/main/start/tutorial#adding-a-router
+
+Nested Routes
+We want the contact component to render inside of the <Root> layout like this.
+5. https://reactrouter.com/en/main/start/tutorial#nested-routes
+
+Handling Not Found Errors
+Create an error page component
+6. https://reactrouter.com/en/main/start/tutorial#handling-not-found-errors
+
+#Firebase
+7. https://console.firebase.google.com/
+Create a new project-->
+Get started by adding Firebase to your app-->
+Authentication--> sign-in-method
+In public folder create firebase folder --> firebase.config.js file
+
+Documentation
+https://firebase.google.com/docs/auth/web/start
+
+create a AuthProvider
+
+#Context API
+https://react.dev/reference/react/createContext
+
+After successful login Get the currently signed-in user
+https://firebase.google.com/docs/auth/web/manage-users
+
+To sign out a user, call signOut:
+https://firebase.google.com/docs/auth/web/password-auth
+
+Create a PrivateRoute
+
+_steps_to_do
+1. Create a new react and vite project
+2. Install tailwind css with vite using react
+3. React router and nested routes setup
+4. Create 4 folders inside src folder --> components, pages, layout, and, routes
+5. 
+
+Sample websites:
+https://library-management-crud-jwt.web.app/
+https://pawspalace-pet-adoption.web.app/
+https://event-management-yoga.web.app/
+
+

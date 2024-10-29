@@ -1,0 +1,23 @@
+[
+    {
+      "question": "What is the Budget Management System (BMS)?",
+      "answer": "BMS is a tool designed to manage budget allocation, tracking, and approvals for the Department of ICT, providing transparency and efficiency in budget management."
+    },
+    {
+      "question": "How do I access my dashboard?",
+      "answer": "Once logged in, users are redirected to their personalized dashboard, which shows options and features according to their role."
+    },
+    {
+      "question": "Can I request a new budget allocation?",
+      "answer": "Yes, officers can request new budget allocations and submit them for approval to the administrators and super administrators."
+    },
+    {
+      "question": "Is there mobile compatibility?",
+      "answer": "Yes, the system is designed to be responsive, offering a seamless experience on mobile and desktop devices."
+    },
+    {
+      "question": "Who has the authority to approve budget requests?",
+      "answer": "Budget requests are approved by super administrators after reviewing the requests made by officers and upazila offices."
+    }
+  ]
+  

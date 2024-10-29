@@ -1,0 +1,26 @@
+[
+  {
+    "question": "What technologies are used in this website?",
+    "answer": "This website is built using React for the frontend, Tailwind CSS and DaisyUI for design, Node.js and Express for backend development, MongoDB as the database, and Firebase for authentication."
+  },
+  {
+    "question": "How do I log in and what happens after logging in?",
+    "answer": "To log in, click on the 'Login' button. Once authenticated via Firebase, you'll be redirected to your personalized dashboard. Depending on your role (admin or user), different functionalities will be available."
+  },
+  {
+    "question": "What features are available in the user and admin dashboards?",
+    "answer": "For users: You can view/manage your bookings, update your profile, and access other options. For admins: You can view all users, approve user actions, and manage content."
+  },
+  {
+    "question": "How is user authentication handled?",
+    "answer": "We use Firebase Authentication to manage user login and registration. It supports both email/password login and third-party providers like Google and Facebook."
+  },
+  {
+    "question": "How can I log out?",
+    "answer": "The 'Logout' button is available in your dashboard's navigation. Clicking it securely signs you out and redirects you to the homepage."
+  },
+  {
+    "question": "Can I perform CRUD operations on this website?",
+    "answer": "Yes! Users can create, update, and delete their bookings, while admins can manage users, approve/reject content, and perform other admin-specific tasks."
+  }
+]
