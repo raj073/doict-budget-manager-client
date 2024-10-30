@@ -1,75 +1,40 @@
-import {
-  FaGithub,
-  FaLinkedin,
-  FaFacebook,
-  FaYoutube,
-  FaTwitter,
-} from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+import DoICTLogo from "../../public/resources/doict.png"; // Replace with actual path to DoICT logo
+import ICTDivisionLogo from "../../public/resources/ictdiv.png"; // Replace with actual path to ICT Division logo
 
 const Footer = () => {
   return (
-    <footer className="footer bg-base-200 text-base-content p-10 flex justify-center">
-      <div className="text-center">
-        {/* Contact Info */}
-        <div className="mb-6">
-          <p className="text-lg font-semibold">Contact Me</p>
-          <p>
-            Email:{" "}
-            <a href="mailto:hassansabbir0321@gmail.com" className="underline">
-              hassansabbir0321@gmail.com
-            </a>
-          </p>
-          <p>
-            Phone:{" "}
-            <a href="tel:+8801893070812" className="underline">
-              +8801893070812
-            </a>
-          </p>
-        </div>
+    <footer className="footer text-base-content flex justify-between items-center px-4 w-full lg:w-3/4 mx-auto">
+      {/* Left Side - DoICT and ICT Division Logos */}
+      <div className="flex justify-start items-center space-x-2">
+        <a
+          href="https://doict.gov.bd/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
 
-        {/* Social Media Icons */}
-        <div className="flex justify-center space-x-6 mb-6">
-          <a
-            href="https://github.com/devalienbrain"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaGithub size={30} className="hover:text-gray-600" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/md-sabbir-hassan-murad/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaLinkedin size={30} className="hover:text-blue-600" />
-          </a>
-          <a
-            href="https://www.facebook.com/md.sabbirhassanmurad"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaFacebook size={30} className="hover:text-blue-500" />
-          </a>
-          <a
-            href="https://www.youtube.com/@devAlienBrain"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaYoutube size={30} className="hover:text-red-600" />
-          </a>
-          <a
-            href="https://x.com/Hassan006930481"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaTwitter size={30} className="hover:text-blue-400" />
-          </a>
-        </div>
+          <img src={DoICTLogo} alt="DoICT Logo" className="h-16" />
+        </a>
+        <a
+          href="https://ictd.gov.bd/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src={ICTDivisionLogo} alt="ICT Division Logo" className="h-16" />
+        </a>
+      </div>
 
-        {/* Copyright Info */}
-        <div className="mt-6">
-          <p>All rights reserved &copy; Devalienbrain</p>
-        </div>
+      {/* Right Side - GitHub Icon and Developed By Text */}
+      <div className="flex items-center space-x-2">
+        <p>Developed by</p>
+
+        <a
+          href="https://github.com/devalienbrain"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaGithub size={24} className="hover:text-gray-600" />
+        </a>
       </div>
     </footer>
   );

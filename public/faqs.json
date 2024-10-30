@@ -1,26 +1,42 @@
 [
   {
-    "question": "What technologies are used in this website?",
-    "answer": "This website is built using React for the frontend, Tailwind CSS and DaisyUI for design, Node.js and Express for backend development, MongoDB as the database, and Firebase for authentication."
+    "question": "What is the Budget Management System (BMS)?",
+    "answer": "The Budget Management System (BMS) is a comprehensive tool designed to manage budget allocation, tracking, and approvals for the Department of ICT, providing transparency and efficiency in budget management."
   },
   {
-    "question": "How do I log in and what happens after logging in?",
-    "answer": "To log in, click on the 'Login' button. Once authenticated via Firebase, you'll be redirected to your personalized dashboard. Depending on your role (admin or user), different functionalities will be available."
+    "question": "How do I access my dashboard?",
+    "answer": "After logging in, users are redirected to their personalized dashboard, which displays options and features tailored to their specific role within the system."
   },
   {
-    "question": "What features are available in the user and admin dashboards?",
-    "answer": "For users: You can view/manage your bookings, update your profile, and access other options. For admins: You can view all users, approve user actions, and manage content."
+    "question": "Can I request a new budget allocation?",
+    "answer": "Yes, officers can request new budget allocations and submit these requests for approval to administrators and super administrators."
   },
   {
-    "question": "How is user authentication handled?",
-    "answer": "We use Firebase Authentication to manage user login and registration. It supports both email/password login and third-party providers like Google and Facebook."
+    "question": "Is there mobile compatibility?",
+    "answer": "Absolutely! The system is designed to be responsive, ensuring a seamless experience on both mobile and desktop devices."
   },
   {
-    "question": "How can I log out?",
-    "answer": "The 'Logout' button is available in your dashboard's navigation. Clicking it securely signs you out and redirects you to the homepage."
+    "question": "Who has the authority to approve budget requests?",
+    "answer": "Super administrators have the authority to approve budget requests after thoroughly reviewing the submissions made by officers and upazila offices."
   },
   {
-    "question": "Can I perform CRUD operations on this website?",
-    "answer": "Yes! Users can create, update, and delete their bookings, while admins can manage users, approve/reject content, and perform other admin-specific tasks."
+    "question": "What user roles are available in the BMS?",
+    "answer": "The system includes multiple user roles, including Administrator (Validator), Officer/Upazila Office, and Super Administrator (Approver), each with specific functionalities."
+  },
+  {
+    "question": "How can I track budget allocations?",
+    "answer": "Users can view detailed reports and summary tables within their dashboard to track budget allocations, distributions, and remaining balances."
+  },
+  {
+    "question": "What measures are in place for data security?",
+    "answer": "The BMS incorporates secure login authentication and role-based access control to ensure that sensitive data is protected and accessible only to authorized users."
+  },
+  {
+    "question": "Will I receive training on how to use the BMS?",
+    "answer": "Yes, comprehensive training sessions will be provided to familiarize users with the system's features and functionalities, ensuring effective usage."
+  },
+  {
+    "question": "What happens if I encounter an issue while using the BMS?",
+    "answer": "If you encounter any issues, you can reach out for ongoing support and maintenance, which will be provided to ensure smooth operation of the system."
   }
 ]
