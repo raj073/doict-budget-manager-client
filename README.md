@@ -1,4 +1,4 @@
 ## Important Links
 
-- **Live URL**: [Link](https://the-master-full-stack-project-client.vercel.app/)
+- **Live URL**: [Link](https://doict-budget-manager-client.vercel.app/)
 - **Backend Server Code**: [Link](https://github.com/devalienbrain/doict-budget-manager-server)
