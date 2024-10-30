@@ -25,7 +25,8 @@ const Profile = () => {
 
       // Make API call to update user information
       const response = await fetch(
-        `https://the-master-full-stack-project-server.vercel.app/user/${user._id}`,
+        `https://doict-budget-manager-server.vercel.app/user/${user._id}`,
+        // `http://localhost:5000/user/user/${user._id}`,
         {
           method: "PUT",
           headers: {

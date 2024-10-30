@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import DashboardSidebarContent from "../components/DashboardSidebarContent";
+import DashboardNavbar from "../components/DashboardNavbar";
 
 const DashboardLayout = () => {
   return (
     <>
       <div>
         <div className="shadow-md bg-slate-100">
-          <Navbar />
+          <DashboardNavbar />
         </div>
         <div className="block lg:flex">
           <div className="min-w-64 shadow-md bg-slate-100">

@@ -29,7 +29,7 @@ const LoginPage = () => {
     <>
       <Helmet>
         <title>
-          DEV Master | Login
+          Budget Manager | Login
         </title>
       </Helmet>
       <div className="hero bg-white pt-10 font-semibold">

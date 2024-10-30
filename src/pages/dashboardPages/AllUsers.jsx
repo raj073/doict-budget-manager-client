@@ -20,7 +20,8 @@ const AllUsers = () => {
   const fetchUsers = async () => {
     try {
       const response = await fetch(
-        "https://the-master-full-stack-project-server.vercel.app/users"
+        // "http://localhost:5000/users"
+        "https://doict-budget-manager-server.vercel.app/users"
       );
       const data = await response.json();
       setUsers(data);
@@ -44,7 +45,8 @@ const AllUsers = () => {
       console.log({ updatedUser });
 
       await fetch(
-        `https://the-master-full-stack-project-server.vercel.app/user/${selectedUser._id}`,
+        `https://doict-budget-manager-server.vercel.app/user/${selectedUser._id}`,
+        `http://localhost:5000/user/${selectedUser._id}`,
         {
           method: "PUT",
           headers: {
@@ -67,7 +69,8 @@ const AllUsers = () => {
       const updatedUser = { ...selectedUser, isAdmin: !selectedUser?.isAdmin };
 
       await fetch(
-        `https://the-master-full-stack-project-server.vercel.app/user/${selectedUser._id}`,
+        // `http://localhost:5000/user/${selectedUser._id}`,
+        `https://doict-budget-manager-server.vercel.app/user/${selectedUser._id}`,
         {
           method: "PUT",
           headers: {
@@ -107,7 +110,8 @@ const AllUsers = () => {
       };
 
       await fetch(
-        `https://the-master-full-stack-project-server.vercel.app/user/${selectedUser._id}`,
+        `https://doict-budget-manager-server.vercel.app/user/${selectedUser._id}`,
+        // `http://localhost:5000/user/user/${selectedUser._id}`,
         {
           method: "PUT",
           headers: {

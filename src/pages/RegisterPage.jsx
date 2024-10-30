@@ -33,7 +33,7 @@ const RegisterPage = () => {
     <>
     <Helmet>
       <title>
-        DEV Master | Register
+      Budget Manager  | Register
       </title>
     </Helmet>
     <div className="hero min-h-screen bg-white font-semibold">

@@ -44,10 +44,10 @@ const Navbar = () => {
         ) : (
           <Link
             to="/login"
-            className="flex items-center text-lime-500 font-semibold gap-1"
+            className="flex items-center text-cyan-800 font-semibold gap-1"
             title="Login"
           >
-            <IoMdLogIn className="w-6 h-6" />
+            <IoMdLogIn className="w-7 h-7" />
             <span>Login</span>
           </Link>
         )}

@@ -10,7 +10,7 @@ const MessageDetails = () => {
       try {
         // const response = await fetch(`http://localhost:5000/messages/${id}`); // Adjust URL
         const response = await fetch(
-          `https://the-master-full-stack-project-server.vercel.app/messages/${id}`
+          `https://doict-budget-manager-server.vercel.app/messages/${id}`
         ); // Adjust URL
         if (!response.ok) {
           throw new Error("Failed to fetch message details");

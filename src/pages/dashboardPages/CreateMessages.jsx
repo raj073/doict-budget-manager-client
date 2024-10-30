@@ -24,7 +24,7 @@ const CreateMessage = () => {
     try {
       // const response = await fetch("http://localhost:5000/messages", {
       const response = await fetch(
-        "https://the-master-full-stack-project-server.vercel.app/messages",
+        "https://doict-budget-manager-server.vercel.app/messages",
         {
           method: "POST",
           headers: {
