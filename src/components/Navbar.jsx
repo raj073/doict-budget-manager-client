@@ -36,10 +36,10 @@ const Navbar = () => {
               onClick={logout}
               className="flex items-center text-red-500 font-semibold gap-1"
               title="Logout"
+              
             >
               <MdLogout className="w-6 h-6" />
-              <span>Logout</span>
-            </button>
+               </button>
           </>
         ) : (
           <Link

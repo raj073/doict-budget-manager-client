@@ -1,13 +1,16 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
-import { MdSpaceDashboard, MdLogout } from "react-icons/md";
-import { IoMdLogIn } from "react-icons/io";
 import { GiMoneyStack } from "react-icons/gi";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const DashboardNavbar = () => {
-  const { user, logout } = useContext(AuthContext);
-
+  const { logOutUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logOutUser();
+    navigate("/");
+  };
   return (
     <div className="navbar border-b rounded-3xl px-4 w-fullmx-auto flex items-center justify-between">
       <div className="navbar-start flex items-center space-x-2">
@@ -22,13 +25,13 @@ const DashboardNavbar = () => {
         </Link>
       </div>
       <div className="navbar-end flex items-center space-x-4">
+        {/* Logout */}
         <button
-          onClick={logout}
-          className="flex items-center text-red-500 font-semibold gap-1"
-          title="Logout"
+          onClick={handleLogout}
+          className="text-red-600 text-base hover:underline flex items-center"
         >
-          <MdLogout className="w-6 h-6" />
-          <span>Logout</span>
+          <FaSignOutAlt className="inline mr-2" />
+          Logout
         </button>
       </div>
     </div>

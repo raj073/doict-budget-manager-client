@@ -1,12 +1,9 @@
-
 import { useContext } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import {
   FaUser,
   FaUsers,
-  FaEnvelope,
-  FaSignOutAlt,
   FaPenAlt,
   FaMoneyCheck,
   FaPlusSquare,
@@ -14,16 +11,10 @@ import {
 } from "react-icons/fa";
 
 const DashboardSidebarContent = () => {
-  const { user, logOutUser } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logOutUser();
-    navigate("/");
-  };
+  const { user } = useContext(AuthContext);
 
   return (
-    <div className="p-4">
+    <div className="p-4 font-semibold">
       {/* User Profile Info */}
       <div className="flex flex-row lg:flex-col items-start gap-2">
         <img
@@ -96,6 +87,15 @@ const DashboardSidebarContent = () => {
               <FaUsers className="inline mr-2" />
               All Users
             </NavLink>
+            <NavLink
+              to="/dashboard/createMessage"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <FaUsers className="inline mr-2" />
+              Send Notice
+            </NavLink>
           </>
         )}
 
@@ -120,17 +120,17 @@ const DashboardSidebarContent = () => {
               <FaPenAlt className="inline mr-2" />
               Add Expense
             </NavLink>
+            <NavLink
+              to="/dashboard/messages"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <FaPenAlt className="inline mr-2" />
+              Important Notices
+            </NavLink>
           </>
         )}
-
-        {/* Logout */}
-        <button
-          onClick={handleLogout}
-          className="text-red-600 text-sm hover:underline flex items-center"
-        >
-          <FaSignOutAlt className="inline mr-2" />
-          Logout
-        </button>
       </nav>
     </div>
   );

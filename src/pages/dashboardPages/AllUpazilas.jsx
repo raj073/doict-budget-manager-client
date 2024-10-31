@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import useAxiosPublic from "../../hooks/useAxios";
 
 const AllUpazilas = () => {
   const [upazilas, setUpazilas] = useState([]);
-
+  const axiosInstance = useAxiosPublic();
   useEffect(() => {
-    axios.get("/api/upazilas")
-      .then(response => setUpazilas(response.data))
-      .catch(error => console.error(error));
+    axiosInstance
+      .get("/upazilas")
+      .then((response) => setUpazilas(response.data))
+      .catch((error) => console.error(error));
   }, []);
 
   return (
@@ -22,14 +23,16 @@ const AllUpazilas = () => {
           </tr>
         </thead>
         <tbody>
-          {upazilas.map(upazila => (
+          {upazilas.map((upazila) => (
             <tr key={upazila.id}>
               <td>{upazila.id}</td>
               <td>{upazila.name}</td>
               <td>
-                {upazila.economicCodes.map(code => (
+                {upazila.economicCodes.map((code) => (
                   <div key={code.code}>
-                    <span>{code.code}: {code.distributedBudget}</span>
+                    <span>
+                      {code.code}: {code.distributedBudget}
+                    </span>
                   </div>
                 ))}
               </td>

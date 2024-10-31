@@ -2,18 +2,18 @@ import React from "react";
 
 const Banner = () => {
   return (
-    <div className="bg-white p-4 px-8 md:px-16 lg:px-32 mt-10">
+    <div className="bg-white p-4 mt-10">
       <div className="text-center mb-10">
-        <h1 className="text-5xl font-extrabold mb-4 text-gray-800">
-          Budget Management System <span className="text-cyan-600">(BMS)</span>
+        <h1 className="text-3xl md:text-6xl font-extrabold mb-4 text-gray-800">
+          Budget Distribution Management System <span className="text-red-600">(BDMS)</span>
         </h1>
-        <p className="text-2xl font-medium text-gray-600">
+        <p className="text-2xl font-bold text-gray-800">
           For Department of ICT Officials
         </p>
       </div>
 
       <div className="flex flex-col items-center">
-        <h2 className="text-3xl font-bold mb-8 text-gray-700">Core Features</h2>
+        <h2 className="text-3xl font-bold mb-8 text-gray-600">Core Features</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full max-w-3xl">
           {[
             { icon: "🔒", text: "Secure Login & Personalized Dashboard" },

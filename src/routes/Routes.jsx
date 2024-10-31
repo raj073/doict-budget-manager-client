@@ -10,6 +10,10 @@ import Messages from "../pages/dashboardPages/Messages";
 import CreateMessage from "../pages/dashboardPages/CreateMessages";
 import MessageDetails from "../pages/dashboardPages/MessageDetails";
 import CodeWiseBudget from "../pages/dashboardPages/CodeWiseBudget";
+import AllUpazilas from "../pages/dashboardPages/AllUpazilas";
+import AddEconomicField from "../pages/dashboardPages/AddEconomicField";
+import BudgetDistribution from "../pages/dashboardPages/BudgetDistribution";
+import AddExpense from "../pages/dashboardPages/AddExpense";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +65,22 @@ const router = createBrowserRouter([
       {
         path: "codeWiseBudget",
         element: <CodeWiseBudget />,
+      },
+      {
+        path: "allUpazilas",
+        element: <AllUpazilas />,
+      },
+      {
+        path: "addEconomicField",
+        element: <AddEconomicField />,
+      },
+      {
+        path: "budgetDistribution",
+        element: <BudgetDistribution />,
+      },
+      {
+        path: "addExpense",
+        element: <AddExpense />,
       },
     ],
   },
