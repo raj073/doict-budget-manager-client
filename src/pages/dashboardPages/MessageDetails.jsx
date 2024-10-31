@@ -1,29 +1,24 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxios";
 
 const MessageDetails = () => {
   const { id } = useParams();
   const [message, setMessage] = useState(null);
+  const axiosInstance = useAxiosPublic(); // Create an axios instance using the custom hook
 
   useEffect(() => {
     const fetchMessageDetails = async () => {
       try {
-        // const response = await fetch(`http://localhost:5000/messages/${id}`); // Adjust URL
-        const response = await fetch(
-          `https://doict-budget-manager-server.vercel.app/messages/${id}`
-        ); // Adjust URL
-        if (!response.ok) {
-          throw new Error("Failed to fetch message details");
-        }
-        const data = await response.json();
-        setMessage(data);
+        const response = await axiosInstance.get(`/messages/${id}`); // Use axiosInstance for the request
+        setMessage(response.data); // Assuming the data structure is consistent
       } catch (error) {
         console.error("Error fetching message details:", error);
       }
     };
 
     fetchMessageDetails();
-  }, [id]);
+  }, [id, axiosInstance]); // Include axiosInstance as a dependency
 
   return (
     <div className="p-6 bg-white rounded-md shadow-lg">

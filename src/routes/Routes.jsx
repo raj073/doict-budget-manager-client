@@ -9,6 +9,7 @@ import Profile from "../pages/dashboardPages/Profile";
 import Messages from "../pages/dashboardPages/Messages";
 import CreateMessage from "../pages/dashboardPages/CreateMessages";
 import MessageDetails from "../pages/dashboardPages/MessageDetails";
+import CodeWiseBudget from "../pages/dashboardPages/CodeWiseBudget";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "createMessage",
         element: <CreateMessage />,
+      },
+      {
+        path: "codeWiseBudget",
+        element: <CodeWiseBudget />,
       },
     ],
   },

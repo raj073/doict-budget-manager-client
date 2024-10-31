@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaEdit, FaUserShield } from "react-icons/fa";
 import { ImBlocked } from "react-icons/im";
+import useAxiosPublic from "../../hooks/useAxios";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -16,15 +17,13 @@ const AllUsers = () => {
     address: "",
   });
 
+  const axiosInstance = useAxiosPublic(); // Create an axios instance using the custom hook
+
   // Fetch all users from the backend
   const fetchUsers = async () => {
     try {
-      const response = await fetch(
-        // "http://localhost:5000/users"
-        "https://doict-budget-manager-server.vercel.app/users"
-      );
-      const data = await response.json();
-      setUsers(data);
+      const response = await axiosInstance.get("/users"); // Use axiosInstance for requests
+      setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -37,24 +36,9 @@ const AllUsers = () => {
   // Block a user
   const handleBlock = async () => {
     try {
-      console.log({ selectedUser });
-      const updatedUser = {
-        ...selectedUser,
-        isBlocked: !selectedUser?.isBlocked,
-      };
-      console.log({ updatedUser });
+      const updatedUser = { ...selectedUser, isBlocked: !selectedUser?.isBlocked };
 
-      await fetch(
-        `https://doict-budget-manager-server.vercel.app/user/${selectedUser._id}`,
-        `http://localhost:5000/user/${selectedUser._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedUser),
-        }
-      );
+      await axiosInstance.put(`/user/${selectedUser._id}`, updatedUser); // Use axiosInstance
       fetchUsers(); // Reload users after update
       setIsBlockModalOpen(false);
     } catch (error) {
@@ -65,20 +49,9 @@ const AllUsers = () => {
   // Toggle admin status
   const handleToggleAdmin = async () => {
     try {
-      console.log({ selectedUser });
       const updatedUser = { ...selectedUser, isAdmin: !selectedUser?.isAdmin };
 
-      await fetch(
-        // `http://localhost:5000/user/${selectedUser._id}`,
-        `https://doict-budget-manager-server.vercel.app/user/${selectedUser._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedUser),
-        }
-      );
+      await axiosInstance.put(`/user/${selectedUser._id}`, updatedUser); // Use axiosInstance
       fetchUsers(); // Reload users after update
       setIsAdminToggleModalOpen(false);
     } catch (error) {
@@ -103,23 +76,13 @@ const AllUsers = () => {
     try {
       const updatedUser = {
         ...selectedUser,
-        displayName: formData.name,
+        displayName: formData.displayName,
         phone: formData.phone,
         photoUrl: formData.photoUrl,
         address: formData.address,
       };
 
-      await fetch(
-        `https://doict-budget-manager-server.vercel.app/user/${selectedUser._id}`,
-        // `http://localhost:5000/user/user/${selectedUser._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedUser),
-        }
-      );
+      await axiosInstance.put(`/user/${selectedUser._id}`, updatedUser); // Use axiosInstance
       fetchUsers(); // Reload users after update
       setIsEditModalOpen(false);
     } catch (error) {
@@ -131,6 +94,7 @@ const AllUsers = () => {
     setSelectedUser(user);
     setIsBlockModalOpen(true);
   };
+  
   const handleClickedSetUserOrAdminRole = (user) => {
     setSelectedUser(user);
     setIsAdminToggleModalOpen(true);
@@ -221,9 +185,9 @@ const AllUsers = () => {
               <input
                 type="text"
                 className="w-full p-2 border rounded"
-                value={formData.name}
+                value={formData.displayName}
                 onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
+                  setFormData({ ...formData, displayName: e.target.value })
                 }
               />
             </div>
@@ -243,7 +207,7 @@ const AllUsers = () => {
               <input
                 type="text"
                 className="w-full p-2 border rounded"
-                value={formData.photoURL}
+                value={formData.photoUrl}
                 onChange={(e) =>
                   setFormData({ ...formData, photoUrl: e.target.value })
                 }
@@ -280,49 +244,49 @@ const AllUsers = () => {
       {isBlockModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg w-1/3">
-            <h3 className="text-xl mb-4">
-              {selectedUser.isBlocked
-                ? "Unblock this user?"
-                : "Block this user?"}
-            </h3>
+            <h3 className="text-xl mb-4">Are you sure?</h3>
+            <p>
+              {selectedUser?.isBlocked
+                ? "Do you want to unblock this user?"
+                : "Do you want to block this user?"}
+            </p>
             <button
               onClick={handleBlock}
-              className={`bg-red-500 text-white px-4 py-2 rounded ${
-                selectedUser.isBlocked ? "bg-green-500" : "bg-red-500"
-              }`}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
             >
-              {selectedUser.isBlocked ? "Unblock" : "Block"}
+              Yes
             </button>
             <button
               onClick={() => setIsBlockModalOpen(false)}
-              className="bg-gray-500 text-white px-4 py-2 rounded ml-4"
+              className="bg-red-500 text-white px-4 py-2 rounded ml-4"
             >
-              Cancel
+              No
             </button>
           </div>
         </div>
       )}
 
-      {/* Toggle Admin Modal */}
+      {/* Admin Toggle Modal */}
       {isAdminToggleModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg w-1/3">
-            <h3 className="text-xl mb-4">
-              {selectedUser.isAdmin
-                ? "Revoke Admin Privileges?"
-                : "Grant Admin Privileges?"}
-            </h3>
+            <h3 className="text-xl mb-4">Are you sure?</h3>
+            <p>
+              {selectedUser?.isAdmin
+                ? "Do you want to remove this user from admin?"
+                : "Do you want to make this user admin?"}
+            </p>
             <button
               onClick={handleToggleAdmin}
-              className={`bg-green-500 text-white px-4 py-2 rounded`}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
             >
-              {selectedUser.isAdmin ? "Revoke" : "Grant"}
+              Yes
             </button>
             <button
               onClick={() => setIsAdminToggleModalOpen(false)}
-              className="bg-gray-500 text-white px-4 py-2 rounded ml-4"
+              className="bg-red-500 text-white px-4 py-2 rounded ml-4"
             >
-              Cancel
+              No
             </button>
           </div>
         </div>

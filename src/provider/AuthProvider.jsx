@@ -7,12 +7,14 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import app from "../../public/firebase/firebase.config";
+import useAxiosPublic from "../hooks/useAxios";
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const auth = getAuth(app);
+  const axiosInstance = useAxiosPublic();
 
   // Login with email
   const loginWithEmail = (email, password) => {
@@ -20,49 +22,24 @@ const AuthProvider = ({ children }) => {
   };
 
   // Register with email and send data to backend
-  const registerWithEmail = async (
-    email,
-    password,
-    name,
-    phone,
-    photo,
-    address
-  ) => {
+  const registerWithEmail = async (email, password, name, phone, photo, address) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const newUser = userCredential.user;
 
       // Send user data to backend
-      const response = await fetch(
-        // "http://localhost:5000/users",
-        "https://doict-budget-manager-server.vercel.app/users",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            uid: newUser.uid,
-            email: newUser.email,
-            displayName: name || "User",
-            phone: phone,
-            photoUrl: photo || "https://i.ibb.co/k6hTYW1/Alien-Dev.jpg",
-            address: address,
-            isAdmin: false, // Default role
-            isBlocked: false, // Default status
-          }),
-        }
-      );
+      const response = await axiosInstance.post("/users", {
+        uid: newUser.uid,
+        email: newUser.email,
+        displayName: name || "User",
+        phone: phone,
+        photoUrl: photo || "https://i.ibb.co/k6hTYW1/Alien-Dev.jpg",
+        address: address,
+        isAdmin: false, // Default role
+        isBlocked: false, // Default status
+      });
 
-      if (!response.ok) {
-        throw new Error("Failed to register user data.");
-      }
-
-      return newUser;
+      return response.data;
     } catch (error) {
       console.error("Registration failed:", error.message);
       throw error; // Re-throw error for further handling if needed
@@ -79,16 +56,7 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         try {
-          const res = await fetch(
-            // `http://localhost:5000/user/${currentUser.uid}`
-            `https://doict-budget-manager-server.vercel.app/user/${currentUser.uid}`
-          );
-
-          if (!res.ok) {
-            throw new Error("Failed to fetch user data.");
-          }
-
-          const data = await res.json();
+          const { data } = await axiosInstance.get(`/user/${currentUser.uid}`);
           setUser(data);
         } catch (error) {
           console.error("Error fetching user data:", error.message);
@@ -101,7 +69,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       unsubscribe();
     };
-  }, [auth]);
+  }, [auth, axiosInstance]);
 
   return (
     <AuthContext.Provider

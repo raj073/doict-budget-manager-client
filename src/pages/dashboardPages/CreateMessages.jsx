@@ -2,12 +2,15 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { FiSend } from "react-icons/fi";
 import Messages from "./Messages";
+import useAxiosPublic from "../../hooks/useAxios";
 
 const CreateMessage = () => {
   const { user } = useContext(AuthContext);
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const axiosInstance = useAxiosPublic(); // Create an axios instance using the custom hook
 
   const handleSendMessage = async () => {
     if (!title || !message) {
@@ -22,19 +25,9 @@ const CreateMessage = () => {
     };
 
     try {
-      // const response = await fetch("http://localhost:5000/messages", {
-      const response = await fetch(
-        "https://doict-budget-manager-server.vercel.app/messages",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(messageData),
-        }
-      );
+      const response = await axiosInstance.post("/messages", messageData); // Use axiosInstance for the request
 
-      if (!response.ok) {
+      if (!response.data) {
         throw new Error("Failed to send message");
       }
 

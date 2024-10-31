@@ -1,30 +1,25 @@
 import { useState, useEffect } from "react";
 import { FiEye } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxios";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
   const navigate = useNavigate();
+  const axiosInstance = useAxiosPublic(); // Create an axios instance using the custom hook
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        // const response = await fetch("http://localhost:5000/messages");
-        const response = await fetch(
-          "https://doict-budget-manager-server.vercel.app/messages"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch messages");
-        }
-        const data = await response.json();
-        setMessages(data);
+        const response = await axiosInstance.get("/messages"); // Use axiosInstance for the request
+        setMessages(response.data); // Assuming the data structure is consistent
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
     };
 
     fetchMessages();
-  }, []);
+  }, [axiosInstance]); // Include axiosInstance as a dependency
 
   const handleViewDetails = (id) => {
     navigate(`/dashboard/messages/${id}`);

@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { FiEdit } from "react-icons/fi"; // Importing react-icon
+import useAxiosPublic from "../../hooks/useAxios";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -8,9 +9,10 @@ const Profile = () => {
   const [formData, setFormData] = useState({
     displayName: "",
     phone: "",
-    photoURL: "",
+    photoUrl: "",
     address: "",
   });
+  const axiosInstance = useAxiosPublic(); // Create an axios instance using the custom hook
 
   // Update user info
   const handleUpdate = async () => {
@@ -24,19 +26,9 @@ const Profile = () => {
       };
 
       // Make API call to update user information
-      const response = await fetch(
-        `https://doict-budget-manager-server.vercel.app/user/${user._id}`,
-        // `http://localhost:5000/user/user/${user._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedUser),
-        }
-      );
+      const response = await axiosInstance.put(`/user/${user._id}`, updatedUser); // Use axiosInstance for the request
 
-      if (!response.ok) {
+      if (!response.status === 200) {
         throw new Error("Failed to update user information");
       }
 
