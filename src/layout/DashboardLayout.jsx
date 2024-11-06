@@ -5,7 +5,7 @@ import DashboardNavbar from "../components/DashboardNavbar";
 const DashboardLayout = () => {
   return (
     <>
-      <div>
+      <div className="font-popppins">
         <div className="shadow-md bg-slate-100">
           <DashboardNavbar />
         </div>

@@ -14,6 +14,7 @@ import AllUpazilas from "../pages/dashboardPages/AllUpazilas";
 import AddEconomicField from "../pages/dashboardPages/AddEconomicField";
 import BudgetDistribution from "../pages/dashboardPages/BudgetDistribution";
 import AddExpense from "../pages/dashboardPages/AddExpense";
+import AddUpazila from "../pages/dashboardPages/AddUpazila";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
         path: "",
         element: <Profile />,
       },
+      { path: "addUpazila", element: <AddUpazila /> },
       {
         path: "allUsers",
         element: <AllUsers />,

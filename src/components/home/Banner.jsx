@@ -1,11 +1,10 @@
-import React from "react";
-
 const Banner = () => {
   return (
     <div className="bg-white p-4 mt-10">
       <div className="text-center mb-10">
-        <h1 className="text-3xl md:text-6xl font-extrabold mb-4 text-gray-800">
-          Budget Distribution Management System <span className="text-red-600">(BDMS)</span>
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-4 text-gray-800">
+          Budget Distribution Management System{" "}
+          <span className="text-red-600">(BDMS)</span>
         </h1>
         <p className="text-2xl font-bold text-gray-800">
           For Department of ICT Officials

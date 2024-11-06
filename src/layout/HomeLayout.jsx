@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 
 const HomeLayout = () => {
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-screen overflow-hidden font-popppins">
       {/* Fixed Navbar at the top */}
       <header className="flex-shrink-0">
         <Navbar />

@@ -7,11 +7,15 @@ import {
   FaPenAlt,
   FaMoneyCheck,
   FaPlusSquare,
-  FaList,
+  FaRegArrowAltCircleRight,
+  FaMapMarkerAlt,
+  FaDollarSign,
+  FaWallet,
 } from "react-icons/fa";
 
 const DashboardSidebarContent = () => {
   const { user } = useContext(AuthContext);
+  console.log(user);
 
   return (
     <div className="p-4 font-semibold">
@@ -43,23 +47,25 @@ const DashboardSidebarContent = () => {
         {user?.isAdmin && (
           <>
             <NavLink
-              to="/dashboard/codeWiseBudget"
+              to="/dashboard/addUpazila"
               className={({ isActive }) =>
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaMoneyCheck className="inline mr-2" />
-              Code-wise Budget
+              <FaMapMarkerAlt className="inline mr-2" />
+              Add Upazila
             </NavLink>
+
             <NavLink
               to="/dashboard/allUpazilas"
               className={({ isActive }) =>
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaList className="inline mr-2" />
-              All Upazilas
+              <FaDollarSign className="inline mr-2" />
+              All Upazila Budget
             </NavLink>
+
             <NavLink
               to="/dashboard/addEconomicField"
               className={({ isActive }) =>
@@ -69,6 +75,17 @@ const DashboardSidebarContent = () => {
               <FaPlusSquare className="inline mr-2" />
               Add Economic Field
             </NavLink>
+
+            <NavLink
+              to="/dashboard/codeWiseBudget"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <FaWallet className="inline mr-2" />
+              Code-wise Budget
+            </NavLink>
+
             <NavLink
               to="/dashboard/budgetDistribution"
               className={({ isActive }) =>
@@ -93,7 +110,7 @@ const DashboardSidebarContent = () => {
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaUsers className="inline mr-2" />
+              <FaRegArrowAltCircleRight className="inline mr-2" />
               Send Notice
             </NavLink>
           </>

@@ -11,10 +11,8 @@ const CodeWiseBudget = () => {
       try {
         const response = await axiosInstance.get("/economicCodes");
         setBudgets(response.data);
-        showModal("Budgets fetched successfully!", "success");
       } catch (error) {
         console.error("Error fetching budgets:", error);
-        showModal("Failed to fetch budgets. Please try again.", "error");
       }
     };
 

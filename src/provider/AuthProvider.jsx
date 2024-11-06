@@ -22,9 +22,20 @@ const AuthProvider = ({ children }) => {
   };
 
   // Register with email and send data to backend
-  const registerWithEmail = async (email, password, name, phone, photo, address) => {
+  const registerWithEmail = async (
+    email,
+    password,
+    name,
+    phone,
+    photo,
+    address
+  ) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const newUser = userCredential.user;
 
       // Send user data to backend
@@ -38,6 +49,7 @@ const AuthProvider = ({ children }) => {
         isAdmin: false, // Default role
         isBlocked: false, // Default status
       });
+      console.log(response);
 
       return response.data;
     } catch (error) {
