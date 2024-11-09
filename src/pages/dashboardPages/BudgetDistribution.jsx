@@ -139,10 +139,10 @@ import useAxiosPublic from "../../hooks/useAxios";
 
 const BudgetDistribution = () => {
   const [formData, setFormData] = useState({
-        upazilaId: "",
-        economicCode: "",
-        distributedBudget: "",
-      });
+    upazilaId: "",
+    economicCode: "",
+    distributedBudget: "",
+  });
   const [budgets, setBudgets] = useState([]);
   const [distributions, setDistributions] = useState({});
   const [totalDistributed, setTotalDistributed] = useState(0);
@@ -232,8 +232,8 @@ const BudgetDistribution = () => {
               <th className="p-4 text-left">Serial</th>
               <th className="p-4 text-left">Economic Code</th>
               <th className="p-4 text-left">Code Name</th>
-              <th className="p-4 text-left">Total Budget</th>
-              <th className="p-4 text-left">Distribute Budget</th>
+              <th className="p-4 text-left">Budget to Distribute</th>
+              <th className="p-4 text-left">Available Budget</th>
             </tr>
           </thead>
           <tbody>
@@ -242,7 +242,6 @@ const BudgetDistribution = () => {
                 <td className="p-4">{index + 1}</td>
                 <td className="p-4">{budget.economicCode}</td>
                 <td className="p-4">{budget.codeName}</td>
-                <td className="p-4">{budget.totalBudget}</td>
                 <td className="p-4">
                   <input
                     type="number"
@@ -252,6 +251,11 @@ const BudgetDistribution = () => {
                     min="0"
                   />
                 </td>
+                <td className="p-4">
+                  {" "}
+                  {budget?.totalBudget - budget?.distributedBudget}
+                </td>
+                
               </tr>
             ))}
           </tbody>
@@ -259,7 +263,7 @@ const BudgetDistribution = () => {
       </div>
 
       <div className="text-right font-bold mb-4">
-        Total Distributed: {totalDistributed}
+        Total Budget To Distribute: {totalDistributed}
       </div>
 
       <button
