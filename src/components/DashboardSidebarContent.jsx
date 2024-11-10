@@ -46,15 +46,8 @@ const DashboardSidebarContent = () => {
         {/* Admin Links */}
         {user?.isAdmin && (
           <>
-            <NavLink
-              to="/dashboard/addUpazila"
-              className={({ isActive }) =>
-                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
-              }
-            >
-              <FaMapMarkerAlt className="inline mr-2" />
-              Add Upazila
-            </NavLink>
+            <hr />
+            Budget reports
 
             <NavLink
               to="/dashboard/allUpazilas"
@@ -67,6 +60,28 @@ const DashboardSidebarContent = () => {
             </NavLink>
 
             <NavLink
+              to="/dashboard/codeWiseBudget"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <FaWallet className="inline mr-2" />
+              Code-wise Budget
+            </NavLink>
+            <hr />
+            Budget Execution
+            <NavLink
+              to="/dashboard/budgetDistribution"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <FaMoneyCheck className="inline mr-2" />
+              Budget Distribution
+            </NavLink>
+
+
+            <NavLink
               to="/dashboard/addEconomicField"
               className={({ isActive }) =>
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
@@ -77,33 +92,16 @@ const DashboardSidebarContent = () => {
             </NavLink>
 
             <NavLink
-              to="/dashboard/codeWiseBudget"
+              to="/dashboard/addUpazila"
               className={({ isActive }) =>
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaWallet className="inline mr-2" />
-              Code-wise Budget
+              <FaMapMarkerAlt className="inline mr-2" />
+              Add Upazila
             </NavLink>
-
-            <NavLink
-              to="/dashboard/budgetDistribution"
-              className={({ isActive }) =>
-                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
-              }
-            >
-              <FaMoneyCheck className="inline mr-2" />
-              Budget Distribution
-            </NavLink>
-            <NavLink
-              to="/dashboard/allUsers"
-              className={({ isActive }) =>
-                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
-              }
-            >
-              <FaUsers className="inline mr-2" />
-              All Users
-            </NavLink>
+            <hr />
+            Notice management
             <NavLink
               to="/dashboard/createMessage"
               className={({ isActive }) =>
@@ -112,6 +110,17 @@ const DashboardSidebarContent = () => {
             >
               <FaRegArrowAltCircleRight className="inline mr-2" />
               Send Notice
+            </NavLink>
+            <hr />
+            User Management
+            <NavLink
+              to="/dashboard/allUsers"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <FaUsers className="inline mr-2" />
+              All Users
             </NavLink>
           </>
         )}
