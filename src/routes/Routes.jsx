@@ -17,6 +17,7 @@ import AddExpense from "../pages/dashboardPages/AddExpense";
 import AddUpazila from "../pages/dashboardPages/AddUpazila";
 import UpazilaAllList from "../pages/dashboardPages/UpazilaAllList";
 import UpazilaDetails from "../pages/dashboardPages/UpazilaDetails";
+import AllocatedCodewiseBudget from "../pages/dashboardPages/AllocatedCodewiseBudget";
 
 const router = createBrowserRouter([
   {
@@ -30,10 +31,6 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginPage />,
-      },
-      {
-        path: "/register",
-        element: <RegisterPage />,
       },
     ],
   },
@@ -49,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "allUsers",
         element: <AllUsers />,
+      },
+      {
+        path: "addNewUser",
+        element: <RegisterPage />,
       },
       {
         path: "profile",
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "addExpense",
         element: <AddExpense />,
+      },
+      {
+        path: "allocatedCodeWiseBudget",
+        element: <AllocatedCodewiseBudget />,
       },
     ],
   },

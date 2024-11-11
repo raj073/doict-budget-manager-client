@@ -131,6 +131,15 @@ const DashboardSidebarContent = () => {
               <FaUsers className="inline mr-2" />
               All Users
             </NavLink>
+            <NavLink
+              to="/dashboard/addNewUser"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <FaUsers className="inline mr-2" />
+              Add New User
+            </NavLink>
           </>
         )}
 
@@ -138,13 +147,23 @@ const DashboardSidebarContent = () => {
         {!user?.isAdmin && (
           <>
             <NavLink
-              to="/dashboard/codeWiseBudget"
+              to="/dashboard/messages"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <FaPenAlt className="inline mr-2" />
+              Important Notices
+            </NavLink>
+            <span className="font-bold text-cyan-700 ">Budget executions</span>
+            <NavLink
+              to="/dashboard/allocatedCodeWiseBudget"
               className={({ isActive }) =>
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
               <FaMoneyCheck className="inline mr-2" />
-              Code-wise Budget
+              Allocated Codewise Budget
             </NavLink>
             <NavLink
               to="/dashboard/addExpense"
@@ -154,15 +173,6 @@ const DashboardSidebarContent = () => {
             >
               <FaPenAlt className="inline mr-2" />
               Add Expense
-            </NavLink>
-            <NavLink
-              to="/dashboard/messages"
-              className={({ isActive }) =>
-                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
-              }
-            >
-              <FaPenAlt className="inline mr-2" />
-              Important Notices
             </NavLink>
           </>
         )}
