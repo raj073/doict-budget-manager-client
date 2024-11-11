@@ -4,14 +4,16 @@ import useAxiosPublic from "../../hooks/useAxios";
 
 const UpazilaDetails = () => {
   const { fieldOfficeCode } = useParams();
+  console.log({fieldOfficeCode});
   const [details, setDetails] = useState(null);
   const axiosInstance = useAxiosPublic();
 
   useEffect(() => {
     const fetchUpazilaDetails = async () => {
       try {
-        const response = await axiosInstance.get(`/upazilaCodewiseBudget?fieldOfficeCode=${fieldOfficeCode}`);
+        const response = await axiosInstance.get(`/upazilaCodewiseBudget/${fieldOfficeCode}`);
         setDetails(response.data);
+        console.log(details);
       } catch (error) {
         console.error("Error fetching upazila details:", error);
       }
