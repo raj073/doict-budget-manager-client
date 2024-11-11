@@ -15,6 +15,7 @@ import AddEconomicField from "../pages/dashboardPages/AddEconomicField";
 import BudgetDistribution from "../pages/dashboardPages/BudgetDistribution";
 import AddExpense from "../pages/dashboardPages/AddExpense";
 import AddUpazila from "../pages/dashboardPages/AddUpazila";
+import UpazilaAllList from "../pages/dashboardPages/UpazilaAllList";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: "codeWiseBudget",
         element: <CodeWiseBudget />,
+      },
+      {
+        path: "upazilaAllList",
+        element: <UpazilaAllList />,
       },
       {
         path: "allUpazilas",

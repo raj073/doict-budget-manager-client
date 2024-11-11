@@ -68,6 +68,15 @@ const DashboardSidebarContent = () => {
               <FaWallet className="inline mr-2" />
               Code-wise Budget
             </NavLink>
+            <NavLink
+              to="/dashboard/upazilaAllList"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <FaWallet className="inline mr-2" />
+              List of All Upazila
+            </NavLink>
             <hr />
             Budget Execution
             <NavLink
