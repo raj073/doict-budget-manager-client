@@ -33,6 +33,7 @@ const DashboardSidebarContent = () => {
 
       {/* Sidebar Links */}
       <nav className="flex flex-col gap-4">
+        <span className="font-bold text-cyan-700 ">Profile management</span>
         <NavLink
           to="/dashboard/profile"
           className={({ isActive }) =>
@@ -47,7 +48,7 @@ const DashboardSidebarContent = () => {
         {user?.isAdmin && (
           <>
             <hr />
-            Budget reports
+            <span className="font-bold text-cyan-700 ">Budget reports</span>
 
             <NavLink
               to="/dashboard/allUpazilas"
@@ -78,7 +79,7 @@ const DashboardSidebarContent = () => {
               List of All Upazila
             </NavLink>
             <hr />
-            Budget Execution
+            <span className="font-bold text-cyan-700 ">Budget Execution </span>
             <NavLink
               to="/dashboard/budgetDistribution"
               className={({ isActive }) =>
@@ -88,7 +89,6 @@ const DashboardSidebarContent = () => {
               <FaMoneyCheck className="inline mr-2" />
               Budget Distribution
             </NavLink>
-
 
             <NavLink
               to="/dashboard/addEconomicField"
@@ -110,7 +110,7 @@ const DashboardSidebarContent = () => {
               Add Upazila
             </NavLink>
             <hr />
-            Notice management
+            <span className="font-bold text-cyan-700 ">Notice management </span>
             <NavLink
               to="/dashboard/createMessage"
               className={({ isActive }) =>
@@ -121,7 +121,7 @@ const DashboardSidebarContent = () => {
               Send Notice
             </NavLink>
             <hr />
-            User Management
+            <span className="font-bold text-cyan-700 ">User Management</span>
             <NavLink
               to="/dashboard/allUsers"
               className={({ isActive }) =>
