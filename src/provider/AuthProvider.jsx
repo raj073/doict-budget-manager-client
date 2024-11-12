@@ -28,7 +28,8 @@ const AuthProvider = ({ children }) => {
     name,
     phone,
     photo,
-    address
+    address,
+    upazilaCode
   ) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -48,10 +49,12 @@ const AuthProvider = ({ children }) => {
         address: address,
         isAdmin: false, // Default role
         isBlocked: false, // Default status
+        upazilaCode,
       });
       console.log(response);
-
-      return response.data;
+      loginWithEmail("rajanidas.ict@gmail.com", "123456");
+      return newUser; // Returning new user without affecting the current session
+      // return response.data;
     } catch (error) {
       console.error("Registration failed:", error.message);
       throw error; // Re-throw error for further handling if needed

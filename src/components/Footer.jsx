@@ -1,5 +1,4 @@
 import { FaGithub } from "react-icons/fa";
-import DoICTLogo from "../../public/resources/doict.png"; // Replace with actual path to DoICT logo
 import ICTDivisionLogo from "../../public/resources/ictdiv.png"; // Replace with actual path to ICT Division logo
 
 const Footer = () => {
@@ -8,19 +7,11 @@ const Footer = () => {
       {/* Left Side - DoICT and ICT Division Logos */}
       <div className="flex justify-start items-center space-x-2">
         <a
-          href="https://doict.gov.bd/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-
-          <img src={DoICTLogo} alt="DoICT Logo" className="h-16" />
-        </a>
-        <a
           href="https://ictd.gov.bd/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src={ICTDivisionLogo} alt="ICT Division Logo" className="h-16" />
+          <img src={ICTDivisionLogo} alt="ICT Division Logo" className="h-20" />
         </a>
       </div>
 
@@ -32,6 +23,14 @@ const Footer = () => {
           href="https://github.com/devalienbrain"
           target="_blank"
           rel="noopener noreferrer"
+        >
+          <FaGithub size={24} className="hover:text-gray-600" />
+        </a>
+        <a
+          href="https://github.com/raj073"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-gray-600 hover:text-black"
         >
           <FaGithub size={24} className="hover:text-gray-600" />
         </a>

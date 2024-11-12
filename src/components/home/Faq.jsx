@@ -13,7 +13,7 @@ const Faq = () => {
   }, []);
 
   return (
-    <div className="py-12 px-4 bg-white w-full max-w-4xl mx-auto mt-10">
+    <div className="py-12 bg-white w-full max-w-4xl mx-auto mt-10">
       {/* Title */}
       <h2 className="text-3xl font-bold text-center mb-4 text-black">Frequently Asked Questions</h2>
       <h3 className="text-lg text-center text-gray-600 mb-8">How Budget Manager works for ICT Officials</h3>
