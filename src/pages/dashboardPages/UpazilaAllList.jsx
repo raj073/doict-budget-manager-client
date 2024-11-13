@@ -23,10 +23,22 @@ const UpazilaListAll = () => {
     fetchData();
   }, [axiosInstance]);
 
-  const getTotalDistributedBudget = (upazilaId) => {
-    return budgets
-      .filter((budget) => budget.upazilaId === upazilaId)
-      .reduce((acc, cur) => acc + cur.amount, 0);
+  const getTotalDistributedBudget = (fieldOfficeCode) => {
+    // Find the budget object that matches the fieldOfficeCode
+    const budget = budgets.find(
+      (budget) => budget.upazilaId === fieldOfficeCode
+    );
+
+    // If a matching budget is found, calculate the total distributed amount from allocations
+    if (budget && budget.allocations) {
+      return budget.allocations.reduce(
+        (acc, allocation) => acc + (allocation.amount || 0),
+        0
+      );
+    }
+
+    // If no matching budget or allocations found, return 0
+    return 0;
   };
 
   return (
@@ -56,18 +68,21 @@ const UpazilaListAll = () => {
                   {upazila.fieldOfficeCode}
                 </td>
                 <td>
-                  <Link
-                    to={`/upazila/${upazila.id}`}
-                    className="text-blue-500 hover:underline"
-                  >
+                  <span className="text-blue-500 ">
                     {upazila.upazilaOfficeName}
-                  </Link>
+                  </span>
                 </td>
-                <td>{getTotalDistributedBudget(upazila.id) || 0}</td>
+                <td>
+                  {getTotalDistributedBudget(upazila.fieldOfficeCode) || 0}
+                </td>
                 <td>
                   <Link
-                    to={`/upazila/${upazila.id}`}
-                    className="text-blue-500 hover:underline"
+                    to={`/dashboard/upazila/${upazila.fieldOfficeCode}`}
+                    state={{
+                      upazilaName: upazila.upazilaOfficeName,
+                      fieldOfficeCode: upazila.fieldOfficeCode,
+                    }}
+                    className="text-lime-800 text-sm hover:underline"
                   >
                     View Details
                   </Link>
