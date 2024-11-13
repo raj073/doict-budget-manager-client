@@ -20,7 +20,7 @@ const Navbar = () => {
           rel="noopener noreferrer"
         >
 
-          <img src={DoICTLogo} alt="DoICT Logo" className="h-20" />
+          <img src={DoICTLogo} alt="DoICT Logo" className="w-20" />
         </a>
         <Link
           to="/"

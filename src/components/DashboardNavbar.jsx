@@ -5,6 +5,7 @@ import { GiMoneyStack } from "react-icons/gi";
 import { FaSignOutAlt } from "react-icons/fa";
 
 import DoICTLogo from "/resources/doict.png";
+import { MdLogout } from "react-icons/md";
 
 const DashboardNavbar = () => {
   const { logOutUser } = useContext(AuthContext);
@@ -40,7 +41,8 @@ const DashboardNavbar = () => {
           onClick={handleLogout}
           className="text-red-600 text-base hover:underline flex items-center"
         >
-          <FaSignOutAlt className="inline mr-2" />
+          {/* <MdLogout className="w-7 h-7 font-bold" /> */}
+          <FaSignOutAlt className="inline mr-2 w-5 h-5" />
           Logout
         </button>
       </div>

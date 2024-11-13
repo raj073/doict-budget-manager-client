@@ -13,7 +13,7 @@ const Faq = () => {
   }, []);
 
   return (
-    <div className="py-12 bg-white w-full max-w-4xl mx-auto mt-10">
+    <div className="py-12 w-full max-w-4xl mx-auto mt-10">
       {/* Title */}
       <h2 className="text-3xl font-bold text-center mb-4 text-black">Frequently Asked Questions</h2>
       <h3 className="text-lg text-center text-gray-600 mb-8">How Budget Manager works for ICT Officials</h3>
@@ -23,11 +23,11 @@ const Faq = () => {
         {faqs.length > 0 ? (
           faqs.map((faq, index) => (
             <div key={index} tabIndex="0" className="border border-gray-300 rounded-lg">
-              <div className="p-4 text-lg font-medium flex items-center gap-2 text-black bg-white">
+              <div className="p-4 text-lg font-medium flex items-center gap-2 text-black">
                 <FaQuestionCircle className="text-black w-4 h-4" />
                 {faq.question}
               </div>
-              <div className="p-4 bg-white">
+              <div className="p-4 ">
                 <p className="text-gray-800 text-md">{faq.answer}</p>
               </div>
             </div>
