@@ -8,8 +8,6 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { mkConfig, generateCsv, download } from "export-to-csv";
 import { jsPDF } from "jspdf"; //or use your library of choice here
 import autoTable from "jspdf-autotable";
-
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useAxiosPublic from "../../hooks/useAxios";
 
