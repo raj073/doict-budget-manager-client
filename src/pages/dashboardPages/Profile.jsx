@@ -85,6 +85,19 @@ const Profile = () => {
               {user?.isAdmin ? "Admin" : "User"}
             </span>{" "}
           </li>
+          <hr className="py-3" />
+          Basic Data
+          <li>
+            <strong>Upazila Name:</strong> {user?.displayName || "N/A"}
+          </li>
+          <li>
+            <strong>Upazila Code:</strong> {user?.upazilaCode || "N/A"}
+          </li>
+          <li>
+            <strong>Address:</strong> {user?.address || "N/A"}
+          </li>
+          <hr className="py-3" />
+          Contacts
           <li>
             <strong>Email:</strong> {user?.email}
           </li>
@@ -95,8 +108,13 @@ const Profile = () => {
             <strong>Address:</strong> {user?.address || "N/A"}
           </li>
           <hr />
-          <li>
+          <li className="text-xs">
             <strong>Unique ID:</strong> {user?.uid}
+          </li>
+          <hr />
+          <li className="text-red-700">
+            <strong>Want to change password? </strong>{" "}
+            <button className="btn">Change password</button>
           </li>
         </ul>
       </div>

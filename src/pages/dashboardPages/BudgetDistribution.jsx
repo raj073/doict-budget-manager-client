@@ -9,9 +9,29 @@ const BudgetDistribution = () => {
   const [budgets, setBudgets] = useState([]);
   const [distributions, setDistributions] = useState({});
   const [totalDistributed, setTotalDistributed] = useState(0);
+  const [upazilas, setUpazilas] = useState([]);
+  const [formData, setFormData] = useState({
+    upazilaId: "",
+    upazilaName: "",
+  });
   const axiosInstance = useAxiosPublic();
-
   const fileInputRef = useRef();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const upazilasResponse = await axiosInstance.get("/upazila");
+        const budgetsResponse = await axiosInstance.get("/economicCodes");
+        setUpazilas(upazilasResponse.data);
+        setBudgets(budgetsResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        toast.error("Failed to load data. Please try again.");
+      }
+    };
+
+    fetchData();
+  }, [axiosInstance]);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -37,17 +57,16 @@ const BudgetDistribution = () => {
     formData.append("csvFile", file);
 
     try {
-      // Send a POST request to the backend
       const response = await axiosInstance.post("/uploadExcel", formData);
       setMessage(response.data.message);
       setError("");
+      // After successful upload, fetch updated budgets
+      const updatedBudgetsResponse = await axiosInstance.get("/economicCodes");
+      setBudgets(updatedBudgetsResponse.data); // Update budget list with distributed amounts
     } catch (err) {
-      // Handle validation and duplicate errors from the backend
       console.error("Error:", err.response);
-      if (err.response?.status === 400) {
-        setError(err.response?.data?.error); // Header validation error
-      } else if (err.response?.status === 409) {
-        setError(err.response?.data?.error); // Duplicate record error
+      if (err.response?.status === 400 || err.response?.status === 409) {
+        setError(err.response?.data?.error);
       } else {
         setError("Upload Failed. Please Try Again.");
       }
@@ -65,28 +84,19 @@ const BudgetDistribution = () => {
     }
   };
 
-  const [formData, setFormData] = useState({
-    upazilaId: "",
-    upazilaName: "",
-  });
-
-  useEffect(() => {
-    const fetchBudgets = async () => {
-      try {
-        const budgetResponse = await axiosInstance.get("/economicCodes");
-        setBudgets(budgetResponse.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        toast.error("Failed to load budget data. Please try again.");
-      }
-    };
-
-    fetchBudgets();
-  }, []);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleUpazilaSelect = (e) => {
+    const selectedUpazila = upazilas.find(
+      (upazila) => upazila.fieldOfficeCode === e.target.value
+    );
+    setFormData({
+      upazilaId: selectedUpazila?.fieldOfficeCode || "",
+      upazilaName: selectedUpazila?.upazilaOfficeName || "",
+    });
   };
 
   const handleBudgetChange = (e, code) => {
@@ -96,7 +106,6 @@ const BudgetDistribution = () => {
       [code]: value,
     }));
 
-    // Calculate total distributed budget
     const total = Object.values({
       ...distributions,
       [code]: value,
@@ -106,6 +115,7 @@ const BudgetDistribution = () => {
 
   const handleDistributeBudget = async () => {
     try {
+      // Prepare the distribution data for the upazilaCodewiseBudget collection
       const distributionData = {
         upazilaId: formData.upazilaId,
         upazilaName: formData.upazilaName,
@@ -114,11 +124,43 @@ const BudgetDistribution = () => {
           amount,
         })),
       };
-      console.log(distributionData);
-      await axiosInstance.post("/upazilaCodewiseBudget", distributionData);
+
+      // Send the distribution data to update the upazilaCodewiseBudget collection
+      const upazilaResponse = await axiosInstance.post(
+        "/upazilaCodewiseBudget",
+        distributionData
+      );
+
+      // Iterate over each economic code to update the economicCodes collection
+      const economicCodeUpdates = Object.entries(distributions).map(
+        async ([code, amount]) => {
+          // Prepare the update data for economicCodes collection
+          const economicCodeData = {
+            economicCode: code,
+            distributedAmount: amount,
+          };
+
+          try {
+            // Update the economicCodes collection by incrementing the distributed budget
+            await axiosInstance.post("/economicCodes", economicCodeData);
+          } catch (error) {
+            console.error(`Error updating economic code ${code}:`, error);
+          }
+        }
+      );
+
+      // Wait for all economic code updates to finish
+      await Promise.all(economicCodeUpdates);
+
+      // Success: notify user and reset data
       toast.success("Budgets distributed successfully!");
       setDistributions({});
       setTotalDistributed(0);
+
+      // After successful distribution, fetch updated budgets
+      const updatedBudgetsResponse = await axiosInstance.get("/economicCodes");
+      console.log(updatedBudgetsResponse.data); // Log to check the updated data
+      setBudgets(updatedBudgetsResponse.data);
     } catch (error) {
       console.error("Error distributing budget:", error);
       toast.error("Failed to distribute budget. Please try again.");
@@ -151,6 +193,26 @@ const BudgetDistribution = () => {
 
       <form className="mb-6 mt-10">
         <div className="mb-4">
+          <label className="block text-sm font-medium">Select Upazila</label>
+          <select
+            name="upazilaId"
+            value={formData.upazilaId}
+            onChange={handleUpazilaSelect}
+            className="w-full p-2 border rounded"
+            required
+          >
+            <option value="">Select Upazila</option>
+            {upazilas.map((upazila) => (
+              <option
+                key={upazila.fieldOfficeCode}
+                value={upazila.fieldOfficeCode}
+              >
+                {upazila.upazilaOfficeName}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-4">
           <label className="block text-sm font-medium">Upazila ID</label>
           <input
             type="text"
@@ -159,20 +221,11 @@ const BudgetDistribution = () => {
             onChange={handleInputChange}
             className="w-full p-2 border rounded"
             required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium">Upazila Name</label>
-          <input
-            type="text"
-            name="upazilaName"
-            value={formData.upazilaName}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-            required
+            disabled
           />
         </div>
       </form>
+
       <div className="overflow-x-auto mb-4">
         <table className="table w-full border border-gray-300">
           <thead className="bg-gray-100">
@@ -221,4 +274,5 @@ const BudgetDistribution = () => {
     </div>
   );
 };
+
 export default BudgetDistribution;
