@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaQuestionCircle } from "react-icons/fa";
-
+import "../../../src/index.css";
 const Faq = () => {
   const [faqs, setFaqs] = useState([]);
 
@@ -13,10 +13,11 @@ const Faq = () => {
   }, []);
 
   return (
-    <div className="py-12 w-full max-w-4xl mx-auto mt-10">
+    <div className="py-12 w-full max-w-4xl mx-auto mt-10 noto-sans-bengali">
       {/* Title */}
-      <h2 className="text-3xl font-bold text-center mb-4 text-black">Frequently Asked Questions</h2>
-      <h3 className="text-lg text-center text-gray-600 mb-8">How Budget Manager works for ICT Officials</h3>
+      <h2 className="text-3xl font-bold text-center mb-4 text-black">প্রায়শই জিজ্ঞাসিত প্রশ্নাবলী</h2>
+      <h3 className="text-lg text-center text-gray-600 mb-8">বাজেট ম্যানেজার কীভাবে আইসিটি কর্মকর্তাদের জন্য কাজ করে</h3>
+
 
       {/* FAQ List */}
       <div className="space-y-4">

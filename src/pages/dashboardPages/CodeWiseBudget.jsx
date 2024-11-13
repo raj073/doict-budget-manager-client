@@ -44,7 +44,7 @@ const CodeWiseBudget = () => {
             </button>
             <p
               className={`text-center text-lg font-semibold ${
-                modal.type === "success" ? "text-lime-700" : "text-red-700"
+                modal.type === "success" ? "text-lime-800" : "text-red-700"
               }`}
             >
               {modal.message}
@@ -59,12 +59,12 @@ const CodeWiseBudget = () => {
         <table className="table w-full border border-gray-300">
           <thead className="bg-gray-100">
             <tr>
-              <th className="p-4 text-left text-lg">Serial</th>
-              <th className="p-4 text-left text-lg">Economic Code</th>
-              <th className="p-4 text-left text-lg">Code Name</th>
-              <th className="p-4 text-left text-lg">Total Budget</th>
-              <th className="p-4 text-left text-lg">Distributed Budget</th>
-              <th className="p-4 text-left text-lg">Remaining Budget</th>
+              <th className="p-4 text-left">Serial</th>
+              <th className="p-4 text-left">Economic Code</th>
+              <th className="p-4 text-left">Code Name</th>
+              <th className="p-4 text-left">Total Budget</th>
+              <th className="p-4 text-left">Distributed Budget</th>
+              <th className="p-4 text-left">Remaining Budget</th>
             </tr>
           </thead>
           <tbody>
@@ -76,7 +76,7 @@ const CodeWiseBudget = () => {
                 } hover:bg-gray-100`}
               >
                 <td className="p-4 text-md">{index + 1}</td>
-                <td className="p-4 text-md">{budget?.economicCode}</td>
+                <td className="p-4 text-md text-red-800 font-bold">{budget?.economicCode}</td>
                 <td className="p-4 text-md">{budget?.codeName}</td>
                 <td className="p-4 text-md">{budget?.totalBudget}</td>
                 <td className="p-4 text-md">{budget?.distributedBudget}</td>

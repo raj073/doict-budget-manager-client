@@ -1,42 +1,42 @@
 [
   {
-    "question": "What is the Budget Management System (BMS)?",
-    "answer": "The Budget Management System (BMS) is a comprehensive tool designed to manage budget allocation, tracking, and approvals for the Department of ICT, providing transparency and efficiency in budget management."
+    "question": "বাজেট ডিস্ট্রিবিউশন ম্যানেজমেন্ট সিস্টেম (BDMS) কি?",
+    "answer": "বাজেট ডিস্ট্রিবিউশন ম্যানেজমেন্ট সিস্টেম (BDMS) একটি সম্পূর্ণ সিস্টেম যা তথ্য ও যোগাযোগ প্রযুক্তি (আইসিটি) বিভাগে বাজেট বরাদ্দ, ট্র্যাকিং, এবং অনুমোদনের প্রক্রিয়াকে সহজতর ও স্বচ্ছ করার জন্য ডিজাইন করা হয়েছে।"
   },
   {
-    "question": "How do I access my dashboard?",
-    "answer": "After logging in, users are redirected to their personalized dashboard, which displays options and features tailored to their specific role within the system."
+    "question": "আমি আমার ড্যাশবোর্ডে কিভাবে প্রবেশ করতে পারি?",
+    "answer": "লগইন করার পর ব্যবহারকারীরা তাদের ড্যাশবোর্ডে পুনর্নির্দেশিত হন, যেখানে তাদের নির্দিষ্ট ভূমিকার উপর ভিত্তি করে বৈশিষ্ট্য ও অপশনগুলো প্রদর্শিত হয়।"
   },
   {
-    "question": "Can I request a new budget allocation?",
-    "answer": "Yes, officers can request new budget allocations and submit these requests for approval to administrators and super administrators."
+    "question": "আমি কি নতুন বাজেট বরাদ্দের জন্য আবেদন করতে পারি?",
+    "answer": "হ্যাঁ, কর্মকর্তারা নতুন বাজেট বরাদ্দের জন্য আবেদন করতে পারেন এবং অনুমোদনের জন্য এটি প্রশাসক ও সুপার প্রশাসকের কাছে জমা দিতে পারেন।"
   },
   {
-    "question": "Is there mobile compatibility?",
-    "answer": "Absolutely! The system is designed to be responsive, ensuring a seamless experience on both mobile and desktop devices."
+    "question": "মোবাইল উপযোগিতা কি আছে?",
+    "answer": "অবশ্যই! এই সিস্টেমটি রেসপন্সিভ ডিজাইন করা হয়েছে, যা মোবাইল এবং ডেস্কটপ উভয়েই নিরবচ্ছিন্ন অভিজ্ঞতা প্রদান করে।"
   },
   {
-    "question": "Who has the authority to approve budget requests?",
-    "answer": "Super administrators have the authority to approve budget requests after thoroughly reviewing the submissions made by officers and upazila offices."
+    "question": "বাজেট আবেদনের অনুমোদনের ক্ষমতা কারা রাখে?",
+    "answer": "সুপার প্রশাসকেরা বাজেট আবেদনের অনুমোদন দেওয়ার ক্ষমতা রাখেন, যারা কর্মকর্তা ও উপজেলা অফিসের জমা দেওয়া আবেদনগুলি পুঙ্খানুপুঙ্খ পর্যালোচনা করে অনুমোদন দেন।"
   },
   {
-    "question": "What user roles are available in the BMS?",
-    "answer": "The system includes multiple user roles, including Administrator (Validator), Officer/Upazila Office, and Super Administrator (Approver), each with specific functionalities."
+    "question": "BDMS-এ কোন কোন ব্যবহারকারীর ভূমিকা রয়েছে?",
+    "answer": "এই সিস্টেমে বিভিন্ন ব্যবহারকারীর ভূমিকা রয়েছে, যেমন প্রশাসক (ভ্যালিডেটর), কর্মকর্তা/উপজেলা অফিস, এবং সুপার প্রশাসক (অ্যাপ্রুভার), প্রত্যেকের নির্দিষ্ট কার্যকারিতা রয়েছে।"
   },
   {
-    "question": "How can I track budget allocations?",
-    "answer": "Users can view detailed reports and summary tables within their dashboard to track budget allocations, distributions, and remaining balances."
+    "question": "আমি বাজেট বরাদ্দ কিভাবে ট্র্যাক করতে পারি?",
+    "answer": "ব্যবহারকারীরা তাদের ড্যাশবোর্ডে বিশদ প্রতিবেদন ও সারসংক্ষেপের টেবিল দেখতে পারেন, যা বাজেট বরাদ্দ, বিতরণ এবং অবশিষ্ট ব্যালেন্স ট্র্যাক করতে সাহায্য করে।"
   },
   {
-    "question": "What measures are in place for data security?",
-    "answer": "The BMS incorporates secure login authentication and role-based access control to ensure that sensitive data is protected and accessible only to authorized users."
+    "question": "ডেটা নিরাপত্তার জন্য কী ব্যবস্থা গ্রহণ করা হয়েছে?",
+    "answer": "BDMS-এ সুরক্ষিত লগইন প্রমাণীকরণ এবং ভূমিকা-ভিত্তিক অ্যাক্সেস নিয়ন্ত্রণ অন্তর্ভুক্ত করা হয়েছে, যা সংবেদনশীল ডেটাকে সুরক্ষিত রাখে এবং শুধুমাত্র অনুমোদিত ব্যবহারকারীদের প্রবেশাধিকারের সুযোগ দেয়।"
   },
   {
-    "question": "Will I receive training on how to use the BMS?",
-    "answer": "Yes, comprehensive training sessions will be provided to familiarize users with the system's features and functionalities, ensuring effective usage."
+    "question": "আমি কি BDMS ব্যবহারের জন্য প্রশিক্ষণ পাব?",
+    "answer": "হ্যাঁ, ব্যবহারকারীদের সিস্টেমের বৈশিষ্ট্য ও কার্যকারিতাগুলো সম্পর্কে পরিচিত করতে বিস্তৃত প্রশিক্ষণ সেশন প্রদান করা হবে।"
   },
   {
-    "question": "What happens if I encounter an issue while using the BMS?",
-    "answer": "If you encounter any issues, you can reach out for ongoing support and maintenance, which will be provided to ensure smooth operation of the system."
+    "question": "আমি যদি BDMS ব্যবহার করতে গিয়ে কোনো সমস্যার সম্মুখীন হই, তাহলে কী হবে?",
+    "answer": "যদি আপনি কোনো সমস্যার সম্মুখীন হন, তবে চলমান সহায়তা ও রক্ষণাবেক্ষণ প্রদান করা হবে, যাতে সিস্টেমটি নিরবচ্ছিন্নভাবে চলতে থাকে।"
   }
 ]

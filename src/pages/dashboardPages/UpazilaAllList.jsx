@@ -27,12 +27,12 @@ const UpazilaAllList = () => {
 
       <div className="overflow-x-auto">
         <table className="table w-full border border-gray-300">
-          <thead className="bg-gradient-to-r from-teal-500 to-blue-600 text-white">
+          <thead className="">
             <tr>
-              <th className="p-4 text-left text-lg">#</th>
-              <th className="p-4 text-left text-lg">Field Office Code</th>
-              <th className="p-4 text-left text-lg">Upazila Office Name</th>
-              <th className="p-4 text-left text-lg">
+              <th className="p-4 text-left">#</th>
+              <th className="p-4 text-left">Field Office Code</th>
+              <th className="p-4 text-left">Upazila Office Name</th>
+              <th className="p-4 text-left">
                 Total Distributed Budget
               </th>
             </tr>
@@ -46,7 +46,7 @@ const UpazilaAllList = () => {
                 } hover:bg-gray-100 transition-colors`}
               >
                 <td className="p-4 text-md">{index + 1}</td>
-                <td className="p-4 text-md">{upazila?.fieldOfficeCode}</td>
+                <td className="p-4 text-md font-bold text-lime-700">{upazila?.fieldOfficeCode}</td>
                 <td className="p-4 text-md">
                   <Link
                     to={`/dashboard/upazila/${upazila?.fieldOfficeCode}`}
