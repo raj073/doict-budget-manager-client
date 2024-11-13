@@ -27,10 +27,10 @@ const Navbar = () => {
           className="text-2xl font-extrabold flex items-center"
           title="Home"
         >
-        <span className="text-black font-black">Budget</span>
-        <span className="text-cyan-600 ml-1 font-black">Manager</span>
-      </Link>
-    </div>
+          <span className="text-black font-black">বাজেট</span>
+          <span className="text-cyan-600 ml-1 font-black">ব্যবস্থাপনা</span>
+        </Link>
+      </div>
       <div className="navbar-end flex items-center space-x-4">
         {user ? (
           <>
@@ -40,16 +40,16 @@ const Navbar = () => {
               title="Dashboard"
             >
               <MdSpaceDashboard className="w-6 h-6" />
-              <span>Dashboard</span>
+              <span>ড্যাশবোর্ড</span>
             </Link>
             <button
               onClick={logout}
               className="flex items-center text-red-500 font-semibold gap-1"
               title="Logout"
-              
+
             >
               <MdLogout className="w-6 h-6" />
-               </button>
+            </button>
           </>
         ) : (
           <Link
