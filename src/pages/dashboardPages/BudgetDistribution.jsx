@@ -1,7 +1,4 @@
-import { useRef, useState } from "react";
-
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import useAxiosPublic from "../../hooks/useAxios";
 
@@ -9,6 +6,9 @@ const BudgetDistribution = () => {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [budgets, setBudgets] = useState([]);
+  const [distributions, setDistributions] = useState({});
+  const [totalDistributed, setTotalDistributed] = useState(0);
   const axiosInstance = useAxiosPublic();
 
   const fileInputRef = useRef();
@@ -62,14 +62,13 @@ const BudgetDistribution = () => {
 
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; // Reset the input field
+    }
+  };
+
   const [formData, setFormData] = useState({
     upazilaId: "",
     upazilaName: "",
   });
-  const [budgets, setBudgets] = useState([]);
-  const [distributions, setDistributions] = useState({});
-  const [totalDistributed, setTotalDistributed] = useState(0);
-  const axiosInstance = useAxiosPublic();
 
   useEffect(() => {
     const fetchBudgets = async () => {
@@ -130,7 +129,7 @@ const BudgetDistribution = () => {
     <div className="p-12 bg-white rounded shadow-lg">
       <h2 className="text-2xl font-bold mb-4">Budget Distribution</h2>
 
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-10">
         <input
           type="file"
           onChange={handleFileChange}
@@ -147,11 +146,10 @@ const BudgetDistribution = () => {
       </div>
       {message && <p className="mt-4 font-bold text-lime-700">{message}</p>}
       {error && <p className="mt-4 font-bold text-orange-600">{error}</p>}
-    <div className="p-6 bg-white rounded shadow-md">
-      <h2 className="text-3xl font-bold mb-4 text-center">
-        Budget Distribution
-      </h2>
-      <form className="mb-6">
+
+      <hr />
+
+      <form className="mb-6 mt-10">
         <div className="mb-4">
           <label className="block text-sm font-medium">Upazila ID</label>
           <input
@@ -223,5 +221,4 @@ const BudgetDistribution = () => {
     </div>
   );
 };
-
 export default BudgetDistribution;
