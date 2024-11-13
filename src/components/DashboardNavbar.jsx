@@ -31,8 +31,8 @@ const DashboardNavbar = () => {
           className="text-2xl font-black flex items-center"
           title="Home"
         >
-          <span className="text-black font-black">Budget</span>
-          <span className="text-cyan-600 ml-1 font-black">Manager</span>
+          <span className="text-black font-black">বাজেট</span>
+          <span className="text-cyan-600 ml-1 font-black">ব্যবস্থাপনা</span>
         </Link>
       </div>
       <div className="navbar-end flex items-center space-x-4">

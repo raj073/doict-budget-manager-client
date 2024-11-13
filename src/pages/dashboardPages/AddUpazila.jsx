@@ -5,8 +5,6 @@ import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 
 const AddUpazila = () => {
   const [formData, setFormData] = useState({
-    serialCode: "",
-    instituteCode: "",
     fieldOfficeCode: "",
     upazilaOfficeName: "",
   });
@@ -103,8 +101,6 @@ const AddUpazila = () => {
       ));
 
       setFormData({
-        serialCode: "",
-        instituteCode: "",
         fieldOfficeCode: "",
         upazilaOfficeName: "",
       });
@@ -147,34 +143,7 @@ const AddUpazila = () => {
       <h2 className="text-2xl font-bold mb-4">Add Upazila</h2>
       <div className="p-6 bg-white rounded-tl-xl rounded-br-xl shadow-md">
         <form onSubmit={handleAddUpazila}>
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">
-              Upazila Serial Code
-            </label>
-            <input
-              type="text"
-              name="serialCode"
-              value={formData.serialCode}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">
-              Institute Code
-            </label>
-            <input
-              type="number"
-              name="instituteCode"
-              value={formData.instituteCode}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-
+         
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">
               Field Office Code

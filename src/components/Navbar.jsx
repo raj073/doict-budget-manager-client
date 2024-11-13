@@ -5,7 +5,6 @@ import { MdSpaceDashboard, MdLogout } from "react-icons/md";
 import { IoMdLogIn } from "react-icons/io";
 import { GiMoneyStack } from "react-icons/gi";
 import DoICTLogo from "/resources/doict.png";
-import { HiLogin } from "react-icons/hi";
 
 
 const Navbar = () => {
@@ -21,15 +20,15 @@ const Navbar = () => {
           rel="noopener noreferrer"
         >
 
-          <img src={DoICTLogo} alt="DoICT Logo" className="h-20 font-black" />
+          <img src={DoICTLogo} alt="DoICT Logo" className="w-20" />
         </a>
         <Link
           to="/"
           className="text-2xl font-extrabold flex items-center"
           title="Home"
         >
-          <span className="text-black font-black">Budget</span>
-          <span className="text-cyan-600 ml-1 font-black">Manager</span>
+          <span className="text-black font-black">বাজেট</span>
+          <span className="text-cyan-600 ml-1 font-black">ব্যবস্থাপনা</span>
         </Link>
       </div>
       <div className="navbar-end flex items-center space-x-4">
@@ -41,7 +40,7 @@ const Navbar = () => {
               title="Dashboard"
             >
               <MdSpaceDashboard className="w-6 h-6" />
-              <span>Dashboard</span>
+              <span>ড্যাশবোর্ড</span>
             </Link>
             <button
               onClick={logout}
@@ -49,7 +48,7 @@ const Navbar = () => {
               title="Logout"
 
             >
-              <MdLogout className="w-7 h-7 font-bold" />
+              <MdLogout className="w-6 h-6" />
             </button>
           </>
         ) : (
@@ -58,9 +57,8 @@ const Navbar = () => {
             className="flex items-center text-cyan-800 font-semibold gap-1"
             title="Login"
           >
+            <IoMdLogIn className="w-7 h-7" />
             <span>Login</span>
-            <HiLogin className="w-7 h-7 font-bold" />
-
           </Link>
         )}
       </div>

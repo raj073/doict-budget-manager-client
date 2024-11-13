@@ -17,7 +17,7 @@ const Footer = () => {
 
       {/* Right Side - GitHub Icon and Developed By Text */}
       <div className="flex items-center space-x-2">
-        <p>Developed by</p>
+        <p>তৈরি করেছেন</p>
 
         <a
           href="https://github.com/devalienbrain"
