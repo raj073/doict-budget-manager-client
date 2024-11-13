@@ -86,13 +86,6 @@ const LoginPage = () => {
             <div className="form-control mt-6">
               <button className="btn bg-black text-white w-full">Login</button>
             </div>
-
-            <p className="mt-4 text-center">
-              Don't have an account?{" "}
-              <Link to="/register" className="link">
-                Register here
-              </Link>
-            </p>
           </form>
         </div>
       </div>

@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import "../../src/index.css";
 
 const HomeLayout = () => {
   return (
     <>
-      <div className="bg-gradient-to-r from-cyan-50 via-cyan-50 to-blue-50">
+      <div className="noto-sans-bengali bg-gradient-to-r from-cyan-50 via-cyan-50 to-blue-50">
         <div className="w-full lg:w-3/4 mx-auto flex flex-col min-h-screen font-popppins ">
           <header>
             <Navbar />
@@ -20,7 +21,6 @@ const HomeLayout = () => {
           <Footer />
         </footer>
       </div>
-
     </>
   );
 };

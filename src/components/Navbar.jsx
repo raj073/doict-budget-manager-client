@@ -5,13 +5,13 @@ import { MdSpaceDashboard, MdLogout } from "react-icons/md";
 import { IoMdLogIn } from "react-icons/io";
 import { GiMoneyStack } from "react-icons/gi";
 import DoICTLogo from "/resources/doict.png";
-
+import "../../src/index.css";
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
-    <div className="navbar flex items-center justify-between">
+    <div className="navbar flex items-center justify-between noto-sans-bengali">
       <div className="navbar-start flex items-center space-x-2">
         {/* <GiMoneyStack className="text-3xl text-cyan-600" /> */}
         <a
@@ -19,7 +19,6 @@ const Navbar = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-
           <img src={DoICTLogo} alt="DoICT Logo" className="w-20" />
         </a>
         <Link
@@ -42,14 +41,6 @@ const Navbar = () => {
               <MdSpaceDashboard className="w-6 h-6" />
               <span>ড্যাশবোর্ড</span>
             </Link>
-            <button
-              onClick={logout}
-              className="flex items-center text-red-500 font-semibold gap-1"
-              title="Logout"
-
-            >
-              <MdLogout className="w-6 h-6" />
-            </button>
           </>
         ) : (
           <Link
@@ -58,7 +49,7 @@ const Navbar = () => {
             title="Login"
           >
             <IoMdLogIn className="w-7 h-7" />
-            <span>Login</span>
+            <span>লগ ইন</span>
           </Link>
         )}
       </div>

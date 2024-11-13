@@ -15,7 +15,6 @@ import {
 
 const DashboardSidebarContent = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
 
   return (
     <div className="p-4 font-semibold">

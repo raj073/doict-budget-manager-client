@@ -1,7 +1,7 @@
-
+import "../../../src/index.css"; 
 const Banner = () => {
   return (
-    <div className="my-7 py-16 ">
+    <div className="my-7 py-16 noto-sans-bengali">
       {/* শিরোনাম এবং সাবটাইটেল */}
       <div className="text-center mb-24 max-w-4xl mx-auto">
         <h1 className="text-3xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 drop-shadow-lg tracking-wide">
