@@ -26,7 +26,10 @@ const Profile = () => {
       };
 
       // Make API call to update user information
-      const response = await axiosInstance.put(`/user/${user._id}`, updatedUser); // Use axiosInstance for the request
+      const response = await axiosInstance.put(
+        `/user/${user._id}`,
+        updatedUser
+      ); // Use axiosInstance for the request
 
       if (!response.status === 200) {
         throw new Error("Failed to update user information");
@@ -52,7 +55,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg relative">
+    <div className="p-6 relative">
       <div className="flex flex-col items-center">
         <img
           src={user?.photoUrl}
@@ -77,7 +80,10 @@ const Profile = () => {
         <hr />
         <ul className="mt-3 text-gray-600 space-y-2">
           <li>
-            <strong>Role:</strong> {user?.isAdmin ? "Admin" : "User"}
+            <strong>Role:</strong>{" "}
+            <span className="text-red-600">
+              {user?.isAdmin ? "Admin" : "User"}
+            </span>{" "}
           </li>
           <li>
             <strong>Email:</strong> {user?.email}
