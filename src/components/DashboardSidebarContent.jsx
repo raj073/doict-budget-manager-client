@@ -1,62 +1,46 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import {
-  FaUser,
-  FaUsers,
-  FaPenAlt,
-  FaMoneyCheck,
-  FaPlusSquare,
-  FaRegArrowAltCircleRight,
-  FaMapMarkerAlt,
-  FaDollarSign,
-  FaWallet,
-} from "react-icons/fa";
+  MdDashboard,
+  MdOutlineAttachMoney,
+  MdOutlineCode,
+  MdOutlineMap,
+  MdOutlineMailOutline,
+  MdOutlinePeople,
+  MdOutlinePersonAdd,
+  MdPersonOutline,
+  MdOutlineLogout,
+  MdOutlineAnalytics,
+  MdAddShoppingCart,
+  MdOutlineLibraryBooks,
+} from "react-icons/md";
 
 const DashboardSidebarContent = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOutUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logOutUser();
+    navigate("/");
+  };
 
   return (
     <div className="p-4 font-semibold">
-      {/* User Profile Info */}
-      <div className="flex flex-row lg:flex-col items-start gap-2">
-        <img
-          src={user?.photoUrl}
-          alt="User Profile"
-          className="w-16 rounded-full"
-        />
-        <span>{user?.displayName}</span>
-        <span className="text-xs">{user?.email}</span>
-      </div>
-      <hr className="my-4" />
-
       {/* Sidebar Links */}
       <nav className="flex flex-col gap-4">
-      <NavLink
-          to="/dashboard/adminDashboardHome"
-          className={({ isActive }) =>
-            isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
-          }
-        >
-          <FaUser className="inline mr-2" />
-          Admin Home
-        </NavLink>
-
-        <hr />
-        <span className="font-bold text-cyan-700 ">Profile management</span>
-        <NavLink
-          to="/dashboard/profile"
-          className={({ isActive }) =>
-            isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
-          }
-        >
-          <FaUser className="inline mr-2" />
-          Profile
-        </NavLink>
-
         {/* Admin Links */}
         {user?.isAdmin && (
           <>
+            <NavLink
+              to="/dashboard/adminDashboardHome"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <MdDashboard className="inline mr-2" />
+              Admin Home
+            </NavLink>
             <hr />
             <span className="font-bold text-cyan-700 ">Budget reports</span>
 
@@ -66,7 +50,7 @@ const DashboardSidebarContent = () => {
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaDollarSign className="inline mr-2" />
+              <MdOutlineAttachMoney className="inline mr-2" />
               All Upazila Budget
             </NavLink>
 
@@ -76,27 +60,28 @@ const DashboardSidebarContent = () => {
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaWallet className="inline mr-2" />
+              <MdOutlineCode className="inline mr-2" />
               Code-wise Budget
             </NavLink>
+
             <NavLink
               to="/dashboard/upazilaAllList"
               className={({ isActive }) =>
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaWallet className="inline mr-2" />
+              <MdOutlineMap className="inline mr-2" />
               List of All Upazila Offices
             </NavLink>
             <hr />
-            <span className="font-bold text-cyan-700 ">Budget Execution </span>
+            <span className="font-bold text-cyan-700 ">Budget Execution</span>
             <NavLink
               to="/dashboard/budgetDistribution"
               className={({ isActive }) =>
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaMoneyCheck className="inline mr-2" />
+              <MdOutlineLibraryBooks className="inline mr-2" />
               Budget Distribution
             </NavLink>
 
@@ -106,7 +91,7 @@ const DashboardSidebarContent = () => {
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaPlusSquare className="inline mr-2" />
+              <MdAddShoppingCart className="inline mr-2" />
               Add New Economic Field
             </NavLink>
 
@@ -116,18 +101,18 @@ const DashboardSidebarContent = () => {
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaMapMarkerAlt className="inline mr-2" />
+              <MdOutlineMap className="inline mr-2" />
               Add New Upazila Office
             </NavLink>
             <hr />
-            <span className="font-bold text-cyan-700 ">Notice management </span>
+            <span className="font-bold text-cyan-700 ">Notice management</span>
             <NavLink
               to="/dashboard/createMessage"
               className={({ isActive }) =>
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaRegArrowAltCircleRight className="inline mr-2" />
+              <MdOutlineMailOutline className="inline mr-2" />
               Send Notice
             </NavLink>
             <hr />
@@ -138,7 +123,7 @@ const DashboardSidebarContent = () => {
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaUsers className="inline mr-2" />
+              <MdOutlinePeople className="inline mr-2" />
               All Users
             </NavLink>
             <NavLink
@@ -147,7 +132,7 @@ const DashboardSidebarContent = () => {
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaUsers className="inline mr-2" />
+              <MdOutlinePersonAdd className="inline mr-2" />
               Add New User
             </NavLink>
           </>
@@ -162,17 +147,17 @@ const DashboardSidebarContent = () => {
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaPenAlt className="inline mr-2" />
+              <MdOutlineLibraryBooks className="inline mr-2" />
               Important Notices
             </NavLink>
-            <span className="font-bold text-cyan-700 ">Budget executions</span>
+            <span className="font-bold text-cyan-700 ">Budget Executions</span>
             <NavLink
               to="/dashboard/allocatedCodeWiseBudget"
               className={({ isActive }) =>
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaMoneyCheck className="inline mr-2" />
+              <MdOutlineAnalytics className="inline mr-2" />
               Allocated Codewise Budget
             </NavLink>
             <NavLink
@@ -181,11 +166,33 @@ const DashboardSidebarContent = () => {
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
               }
             >
-              <FaPenAlt className="inline mr-2" />
+              <MdAddShoppingCart className="inline mr-2" />
               Add Expense
             </NavLink>
           </>
         )}
+
+        {/* Profile Management */}
+        <span className="font-bold text-cyan-700 ">Profile management</span>
+        <NavLink
+          to="/dashboard/profile"
+          className={({ isActive }) =>
+            isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+          }
+        >
+          <MdPersonOutline className="inline mr-2" />
+          Profile
+        </NavLink>
+        <hr />
+
+        {/* Logout */}
+        <button
+          onClick={handleLogout}
+          className="text-red-600 text-base hover:underline flex items-center"
+        >
+          <MdOutlineLogout className="inline mr-2 w-5 h-5" />
+          Logout
+        </button>
       </nav>
     </div>
   );
