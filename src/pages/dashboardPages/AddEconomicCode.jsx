@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useAxiosPublic from "../../hooks/useAxios";
 
-const AddEconomicField = () => {
+const AddEconomicCode = () => {
   const [formData, setFormData] = useState({
     economicCode: "",
     codeName: "",
@@ -71,7 +71,7 @@ const AddEconomicField = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded shadow-md">
+    <div className="p-6">
       {/* Modal */}
       {modal.show && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-gray-800 z-50">
@@ -93,7 +93,7 @@ const AddEconomicField = () => {
         </div>
       )}
 
-      <h2 className="text-2xl font-bold mb-4">Add Economic Field</h2>
+      <h2 className="text-3xl font-bold mb-4">Add Economic Field</h2>
 
       <form onSubmit={handleAddEconomicField}>
         <div className="mb-4">
@@ -129,7 +129,7 @@ const AddEconomicField = () => {
             required
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        <button type="submit" className="btn btn-accent">
           Add Economic Field
         </button>
       </form>
@@ -137,4 +137,4 @@ const AddEconomicField = () => {
   );
 };
 
-export default AddEconomicField;
+export default AddEconomicCode;

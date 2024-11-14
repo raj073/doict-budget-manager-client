@@ -10,14 +10,15 @@ import Messages from "../pages/dashboardPages/Messages";
 import CreateMessage from "../pages/dashboardPages/CreateMessages";
 import MessageDetails from "../pages/dashboardPages/MessageDetails";
 import CodeWiseBudget from "../pages/dashboardPages/CodeWiseBudget";
-import AllUpazilas from "../pages/dashboardPages/AllUpazilas";
-import AddEconomicField from "../pages/dashboardPages/AddEconomicField";
 import BudgetDistribution from "../pages/dashboardPages/BudgetDistribution";
 import AddExpense from "../pages/dashboardPages/AddExpense";
 import AddUpazila from "../pages/dashboardPages/AddUpazila";
-import UpazilaAllList from "../pages/dashboardPages/UpazilaAllList";
 import UpazilaDetails from "../pages/dashboardPages/UpazilaDetails";
 import AllocatedCodewiseBudget from "../pages/dashboardPages/AllocatedCodewiseBudget";
+import CodewiseDistributedBudgetToAllUpazila from "../pages/dashboardPages/CodewiseDistributedBudgetToAllUpazila";
+import AllUpazilaList from "../pages/dashboardPages/AllUpazilaList";
+import AddEconomicCode from "../pages/dashboardPages/AddEconomicCode";
+import AdminDashboardHome from "../pages/dashboardPages/DashboardAdminHome";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,14 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
+        element: <AdminDashboardHome />,
+      },
+      {
+        path: "adminDashboardHome",
+        element: <AdminDashboardHome />,
+      },
+      {
+        path: "profile",
         element: <Profile />,
       },
       { path: "addUpazila", element: <AddUpazila /> },
@@ -73,11 +82,11 @@ const router = createBrowserRouter([
       },
       {
         path: "upazilaAllList",
-        element: <UpazilaAllList />,
+        element: <AllUpazilaList />,
       },
       {
         path: "allUpazilas",
-        element: <AllUpazilas />,
+        element: <CodewiseDistributedBudgetToAllUpazila />,
       },
       {
         path: "upazila/:fieldOfficeCode",
@@ -85,7 +94,7 @@ const router = createBrowserRouter([
       },
       {
         path: "addEconomicField",
-        element: <AddEconomicField />,
+        element: <AddEconomicCode />,
       },
       {
         path: "budgetDistribution",

@@ -32,6 +32,17 @@ const DashboardSidebarContent = () => {
 
       {/* Sidebar Links */}
       <nav className="flex flex-col gap-4">
+      <NavLink
+          to="/dashboard/adminDashboardHome"
+          className={({ isActive }) =>
+            isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+          }
+        >
+          <FaUser className="inline mr-2" />
+          Admin Home
+        </NavLink>
+
+        <hr />
         <span className="font-bold text-cyan-700 ">Profile management</span>
         <NavLink
           to="/dashboard/profile"
@@ -75,7 +86,7 @@ const DashboardSidebarContent = () => {
               }
             >
               <FaWallet className="inline mr-2" />
-              List of All Upazila
+              List of All Upazila Offices
             </NavLink>
             <hr />
             <span className="font-bold text-cyan-700 ">Budget Execution </span>
@@ -96,7 +107,7 @@ const DashboardSidebarContent = () => {
               }
             >
               <FaPlusSquare className="inline mr-2" />
-              Add Economic Field
+              Add New Economic Field
             </NavLink>
 
             <NavLink
@@ -106,7 +117,7 @@ const DashboardSidebarContent = () => {
               }
             >
               <FaMapMarkerAlt className="inline mr-2" />
-              Add Upazila
+              Add New Upazila Office
             </NavLink>
             <hr />
             <span className="font-bold text-cyan-700 ">Notice management </span>

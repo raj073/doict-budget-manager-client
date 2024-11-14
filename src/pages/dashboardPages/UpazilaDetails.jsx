@@ -56,10 +56,10 @@ const UpazilaDetails = () => {
   if (!details) return <p>Oops! Upazila details not found...</p>;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Budget Details</h1>
+    <div className="p-6">
+      <h2 className="text-3xl font-bold mb-4">Budget Distribution Details</h2>
 
-      <div className="mb-4">
+      <div className="mb-4 text-sm">
         <h2 className=" font-semibold text-gray-800">
           Upazila Name:{" "}
           <span className="font-bold">
@@ -68,7 +68,7 @@ const UpazilaDetails = () => {
         </h2>
       </div>
 
-      <div className="mb-4">
+      <div className="mb-4 text-sm">
         <h2 className="font-semibold text-gray-800">
           Field Office Code:{" "}
           <span className="font-bold">
