@@ -168,118 +168,121 @@ const BudgetDistribution = () => {
   };
 
   return (
-    <div className="p-12 bg-white rounded shadow-lg">
+    <>
       <div className="mb-5">
         <h2
           className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
-      bg-clip-text text-transparent mb-4 text-center"
+  bg-clip-text text-transparent mb-4 text-center"
         >
           Budget Distribution
         </h2>
         <hr className="border-cyan-400" />
       </div>
+      <div className="p-12 bg-white rounded shadow-lg">
+        <div className="flex justify-between items-center mb-10">
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept=".csv"
+            ref={fileInputRef}
+            className="file-input file-input-bordered file-input-primary w-full max-w-md"
+          />
+          <button onClick={handleDelete} className="btn btn-error text-white">
+            Delete
+          </button>
+          <button onClick={handleUpload} className="btn btn-active btn-primary">
+            Distribute Budget
+          </button>
+        </div>
+        {message && <p className="mt-4 font-bold text-lime-700">{message}</p>}
+        {error && <p className="mt-4 font-bold text-orange-600">{error}</p>}
 
-      <div className="flex justify-between items-center mb-10">
-        <input
-          type="file"
-          onChange={handleFileChange}
-          accept=".csv"
-          ref={fileInputRef}
-          className="file-input file-input-bordered file-input-primary w-full max-w-md"
-        />
-        <button onClick={handleDelete} className="btn btn-error text-white">
-          Delete
-        </button>
-        <button onClick={handleUpload} className="btn btn-active btn-primary">
+        <hr />
+
+        <form className="mb-6 mt-10">
+          <div className="mb-4">
+            <label className="block text-sm font-medium">Select Upazila</label>
+            <select
+              name="upazilaId"
+              value={formData.upazilaId}
+              onChange={handleUpazilaSelect}
+              className="w-full p-2 border rounded"
+              required
+            >
+              <option value="">Select Upazila</option>
+              {upazilas.map((upazila) => (
+                <option
+                  key={upazila.fieldOfficeCode}
+                  value={upazila.fieldOfficeCode}
+                >
+                  {upazila.upazilaOfficeName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium">Upazila ID</label>
+            <input
+              type="text"
+              name="upazilaId"
+              value={formData.upazilaId}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded"
+              required
+              disabled
+            />
+          </div>
+        </form>
+
+        <div className="overflow-x-auto mb-4">
+          <table className="table w-full border border-gray-300">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-4 text-left">Serial</th>
+                <th className="p-4 text-left">Economic Code</th>
+                <th className="p-4 text-left">Code Name</th>
+                <th className="p-4 text-left">Budget to Distribute</th>
+                <th className="p-4 text-left">Available Budget</th>
+              </tr>
+            </thead>
+            <tbody>
+              {budgets.map((budget, index) => (
+                <tr key={budget.economicCode}>
+                  <td className="p-4">{index + 1}</td>
+                  <td className="p-4">{budget.economicCode}</td>
+                  <td className="p-4">{budget.codeName}</td>
+                  <td className="p-4">
+                    <input
+                      type="number"
+                      value={distributions[budget.economicCode] || ""}
+                      onChange={(e) =>
+                        handleBudgetChange(e, budget.economicCode)
+                      }
+                      className="w-full p-2 border rounded"
+                      min="0"
+                    />
+                  </td>
+                  <td className="p-4">
+                    {budget.totalBudget - budget.distributedBudget}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="text-right font-bold mb-4">
+          Total Budget To Distribute: {totalDistributed}
+        </div>
+
+        <button
+          onClick={handleDistributeBudget}
+          className="bg-blue-500 text-white p-2 rounded"
+        >
           Distribute Budget
         </button>
       </div>
-      {message && <p className="mt-4 font-bold text-lime-700">{message}</p>}
-      {error && <p className="mt-4 font-bold text-orange-600">{error}</p>}
-
-      <hr />
-
-      <form className="mb-6 mt-10">
-        <div className="mb-4">
-          <label className="block text-sm font-medium">Select Upazila</label>
-          <select
-            name="upazilaId"
-            value={formData.upazilaId}
-            onChange={handleUpazilaSelect}
-            className="w-full p-2 border rounded"
-            required
-          >
-            <option value="">Select Upazila</option>
-            {upazilas.map((upazila) => (
-              <option
-                key={upazila.fieldOfficeCode}
-                value={upazila.fieldOfficeCode}
-              >
-                {upazila.upazilaOfficeName}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium">Upazila ID</label>
-          <input
-            type="text"
-            name="upazilaId"
-            value={formData.upazilaId}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-            required
-            disabled
-          />
-        </div>
-      </form>
-
-      <div className="overflow-x-auto mb-4">
-        <table className="table w-full border border-gray-300">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-4 text-left">Serial</th>
-              <th className="p-4 text-left">Economic Code</th>
-              <th className="p-4 text-left">Code Name</th>
-              <th className="p-4 text-left">Budget to Distribute</th>
-              <th className="p-4 text-left">Available Budget</th>
-            </tr>
-          </thead>
-          <tbody>
-            {budgets.map((budget, index) => (
-              <tr key={budget.economicCode}>
-                <td className="p-4">{index + 1}</td>
-                <td className="p-4">{budget.economicCode}</td>
-                <td className="p-4">{budget.codeName}</td>
-                <td className="p-4">
-                  <input
-                    type="number"
-                    value={distributions[budget.economicCode] || ""}
-                    onChange={(e) => handleBudgetChange(e, budget.economicCode)}
-                    className="w-full p-2 border rounded"
-                    min="0"
-                  />
-                </td>
-                <td className="p-4">
-                  {budget.totalBudget - budget.distributedBudget}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="text-right font-bold mb-4">
-        Total Budget To Distribute: {totalDistributed}
-      </div>
-
-      <button
-        onClick={handleDistributeBudget}
-        className="bg-blue-500 text-white p-2 rounded"
-      >
-        Distribute Budget
-      </button>
-    </div>
+    </>
   );
 };
 
