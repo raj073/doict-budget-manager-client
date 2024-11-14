@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
-import HomeLayout from "../layout/HomeLayout";
-import HomePage from "../pages/HomePage";
+import LoginHomeLayout from "../layout/LoginHomeLayout";
 import LoginPage from "../pages/LoginPage";
 import DashboardLayout from "../layout/DashboardLayout";
+import AdminDashboardHome from "../pages/dashboardPages/DashboardAdminHome";
 import RegisterPage from "../pages/RegisterPage";
 import AllUsers from "../pages/dashboardPages/AllUsers";
 import Profile from "../pages/dashboardPages/Profile";
@@ -18,19 +18,14 @@ import AllocatedCodewiseBudget from "../pages/dashboardPages/AllocatedCodewiseBu
 import CodewiseDistributedBudgetToAllUpazila from "../pages/dashboardPages/CodewiseDistributedBudgetToAllUpazila";
 import AllUpazilaList from "../pages/dashboardPages/AllUpazilaList";
 import AddEconomicCode from "../pages/dashboardPages/AddEconomicCode";
-import AdminDashboardHome from "../pages/dashboardPages/DashboardAdminHome";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomeLayout />,
+    element: <LoginHomeLayout />,
     children: [
       {
-        path: "/",
-        element: <HomePage />,
-      },
-      {
-        path: "/login",
+        path: "",
         element: <LoginPage />,
       },
     ],

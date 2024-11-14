@@ -181,7 +181,7 @@ const DashboardSidebarContent = () => {
           }
         >
           <MdPersonOutline className="inline mr-2" />
-          Profile
+          {user?.isAdmin ? "Admin" : "User"} Profile
         </NavLink>
         <hr />
 
