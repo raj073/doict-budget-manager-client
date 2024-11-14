@@ -57,7 +57,15 @@ const CreateMessage = () => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-            <h2 className="text-xl font-bold mb-4">Create Message</h2>
+            <div className="mb-5">
+              <h2
+                className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
+      bg-clip-text text-transparent mb-5 text-center"
+              >
+                Create Message
+              </h2>
+              <hr className="border-cyan-400 mt-3" />
+            </div>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Title

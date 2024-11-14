@@ -36,7 +36,10 @@ const AllUsers = () => {
   // Block a user
   const handleBlock = async () => {
     try {
-      const updatedUser = { ...selectedUser, isBlocked: !selectedUser?.isBlocked };
+      const updatedUser = {
+        ...selectedUser,
+        isBlocked: !selectedUser?.isBlocked,
+      };
 
       await axiosInstance.put(`/user/${selectedUser._id}`, updatedUser); // Use axiosInstance
       fetchUsers(); // Reload users after update
@@ -94,7 +97,7 @@ const AllUsers = () => {
     setSelectedUser(user);
     setIsBlockModalOpen(true);
   };
-  
+
   const handleClickedSetUserOrAdminRole = (user) => {
     setSelectedUser(user);
     setIsAdminToggleModalOpen(true);
@@ -102,7 +105,15 @@ const AllUsers = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Users List</h2>
+      <div className="mb-5">
+        <h2
+          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
+      bg-clip-text text-transparent mb-4 text-center"
+        >
+          All Users List
+        </h2>
+        <hr className="border-cyan-400" />
+      </div>
       <table className="min-w-full bg-white border">
         <thead>
           <tr className="bg-gray-200 text-gray-600 text-left">

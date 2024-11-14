@@ -6,7 +6,7 @@
 // const AllocatedCodewiseBudget = () => {
 //   const [details, setDetails] = useState(null);
 //   const axiosInstance = useAxiosPublic();
-  
+
 //   const { user } = useContext(AuthContext);
 
 //   useEffect(() => {
@@ -71,7 +71,6 @@
 
 // export default AllocatedCodewiseBudget;
 
-
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxios";
@@ -109,15 +108,27 @@ const AllocatedCodewiseBudget = () => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">
-        Details for {details?.upazilaName || "Unknown Upazila"}
-      </h2>
+      <div className="mb-5">
+        <h2
+          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
+      bg-clip-text text-transparent mb-4 text-center"
+        >
+          Details for {details?.upazilaName || "Unknown Upazila"}
+        </h2>
+        <hr className="border-cyan-400" />
+      </div>
       <table className="table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
         <thead className="bg-gradient-to-r from-teal-500 to-blue-600 text-white">
           <tr>
-            <th className="p-4 text-left text-lg font-semibold">Economic Code</th>
-            <th className="p-4 text-left text-lg font-semibold">Allocated Budget</th>
-            <th className="p-4 text-left text-lg font-semibold">Budget Demand</th>
+            <th className="p-4 text-left text-lg font-semibold">
+              Economic Code
+            </th>
+            <th className="p-4 text-left text-lg font-semibold">
+              Allocated Budget
+            </th>
+            <th className="p-4 text-left text-lg font-semibold">
+              Budget Demand
+            </th>
           </tr>
         </thead>
         <tbody>

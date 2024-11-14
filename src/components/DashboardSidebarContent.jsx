@@ -32,7 +32,7 @@ const DashboardSidebarContent = () => {
 
       {/* Sidebar Links */}
       <nav className="flex flex-col gap-4">
-        <span className="font-bold text-cyan-700 ">Profile management</span>
+        <span className="font-bold text-cyan-700">Profile management</span>
         <NavLink
           to="/dashboard/profile"
           className={({ isActive }) =>
