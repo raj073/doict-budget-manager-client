@@ -152,19 +152,17 @@ const AllUpazilas = () => {
 
   return (
     <div className="p-6">
-      <div className="mb-5">
+      <div className="mb-10">
         <h2
           className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
       bg-clip-text text-transparent mb-4 text-center"
         >
-          All Upazilas
+          All Upazilas Budget Distribution
         </h2>
         <hr className="border-cyan-400" />
       </div>
-      <h2 className="text-3xl font-bold text-center mb-6">
-        All Upazilas Budget Distribution
-      </h2>
-      <div className="overflow-x-auto">
+
+      <div className="overflow-x-auto mt-5">
         <table className="table table-zebra w-full border rounded-lg shadow-lg">
           <thead>
             <tr>
