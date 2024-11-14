@@ -20,13 +20,7 @@ const RegisterPage = () => {
     setError(null); // Reset any previous errors
 
     try {
-      await registerWithEmail(
-        email,
-        password,
-        name,
-        phone,
-        upazilaCode
-      );
+      await registerWithEmail(email, password, name, phone, upazilaCode);
     } catch (err) {
       setError(err.message); // Capture and display error message
       console.error(err.message);
@@ -38,7 +32,7 @@ const RegisterPage = () => {
       <Helmet>
         <title>Budget Manager | Register</title>
       </Helmet>
-      <div className="hero min-h-screen bg-white font-semibold">
+      <div className="hero font-semibold">
         <div className="card w-full max-w-xl">
           <form className="card-body" onSubmit={handleEmailRegister}>
             <h1 className="text-4xl font-extrabold text-center mb-4">

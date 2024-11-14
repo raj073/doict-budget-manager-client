@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxios";
 
-const UpazilaListAll = () => {
+const AllUpazilaList = () => {
   const [upazilas, setUpazilas] = useState([]);
   const [budgets, setBudgets] = useState([]);
   const axiosInstance = useAxiosPublic();
@@ -43,12 +43,12 @@ const UpazilaListAll = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold text-center mb-6">All Upazilas</h2>
+      <h2 className="text-3xl font-bold mb-4">All Upazila Offices</h2>
       <div className="overflow-x-auto">
         <table className="table w-full border border-gray-300">
           <thead>
             <tr>
-              <th>#</th>
+              <th>Serial</th>
               <th>Field Office Code</th>
               <th>Upazila Office Name</th>
               <th>Total Distributed Budget</th>
@@ -96,4 +96,4 @@ const UpazilaListAll = () => {
   );
 };
 
-export default UpazilaListAll;
+export default AllUpazilaList;

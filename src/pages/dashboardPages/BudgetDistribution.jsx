@@ -168,8 +168,8 @@ const BudgetDistribution = () => {
   };
 
   return (
-    <div className="p-12 bg-white rounded shadow-lg">
-      <h2 className="text-2xl font-bold mb-4">Budget Distribution</h2>
+    <div className="p-6">
+      <h2 className="text-3xl font-bold mb-4">Budget Distribution</h2>
 
       <div className="flex justify-between items-center mb-10">
         <input
@@ -265,10 +265,7 @@ const BudgetDistribution = () => {
         Total Budget To Distribute: {totalDistributed}
       </div>
 
-      <button
-        onClick={handleDistributeBudget}
-        className="bg-blue-500 text-white p-2 rounded"
-      >
+      <button onClick={handleDistributeBudget} className="btn btn-accent">
         Distribute Budget
       </button>
     </div>
