@@ -93,7 +93,15 @@ const AddEconomicField = () => {
         </div>
       )}
 
-      <h2 className="text-2xl font-bold mb-4">Add Economic Field</h2>
+      <div className="mb-5">
+        <h2
+          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
+      bg-clip-text text-transparent mb-4 text-center"
+        >
+          Add Economic Field
+        </h2>
+        <hr className="border-cyan-400" />
+      </div>
 
       <form onSubmit={handleAddEconomicField}>
         <div className="mb-4">

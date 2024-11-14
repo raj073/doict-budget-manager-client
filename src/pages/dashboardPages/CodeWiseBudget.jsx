@@ -53,7 +53,15 @@ const CodeWiseBudget = () => {
         </div>
       )}
 
-      <h2 className="text-3xl font-bold mb-4 text-center">Code-wise Budget</h2>
+      <div className="mb-5">
+        <h2
+          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
+      bg-clip-text text-transparent mb-4 text-center"
+        >
+          Code-wise Budget
+        </h2>
+        <hr className="border-cyan-400" />
+      </div>
 
       <div className="overflow-x-auto">
         <table className="table w-full border border-gray-300">

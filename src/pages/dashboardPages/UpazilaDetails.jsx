@@ -4,14 +4,16 @@ import useAxiosPublic from "../../hooks/useAxios";
 
 const UpazilaDetails = () => {
   const { fieldOfficeCode } = useParams();
-  console.log({fieldOfficeCode});
+  console.log({ fieldOfficeCode });
   const [details, setDetails] = useState(null);
   const axiosInstance = useAxiosPublic();
 
   useEffect(() => {
     const fetchUpazilaDetails = async () => {
       try {
-        const response = await axiosInstance.get(`/upazilaCodewiseBudget/${fieldOfficeCode}`);
+        const response = await axiosInstance.get(
+          `/upazilaCodewiseBudget/${fieldOfficeCode}`
+        );
         setDetails(response.data);
         console.log(details);
       } catch (error) {
@@ -26,7 +28,15 @@ const UpazilaDetails = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center">Details for {details?.upazilaName || "Unknown Upazila"}</h2>
+      <div className="mb-5">
+        <h2
+          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
+      bg-clip-text text-transparent mb-4 text-center"
+        >
+          Details for {details?.upazilaName || "Unknown Upazila"}
+        </h2>
+        <hr className="border-cyan-400" />
+      </div>
       <table className="table w-full border border-gray-300">
         <thead className="bg-gradient-to-r from-teal-500 to-blue-600 text-white">
           <tr>
@@ -36,8 +46,15 @@ const UpazilaDetails = () => {
         </thead>
         <tbody>
           {(details.allocations || []).map((allocation, index) => (
-            <tr key={index} className={`${index % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100`}>
-              <td className="p-4 text-md">{allocation?.economicCode || "N/A"}</td>
+            <tr
+              key={index}
+              className={`${
+                index % 2 === 0 ? "bg-white" : "bg-gray-50"
+              } hover:bg-gray-100`}
+            >
+              <td className="p-4 text-md">
+                {allocation?.economicCode || "N/A"}
+              </td>
               <td className="p-4 text-md">{allocation?.amount || 0}</td>
             </tr>
           ))}

@@ -28,7 +28,15 @@ const BudgetDistribution = () => {
 
   return (
     <div className="p-6 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Budget Distribution</h2>
+      <div className="mb-5">
+        <h2
+          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
+      bg-clip-text text-transparent mb-4 text-center"
+        >
+          Budget Distribution
+        </h2>
+        <hr className="border-cyan-400" />
+      </div>
       <form onSubmit={handleDistributeBudget}>
         <div className="mb-4">
           <label className="block text-sm font-medium">Upazila ID</label>

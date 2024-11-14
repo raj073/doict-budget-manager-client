@@ -23,6 +23,9 @@ const AllUpazilas = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const axiosInstance = useAxiosPublic();
+  const [upazilas, setUpazilas] = useState([]);
+  const [budgets, setBudgets] = useState([]);
+  const [upazilaBudgets, setUpazilaBudgets] = useState([]);
 
   const handleExportRows = (rows) => {
     const rowData = rows.map((row) => row.original);
@@ -93,9 +96,6 @@ const AllUpazilas = () => {
     ],
     []
   );
-  const [upazilas, setUpazilas] = useState([]);
-  const [budgets, setBudgets] = useState([]);
-  const [upazilaBudgets, setUpazilaBudgets] = useState([]);
 
   useEffect(() => {
     const fetchUpazilas = async () => {
@@ -152,9 +152,15 @@ const AllUpazilas = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-semibold text-center mb-6 text-primary">
-        All Upazilas
-      </h2>
+      <div className="mb-5">
+        <h2
+          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
+      bg-clip-text text-transparent mb-4 text-center"
+        >
+          All Upazilas
+        </h2>
+        <hr className="border-cyan-400" />
+      </div>
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full border rounded-lg shadow-lg">
           <thead>
