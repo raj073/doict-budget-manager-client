@@ -26,7 +26,10 @@ const Profile = () => {
       };
 
       // Make API call to update user information
-      const response = await axiosInstance.put(`/user/${user._id}`, updatedUser); // Use axiosInstance for the request
+      const response = await axiosInstance.put(
+        `/user/${user._id}`,
+        updatedUser
+      ); // Use axiosInstance for the request
 
       if (!response.status === 200) {
         throw new Error("Failed to update user information");
@@ -52,7 +55,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg relative">
+    <div className="p-6 relative">
       <div className="flex flex-col items-center">
         <img
           src={user?.photoUrl}
@@ -77,8 +80,24 @@ const Profile = () => {
         <hr />
         <ul className="mt-3 text-gray-600 space-y-2">
           <li>
-            <strong>Role:</strong> {user?.isAdmin ? "Admin" : "User"}
+            <strong>Role:</strong>{" "}
+            <span className="text-red-600">
+              {user?.isAdmin ? "Admin" : "User"}
+            </span>{" "}
           </li>
+          <hr className="py-3" />
+          Basic Data
+          <li>
+            <strong>Upazila Name:</strong> {user?.displayName || "N/A"}
+          </li>
+          <li>
+            <strong>Upazila Code:</strong> {user?.upazilaCode || "N/A"}
+          </li>
+          <li>
+            <strong>Address:</strong> {user?.address || "N/A"}
+          </li>
+          <hr className="py-3" />
+          Contacts
           <li>
             <strong>Email:</strong> {user?.email}
           </li>
@@ -89,8 +108,13 @@ const Profile = () => {
             <strong>Address:</strong> {user?.address || "N/A"}
           </li>
           <hr />
-          <li>
+          <li className="text-xs">
             <strong>Unique ID:</strong> {user?.uid}
+          </li>
+          <hr />
+          <li className="text-red-700">
+            <strong>Want to change password? </strong>{" "}
+            <button className="btn">Change password</button>
           </li>
         </ul>
       </div>

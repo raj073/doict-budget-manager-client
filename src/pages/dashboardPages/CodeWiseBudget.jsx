@@ -1,34 +1,24 @@
-import { useEffect, useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxios";
 
 const CodeWiseBudget = () => {
   const [budgets, setBudgets] = useState([]);
-  const [modal, setModal] = useState({ show: false, message: "", type: "" });
+  const [distributions, setDistributions] = useState({});
   const axiosInstance = useAxiosPublic();
 
   useEffect(() => {
-    const fetchBudgets = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axiosInstance.get("/economicCodes");
-        setBudgets(response.data);
+        const budgetsResponse = await axiosInstance.get("/economicCodes");
+        setBudgets(budgetsResponse.data);
       } catch (error) {
-        console.error("Error fetching budgets:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchBudgets();
-  }, []);
-
-  const showModal = (message, type) => {
-    setModal({ show: true, message, type });
-    setTimeout(() => {
-      setModal({ ...modal, show: false });
-    }, 3000);
-  };
-
-  const closeModal = () => {
-    setModal({ ...modal, show: false });
-  };
+    fetchData();
+  }, [axiosInstance, distributions]);
 
   return (
     <div className="p-6">
@@ -62,34 +52,29 @@ const CodeWiseBudget = () => {
         </h2>
         <hr className="border-cyan-400" />
       </div>
+    <div className="p-12 bg-white rounded shadow-lg">
+      <h2 className="text-2xl font-bold mb-4">Code Wise Budget</h2>
 
       <div className="overflow-x-auto">
         <table className="table w-full border border-gray-300">
           <thead className="bg-gray-100">
             <tr>
-              <th className="p-4 text-left text-lg">Serial</th>
-              <th className="p-4 text-left text-lg">Economic Code</th>
-              <th className="p-4 text-left text-lg">Code Name</th>
-              <th className="p-4 text-left text-lg">Total Budget</th>
-              <th className="p-4 text-left text-lg">Distributed Budget</th>
-              <th className="p-4 text-left text-lg">Remaining Budget</th>
+              <th className="p-4 text-left">Serial</th>
+              <th className="p-4 text-left">Economic Code</th>
+              <th className="p-4 text-left">Code Name</th>
+              <th className="p-4 text-left">Distributed Budget</th>
+              <th className="p-4 text-left">Remaining Budget</th>
             </tr>
           </thead>
           <tbody>
-            {budgets?.map((budget, index) => (
-              <tr
-                key={budget?.economicCode}
-                className={`${
-                  index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                } hover:bg-gray-100`}
-              >
-                <td className="p-4 text-md">{index + 1}</td>
-                <td className="p-4 text-md">{budget?.economicCode}</td>
-                <td className="p-4 text-md">{budget?.codeName}</td>
-                <td className="p-4 text-md">{budget?.totalBudget}</td>
-                <td className="p-4 text-md">{budget?.distributedBudget}</td>
-                <td className="p-4 text-md">
-                  {budget?.totalBudget - budget?.distributedBudget}
+            {budgets.map((budget, index) => (
+              <tr key={budget.economicCode}>
+                <td className="p-4">{index + 1}</td>
+                <td className="p-4">{budget.economicCode}</td>
+                <td className="p-4">{budget.codeName}</td>
+                <td className="p-4">{budget.distributedBudget}</td>
+                <td className="p-4">
+                  {budget.totalBudget - budget.distributedBudget}
                 </td>
               </tr>
             ))}
