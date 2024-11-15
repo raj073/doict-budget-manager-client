@@ -1,9 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider";
 import LoginHomeLayout from "../layout/LoginHomeLayout";
-import LoginPage from "../pages/LoginPage";
 import DashboardLayout from "../layout/DashboardLayout";
-import AdminDashboardHome from "../pages/dashboardPages/DashboardAdminHome";
+import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
+import AdminDashboardHome from "../pages/dashboardPages/DashboardAdminHome";
+import UserDashboardHome from "../pages/dashboardPages/DashboardUserHome";
 import AllUsers from "../pages/dashboardPages/AllUsers";
 import Profile from "../pages/dashboardPages/Profile";
 import Messages from "../pages/dashboardPages/Messages";
@@ -18,6 +21,12 @@ import AllocatedCodewiseBudget from "../pages/dashboardPages/AllocatedCodewiseBu
 import CodewiseDistributedBudgetToAllUpazila from "../pages/dashboardPages/CodewiseDistributedBudgetToAllUpazila";
 import AllUpazilaList from "../pages/dashboardPages/AllUpazilaList";
 import AddEconomicCode from "../pages/dashboardPages/AddEconomicCode";
+
+// Component to conditionally render the appropriate dashboard based on user role
+const DashboardHome = () => {
+  const { user } = useContext(AuthContext);
+  return user?.isAdmin ? <AdminDashboardHome /> : <UserDashboardHome />;
+};
 
 const router = createBrowserRouter([
   {
@@ -36,17 +45,24 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <AdminDashboardHome />,
+        element: <DashboardHome />, // Conditional dashboard based on user role
       },
       {
         path: "adminDashboardHome",
         element: <AdminDashboardHome />,
       },
       {
+        path: "userDashboardHome",
+        element: <UserDashboardHome />,
+      },
+      {
         path: "profile",
         element: <Profile />,
       },
-      { path: "addUpazila", element: <AddUpazila /> },
+      {
+        path: "addUpazila",
+        element: <AddUpazila />,
+      },
       {
         path: "allUsers",
         element: <AllUsers />,
@@ -54,10 +70,6 @@ const router = createBrowserRouter([
       {
         path: "addNewUser",
         element: <RegisterPage />,
-      },
-      {
-        path: "profile",
-        element: <Profile />,
       },
       {
         path: "messages",
