@@ -27,8 +27,15 @@ const Messages = () => {
 
   return (
     <div className="p-6 bg-white rounded-md shadow-lg">
-      <h2 className="text-2xl font-bold mb-4">Messages</h2>
-      <hr />
+      <div className="mb-5">
+        <h2
+          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
+      bg-clip-text text-transparent mb-4 text-center"
+        >
+          Messages
+        </h2>
+        <hr className="border-cyan-400" />
+      </div>
       <table className="min-w-full bg-white">
         <thead>
           <tr>

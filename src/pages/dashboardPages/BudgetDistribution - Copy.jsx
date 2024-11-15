@@ -2,10 +2,11 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import useAxiosPublic from "../../hooks/useAxios";
 
-const AddExpense = () => {
+const BudgetDistribution = () => {
   const [formData, setFormData] = useState({
+    upazilaId: "",
     economicCode: "",
-    expenseAmount: "",
+    distributedBudget: "",
   });
 
   const handleInputChange = (e) => {
@@ -13,15 +14,15 @@ const AddExpense = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
   const axiosInstance = useAxiosPublic();
-  const handleExpenseSubmit = async (e) => {
+  const handleDistributeBudget = async (e) => {
     e.preventDefault();
     try {
-      await axiosInstance.post("/expenses", formData);
-      toast.success("Expense added successfully!");
-      setFormData({ economicCode: "", expenseAmount: "" });
+      await axiosInstance.post("/budgetDistribution", formData);
+      toast.success("Budget distributed successfully!");
+      setFormData({ upazilaId: "", economicCode: "", distributedBudget: "" });
     } catch (error) {
-      console.error("Error adding expense:", error);
-      toast.error("Failed to add expense. Please try again.");
+      console.error("Error distributing budget:", error);
+      toast.error("Failed to distribute budget. Please try again.");
     }
   };
 
@@ -32,11 +33,22 @@ const AddExpense = () => {
           className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
       bg-clip-text text-transparent mb-4 text-center"
         >
-          Add Expense
+          Budget Distribution
         </h2>
         <hr className="border-cyan-400" />
       </div>
-      <form onSubmit={handleExpenseSubmit}>
+      <form onSubmit={handleDistributeBudget}>
+        <div className="mb-4">
+          <label className="block text-sm font-medium">Upazila ID</label>
+          <input
+            type="text"
+            name="upazilaId"
+            value={formData.upazilaId}
+            onChange={handleInputChange}
+            className="w-full p-2 border rounded"
+            required
+          />
+        </div>
         <div className="mb-4">
           <label className="block text-sm font-medium">Economic Code</label>
           <input
@@ -49,22 +61,25 @@ const AddExpense = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium">Expense Amount</label>
+          <label className="block text-sm font-medium">
+            Distributed Budget
+          </label>
           <input
             type="number"
-            name="expenseAmount"
-            value={formData.expenseAmount}
+            name="distributedBudget"
+            value={formData.distributedBudget}
             onChange={handleInputChange}
             className="w-full p-2 border rounded"
             required
           />
         </div>
         <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-          Add Expense
+          Distribute Budget
         </button>
       </form>
     </div>
   );
 };
 
-export default AddExpense;
+export default BudgetDistribution;
+
