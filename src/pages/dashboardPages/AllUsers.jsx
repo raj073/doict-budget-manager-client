@@ -40,10 +40,7 @@ const AllUsers = () => {
         ...selectedUser,
         isBlocked: !selectedUser?.isBlocked,
       };
-      const updatedUser = {
-        ...selectedUser,
-        isBlocked: !selectedUser?.isBlocked,
-      };
+      
 
       await axiosInstance.put(`/user/${selectedUser._id}`, updatedUser); // Use axiosInstance
       fetchUsers(); // Reload users after update
