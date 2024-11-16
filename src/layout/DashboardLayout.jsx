@@ -1,10 +1,14 @@
 import { Outlet } from "react-router-dom";
 import DashboardSidebarContent from "../components/DashboardSidebarContent";
 import DashboardNavbar from "../components/DashboardNavbar";
+import { Helmet } from "react-helmet-async";
 
 const DashboardLayout = () => {
   return (
     <>
+      <Helmet>
+        <title>Budget Manager | Dashboard</title>
+      </Helmet>
       <div className="font-popppins">
         <div className="shadow-md bg-slate-100">
           <DashboardNavbar />

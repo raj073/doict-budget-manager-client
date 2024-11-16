@@ -29,9 +29,6 @@ const LoginPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Budget Manager | Login</title>
-      </Helmet>
       <div className="flex items-center justify-center min-h-screen font-sans p-2">
         <div className="w-full max-w-xl">
           <div className="mb-6">
