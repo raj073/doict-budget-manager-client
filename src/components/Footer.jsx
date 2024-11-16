@@ -39,7 +39,7 @@ const Footer = () => {
               className="flex items-center space-x-1 text-gray-600 hover:text-black transition-colors duration-200"
             >
               <FaGithub size={18} />
-              <span className="text-xs">Rajanikanta Das</span>
+              <span className="text-xs">Rajani kanta Das</span>
             </a>
           </div>
         </div>
@@ -50,7 +50,7 @@ const Footer = () => {
           <p className="text-xs">ICT Tower, Agargaon, Dhaka-1207</p>
         </div>
       </footer>
-      <div className="text-xs text-gray-700 py-2 px-4 w-full lg:w-3/4 mx-auto text-left">
+      <div className="text-xs text-gray-700 py-2 px-4 w-full lg:w-3/4 mx-auto text-center">
         &copy; {new Date().getFullYear()} Department of ICT. All rights
         reserved.
       </div>
