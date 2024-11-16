@@ -142,6 +142,16 @@ const DashboardSidebarContent = () => {
         {!user?.isAdmin && (
           <>
             <NavLink
+              to="/dashboard/userDashboardHome"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <MdDashboard className="inline mr-2" />
+              User Home
+            </NavLink>
+            <hr />
+            <NavLink
               to="/dashboard/messages"
               className={({ isActive }) =>
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"

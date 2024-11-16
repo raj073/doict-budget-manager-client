@@ -17,6 +17,7 @@ const UpazilaDetails = () => {
         const response = await axiosInstance.get(
           `/upazilaCodewiseBudget/${fieldOfficeCode}`
         );
+        
         setDetails(response.data);
       } catch (error) {
         console.error("Error fetching upazila details:", error);

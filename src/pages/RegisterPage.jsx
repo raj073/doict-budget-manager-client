@@ -29,15 +29,18 @@ const RegisterPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Budget Manager | Register</title>
-      </Helmet>
       <div className="hero font-semibold">
         <div className="card w-full max-w-xl">
           <form className="card-body" onSubmit={handleEmailRegister}>
-            <h1 className="text-4xl font-extrabold text-center mb-4">
-              Add New User!
-            </h1>
+            <div className="mb-5">
+              <h2
+                className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
+      bg-clip-text text-transparent mb-4 text-center"
+              >
+                Add New User !
+              </h2>
+              <hr className="border-cyan-400" />
+            </div>
 
             {/* Display error message */}
             {error && <p className="text-red-500 text-center">{error}</p>}

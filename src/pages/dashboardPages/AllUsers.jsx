@@ -40,6 +40,7 @@ const AllUsers = () => {
         ...selectedUser,
         isBlocked: !selectedUser?.isBlocked,
       };
+      
 
       await axiosInstance.put(`/user/${selectedUser._id}`, updatedUser); // Use axiosInstance
       fetchUsers(); // Reload users after update
@@ -97,6 +98,7 @@ const AllUsers = () => {
     setSelectedUser(user);
     setIsBlockModalOpen(true);
   };
+
 
   const handleClickedSetUserOrAdminRole = (user) => {
     setSelectedUser(user);
