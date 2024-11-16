@@ -32,7 +32,7 @@ const RegisterPage = () => {
       <Helmet>
         <title>Budget Manager | Register</title>
       </Helmet>
-      <div className="hero min-h-screen bg-white font-semibold">
+      <div className="hero font-semibold">
         <div className="card w-full max-w-xl">
           <form className="card-body" onSubmit={handleEmailRegister}>
             <div className="mb-5">

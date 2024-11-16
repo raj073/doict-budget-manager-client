@@ -1,35 +1,40 @@
 import { createBrowserRouter } from "react-router-dom";
-import HomeLayout from "../layout/HomeLayout";
-import HomePage from "../pages/HomePage";
-import LoginPage from "../pages/LoginPage";
+import { useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider";
+import LoginHomeLayout from "../layout/LoginHomeLayout";
 import DashboardLayout from "../layout/DashboardLayout";
+import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
+import AdminDashboardHome from "../pages/dashboardPages/DashboardAdminHome";
+import UserDashboardHome from "../pages/dashboardPages/DashboardUserHome";
 import AllUsers from "../pages/dashboardPages/AllUsers";
 import Profile from "../pages/dashboardPages/Profile";
 import Messages from "../pages/dashboardPages/Messages";
 import CreateMessage from "../pages/dashboardPages/CreateMessages";
 import MessageDetails from "../pages/dashboardPages/MessageDetails";
 import CodeWiseBudget from "../pages/dashboardPages/CodeWiseBudget";
-import AllUpazilas from "../pages/dashboardPages/AllUpazilas";
-import AddEconomicField from "../pages/dashboardPages/AddEconomicField";
 import BudgetDistribution from "../pages/dashboardPages/BudgetDistribution";
 import AddExpense from "../pages/dashboardPages/AddExpense";
 import AddUpazila from "../pages/dashboardPages/AddUpazila";
-import UpazilaAllList from "../pages/dashboardPages/UpazilaAllList";
 import UpazilaDetails from "../pages/dashboardPages/UpazilaDetails";
 import AllocatedCodewiseBudget from "../pages/dashboardPages/AllocatedCodewiseBudget";
+import CodewiseDistributedBudgetToAllUpazila from "../pages/dashboardPages/CodewiseDistributedBudgetToAllUpazila";
+import AllUpazilaList from "../pages/dashboardPages/AllUpazilaList";
+import AddEconomicCode from "../pages/dashboardPages/AddEconomicCode";
+
+// Component to conditionally render the appropriate dashboard based on user role
+const DashboardHome = () => {
+  const { user } = useContext(AuthContext);
+  return user?.isAdmin ? <AdminDashboardHome /> : <UserDashboardHome />;
+};
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomeLayout />,
+    element: <LoginHomeLayout />,
     children: [
       {
-        path: "/",
-        element: <HomePage />,
-      },
-      {
-        path: "/login",
+        path: "",
         element: <LoginPage />,
       },
     ],
@@ -40,9 +45,24 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
+        element: <DashboardHome />, // Conditional dashboard based on user role
+      },
+      {
+        path: "adminDashboardHome",
+        element: <AdminDashboardHome />,
+      },
+      {
+        path: "userDashboardHome",
+        element: <UserDashboardHome />,
+      },
+      {
+        path: "profile",
         element: <Profile />,
       },
-      { path: "addUpazila", element: <AddUpazila /> },
+      {
+        path: "addUpazila",
+        element: <AddUpazila />,
+      },
       {
         path: "allUsers",
         element: <AllUsers />,
@@ -50,10 +70,6 @@ const router = createBrowserRouter([
       {
         path: "addNewUser",
         element: <RegisterPage />,
-      },
-      {
-        path: "profile",
-        element: <Profile />,
       },
       {
         path: "messages",
@@ -73,11 +89,11 @@ const router = createBrowserRouter([
       },
       {
         path: "upazilaAllList",
-        element: <UpazilaAllList />,
+        element: <AllUpazilaList />,
       },
       {
         path: "allUpazilas",
-        element: <AllUpazilas />,
+        element: <CodewiseDistributedBudgetToAllUpazila />,
       },
       {
         path: "upazila/:fieldOfficeCode",
@@ -85,7 +101,7 @@ const router = createBrowserRouter([
       },
       {
         path: "addEconomicField",
-        element: <AddEconomicField />,
+        element: <AddEconomicCode />,
       },
       {
         path: "budgetDistribution",

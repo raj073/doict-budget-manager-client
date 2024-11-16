@@ -139,17 +139,9 @@ const AddUpazila = () => {
   };
 
   return (
-    <div>
-      <div className="mb-10">
-        <h2
-          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
-      bg-clip-text text-transparent mb-4 text-center"
-        >
-          Add Upazila
-        </h2>
-        <hr className="border-cyan-400" />
-      </div>
-      <div className="p-6 bg-white rounded-tl-xl rounded-br-xl shadow-md">
+    <div className="p-6">
+      <h2 className="text-3xl font-bold mb-4">Add Upazila</h2>
+      <div className="py-6">
         <form onSubmit={handleAddUpazila}>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">
@@ -179,7 +171,7 @@ const AddUpazila = () => {
             />
           </div>
 
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+          <button type="submit" className="btn btn-accent">
             Add Upazila
           </button>
         </form>

@@ -168,34 +168,26 @@ const BudgetDistribution = () => {
   };
 
   return (
-    <>
-      <div className="mb-5">
-        <h2
-          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
-  bg-clip-text text-transparent mb-4 text-center"
-        >
-          Budget Distribution
-        </h2>
-        <hr className="border-cyan-400" />
+    <div className="p-6">
+      <h2 className="text-3xl font-bold mb-4">Budget Distribution</h2>
+
+      <div className="flex justify-between items-center mb-10">
+        <input
+          type="file"
+          onChange={handleFileChange}
+          accept=".csv"
+          ref={fileInputRef}
+          className="file-input file-input-bordered file-input-primary w-full max-w-md"
+        />
+        <button onClick={handleDelete} className="btn btn-error text-white">
+          Delete
+        </button>
+        <button onClick={handleUpload} className="btn btn-active btn-primary">
+          Distribute Budget
+        </button>
       </div>
-      <div className="p-12 bg-white rounded shadow-lg">
-        <div className="flex justify-between items-center mb-10">
-          <input
-            type="file"
-            onChange={handleFileChange}
-            accept=".csv"
-            ref={fileInputRef}
-            className="file-input file-input-bordered file-input-primary w-full max-w-md"
-          />
-          <button onClick={handleDelete} className="btn btn-error text-white">
-            Delete
-          </button>
-          <button onClick={handleUpload} className="btn btn-active btn-primary">
-            Distribute Budget
-          </button>
-        </div>
-        {message && <p className="mt-4 font-bold text-lime-700">{message}</p>}
-        {error && <p className="mt-4 font-bold text-orange-600">{error}</p>}
+      {message && <p className="mt-4 font-bold text-lime-700">{message}</p>}
+      {error && <p className="mt-4 font-bold text-orange-600">{error}</p>}
 
         <hr />
 
@@ -275,14 +267,10 @@ const BudgetDistribution = () => {
           Total Budget To Distribute: {totalDistributed}
         </div>
 
-        <button
-          onClick={handleDistributeBudget}
-          className="bg-blue-500 text-white p-2 rounded"
-        >
-          Distribute Budget
-        </button>
-      </div>
-    </>
+      <button onClick={handleDistributeBudget} className="btn btn-accent">
+        Distribute Budget
+      </button>
+    </div>
   );
 };
 

@@ -267,3 +267,4 @@ const AllUpazilas = () => {
 };
 
 export default AllUpazilas;
+

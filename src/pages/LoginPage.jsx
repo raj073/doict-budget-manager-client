@@ -4,23 +4,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Helmet } from "react-helmet-async";
 
+import TitleLogo from "../components/shared/TitleLogo";
+
 const LoginPage = () => {
   const { loginWithEmail } = useContext(AuthContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState(null); // State to handle error messages
+  const [error, setError] = useState(null);
 
   const handleEmailLogin = async (e) => {
     e.preventDefault();
-    setError(null); // Reset any previous errors
+    setError(null);
 
     try {
-      await loginWithEmail(email, password); // Try to log in
-      navigate("/dashboard"); // If successful, navigate to dashboard
+      await loginWithEmail(email, password);
+      navigate("/dashboard");
     } catch (err) {
-      setError(err.message); // Set error message if login fails
+      setError("Invalid email or password. Please try again.");
       console.error(err.message);
     }
   };
@@ -28,64 +30,69 @@ const LoginPage = () => {
   return (
     <>
       <Helmet>
-        <title>
-          Budget Manager | Login
-        </title>
+        <title>Budget Manager | Login</title>
       </Helmet>
-      <div className="hero bg-white pt-10 font-semibold">
-        <div className="card w-full max-w-xl ">
-          <form className="card-body" onSubmit={handleEmailLogin}>
-            <h1 className="text-4xl font-extrabold text-center mb-4">
-              Please Login!
-            </h1>
-
-            {/* Display error message */}
+      <div className="flex items-center justify-center min-h-screen font-sans p-2">
+        <div className="w-full max-w-xl">
+          <div className="mb-6">
+            <div className="flex justify-start items-center">
+              <TitleLogo />
+            </div>
+            <div className="pt-9 pb-1 ">
+              <h1 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+                Budget Distribution Management System
+              </h1>
+              <p className="text-gray-500 text-sm font-medium">
+                For Officials of the Department of ICT
+              </p>
+              <hr className="mt-2 border-gray-300" />
+            </div>
+          </div>
+          <form onSubmit={handleEmailLogin} className="space-y-4">
             {error && <p className="text-red-500 text-center">{error}</p>}
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Email
               </label>
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="input input-bordered"
+                className="mt-1 p-3 w-full border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Password
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
-                  className="input input-bordered w-full pr-10"
+                  className="mt-1 p-3 w-full border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-10"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
                 <span
-                  className="absolute right-3 top-3 cursor-pointer"
+                  className="absolute right-3 top-3 text-gray-400 cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
                 </span>
               </div>
-              <label className="label">
-                <Link to="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </Link>
-              </label>
+              <Link to="#" className="text-sm text-blue-500 hover:underline">
+                Forgot password?
+              </Link>
             </div>
 
-            <div className="form-control mt-6">
-              <button className="btn bg-black text-white w-full">Login</button>
-            </div>
+            <button className="w-full py-3 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700 transition duration-150">
+              Login
+            </button>
           </form>
         </div>
       </div>

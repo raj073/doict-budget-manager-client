@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxios";
 
-const UpazilaListAll = () => {
+const AllUpazilaList = () => {
   const [upazilas, setUpazilas] = useState([]);
   const [budgets, setBudgets] = useState([]);
   const axiosInstance = useAxiosPublic();
@@ -23,29 +23,32 @@ const UpazilaListAll = () => {
     fetchData();
   }, [axiosInstance]);
 
-  const getTotalDistributedBudget = (upazilaId) => {
-    return budgets
-      .filter((budget) => budget.upazilaId === upazilaId)
-      .reduce((acc, cur) => acc + cur.amount, 0);
+  const getTotalDistributedBudget = (fieldOfficeCode) => {
+    // Find the budget object that matches the fieldOfficeCode
+    const budget = budgets.find(
+      (budget) => budget.upazilaId === fieldOfficeCode
+    );
+
+    // If a matching budget is found, calculate the total distributed amount from allocations
+    if (budget && budget.allocations) {
+      return budget.allocations.reduce(
+        (acc, allocation) => acc + (allocation.amount || 0),
+        0
+      );
+    }
+
+    // If no matching budget or allocations found, return 0
+    return 0;
   };
 
   return (
     <div className="p-6">
-      <div className="mb-10">
-        <h2
-          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
-      bg-clip-text text-transparent mb-4 text-center"
-        >
-          All Upazila Office List
-        </h2>
-        <hr className="border-cyan-400" />
-      </div>
-
+      <h2 className="text-3xl font-bold mb-4">All Upazila Offices</h2>
       <div className="overflow-x-auto">
         <table className="table w-full border border-gray-300">
           <thead>
             <tr>
-              <th>#</th>
+              <th>Serial</th>
               <th>Field Office Code</th>
               <th>Upazila Office Name</th>
               <th>Total Distributed Budget</th>
@@ -65,18 +68,21 @@ const UpazilaListAll = () => {
                   {upazila.fieldOfficeCode}
                 </td>
                 <td>
-                  <Link
-                    to={`/upazila/${upazila.id}`}
-                    className="text-blue-500 hover:underline"
-                  >
+                  <span className="text-blue-500 ">
                     {upazila.upazilaOfficeName}
-                  </Link>
+                  </span>
                 </td>
-                <td>{getTotalDistributedBudget(upazila.id) || 0}</td>
+                <td>
+                  {getTotalDistributedBudget(upazila.fieldOfficeCode) || 0}
+                </td>
                 <td>
                   <Link
-                    to={`/upazila/${upazila.id}`}
-                    className="text-blue-500 hover:underline"
+                    to={`/dashboard/upazila/${upazila.fieldOfficeCode}`}
+                    state={{
+                      upazilaName: upazila.upazilaOfficeName,
+                      fieldOfficeCode: upazila.fieldOfficeCode,
+                    }}
+                    className="text-lime-800 text-sm hover:underline"
                   >
                     View Details
                   </Link>
@@ -90,4 +96,4 @@ const UpazilaListAll = () => {
   );
 };
 
-export default UpazilaListAll;
+export default AllUpazilaList;
