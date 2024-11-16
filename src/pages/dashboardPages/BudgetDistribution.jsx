@@ -113,53 +113,29 @@ const BudgetDistribution = () => {
     setTotalDistributed(total);
   };
 
+ 
   const handleDistributeBudget = async () => {
     try {
-      // Prepare the distribution data for the upazilaCodewiseBudget collection
       const distributionData = {
         upazilaId: formData.upazilaId,
         upazilaName: formData.upazilaName,
-        allocations: Object.entries(distributions).map(([code, amount]) => ({
-          economicCode: code,
-          amount,
-        })),
+        // Mapping the distribution data to use economic codes as fields
+        ...Object.fromEntries(
+          Object.entries(distributions).map(([code, amount]) => [code, amount])
+        ),
       };
-
-      // Send the distribution data to update the upazilaCodewiseBudget collection
-      const upazilaResponse = await axiosInstance.post(
+      console.log(distributionData);
+      const response = await axiosInstance.post(
         "/upazilaCodewiseBudget",
         distributionData
       );
 
-      // Iterate over each economic code to update the economicCodes collection
-      const economicCodeUpdates = Object.entries(distributions).map(
-        async ([code, amount]) => {
-          // Prepare the update data for economicCodes collection
-          const economicCodeData = {
-            economicCode: code,
-            distributedAmount: amount,
-          };
-
-          try {
-            // Update the economicCodes collection by incrementing the distributed budget
-            await axiosInstance.post("/economicCodes", economicCodeData);
-          } catch (error) {
-            console.error(`Error updating economic code ${code}:`, error);
-          }
-        }
-      );
-
-      // Wait for all economic code updates to finish
-      await Promise.all(economicCodeUpdates);
-
-      // Success: notify user and reset data
-      toast.success("Budgets distributed successfully!");
+      toast.success(response.data.message);
       setDistributions({});
       setTotalDistributed(0);
 
-      // After successful distribution, fetch updated budgets
+      // Refresh budget data
       const updatedBudgetsResponse = await axiosInstance.get("/economicCodes");
-      console.log(updatedBudgetsResponse.data); // Log to check the updated data
       setBudgets(updatedBudgetsResponse.data);
     } catch (error) {
       console.error("Error distributing budget:", error);
@@ -189,83 +165,81 @@ const BudgetDistribution = () => {
       {message && <p className="mt-4 font-bold text-lime-700">{message}</p>}
       {error && <p className="mt-4 font-bold text-orange-600">{error}</p>}
 
-        <hr />
+      <hr />
 
-        <form className="mb-6 mt-10">
-          <div className="mb-4">
-            <label className="block text-sm font-medium">Select Upazila</label>
-            <select
-              name="upazilaId"
-              value={formData.upazilaId}
-              onChange={handleUpazilaSelect}
-              className="w-full p-2 border rounded"
-              required
-            >
-              <option value="">Select Upazila</option>
-              {upazilas.map((upazila) => (
-                <option
-                  key={upazila.fieldOfficeCode}
-                  value={upazila.fieldOfficeCode}
-                >
-                  {upazila.upazilaOfficeName}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium">Upazila ID</label>
-            <input
-              type="text"
-              name="upazilaId"
-              value={formData.upazilaId}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-              required
-              disabled
-            />
-          </div>
-        </form>
+      <form className="mb-6 mt-10">
+        <div className="mb-4">
+          <label className="block text-sm font-medium">Select Upazila</label>
+          <select
+            name="upazilaId"
+            value={formData.upazilaId}
+            onChange={handleUpazilaSelect}
+            className="w-full p-2 border rounded"
+            required
+          >
+            <option value="">Select Upazila</option>
+            {upazilas.map((upazila) => (
+              <option
+                key={upazila.fieldOfficeCode}
+                value={upazila.fieldOfficeCode}
+              >
+                {upazila.upazilaOfficeName}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium">Upazila ID</label>
+          <input
+            type="text"
+            name="upazilaId"
+            value={formData.upazilaId}
+            onChange={handleInputChange}
+            className="w-full p-2 border rounded"
+            required
+            disabled
+          />
+        </div>
+      </form>
 
-        <div className="overflow-x-auto mb-4">
-          <table className="table w-full border border-gray-300">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-4 text-left">Serial</th>
-                <th className="p-4 text-left">Economic Code</th>
-                <th className="p-4 text-left">Code Name</th>
-                <th className="p-4 text-left">Budget to Distribute</th>
-                <th className="p-4 text-left">Available Budget</th>
+      <div className="overflow-x-auto mb-4">
+        <table className="table w-full border border-gray-300">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-4 text-left">Serial</th>
+              <th className="p-4 text-left">Economic Code</th>
+              <th className="p-4 text-left">Code Name</th>
+              <th className="p-4 text-left">Budget to Distribute</th>
+              <th className="p-4 text-left">Available Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            {budgets.map((budget, index) => (
+              <tr key={budget.economicCode}>
+                <td className="p-4">{index + 1}</td>
+                <td className="p-4">{budget.economicCode}</td>
+                <td className="p-4">{budget.codeName}</td>
+                <td className="p-4">
+                  <input
+                    type="number"
+                    value={distributions[budget.economicCode] || ""}
+                    onChange={(e) => handleBudgetChange(e, budget.economicCode)}
+                    className="w-full p-2 border rounded"
+                    min="0"
+                  />
+                </td>
+                <td className="p-4">
+                  {budget.totalBudget - budget.distributedBudget}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {budgets.map((budget, index) => (
-                <tr key={budget.economicCode}>
-                  <td className="p-4">{index + 1}</td>
-                  <td className="p-4">{budget.economicCode}</td>
-                  <td className="p-4">{budget.codeName}</td>
-                  <td className="p-4">
-                    <input
-                      type="number"
-                      value={distributions[budget.economicCode] || ""}
-                      onChange={(e) =>
-                        handleBudgetChange(e, budget.economicCode)
-                      }
-                      className="w-full p-2 border rounded"
-                      min="0"
-                    />
-                  </td>
-                  <td className="p-4">
-                    {budget.totalBudget - budget.distributedBudget}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-        <div className="text-right font-bold mb-4">
-          Total Budget To Distribute: {totalDistributed}
-        </div>
+      <div className="text-right font-bold mb-4">
+        Total Budget To Distribute: {totalDistributed}
+      </div>
 
       <button onClick={handleDistributeBudget} className="btn btn-accent">
         Distribute Budget
