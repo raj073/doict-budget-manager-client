@@ -14,15 +14,25 @@ const BudgetDistribution = () => {
     upazilaId: "",
     upazilaName: "",
   });
+
+  const [searchUpazilaName, setSearchUpazilaName] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
+  const [items, setItems] = useState([]);
+  const [selectedUpazilaCode, setSelectedUpazilaCode] = useState("");
+
   const axiosInstance = useAxiosPublic();
   const fileInputRef = useRef();
+  const dropdownRef = useRef(null);
+
+  console.log(searchUpazilaName, selectedUpazilaCode);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const upazilasResponse = await axiosInstance.get("/upazila");
         const budgetsResponse = await axiosInstance.get("/economicCodes");
-        setUpazilas(upazilasResponse.data);
+        setItems(upazilasResponse.data);
         setBudgets(budgetsResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -32,6 +42,43 @@ const BudgetDistribution = () => {
 
     fetchData();
   }, [axiosInstance]);
+
+  // Filter items based on the search term
+  const filteredItems = items.filter((item) =>
+    item.upazilaOfficeName
+      .toLowerCase()
+      .includes(searchUpazilaName.toLowerCase())
+  );
+
+  // Handle input change and show dropdown
+  const handleSearch = (event) => {
+    setSearchUpazilaName(event.target.value);
+    setIsOpen(true);
+    setSelectedUpazilaCode("");
+  };
+
+  // Handle item selection
+  const handleSelect = (item) => {
+    setSelectedItem(item.upazilaOfficeName); // Set the selected item into the input
+    setSearchUpazilaName(item.upazilaOfficeName); // Show selected item in the input
+    setSelectedUpazilaCode(item.fieldOfficeCode);
+    setIsOpen(false); // Close dropdown
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if the click is outside the dropdown
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -89,16 +136,6 @@ const BudgetDistribution = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleUpazilaSelect = (e) => {
-    const selectedUpazila = upazilas.find(
-      (upazila) => upazila.fieldOfficeCode === e.target.value
-    );
-    setFormData({
-      upazilaId: selectedUpazila?.fieldOfficeCode || "",
-      upazilaName: selectedUpazila?.upazilaOfficeName || "",
-    });
-  };
-
   const handleBudgetChange = (e, code) => {
     const value = parseFloat(e.target.value) || 0;
     setDistributions((prev) => ({
@@ -117,8 +154,8 @@ const BudgetDistribution = () => {
     try {
       // Prepare the distribution data for the upazilaCodewiseBudget collection
       const distributionData = {
-        upazilaId: formData.upazilaId,
-        upazilaName: formData.upazilaName,
+        upazilaId: selectedUpazilaCode,
+        upazilaName: searchUpazilaName,
         allocations: Object.entries(distributions).map(([code, amount]) => ({
           economicCode: code,
           amount,
@@ -189,83 +226,94 @@ const BudgetDistribution = () => {
       {message && <p className="mt-4 font-bold text-lime-700">{message}</p>}
       {error && <p className="mt-4 font-bold text-orange-600">{error}</p>}
 
-        <hr />
+      <hr />
 
-        <form className="mb-6 mt-10">
-          <div className="mb-4">
-            <label className="block text-sm font-medium">Select Upazila</label>
-            <select
-              name="upazilaId"
-              value={formData.upazilaId}
-              onChange={handleUpazilaSelect}
-              className="w-full p-2 border rounded"
-              required
+      <form className="mb-6 mt-10">
+        <div className="mb-4" ref={dropdownRef}>
+          <label className="block text-sm font-medium">Select Upazila</label>
+          <input
+            type="text"
+            value={searchUpazilaName}
+            onChange={handleSearch}
+            onFocus={() => setIsOpen(true)}
+            placeholder="Search User Upazila Name"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            autoComplete="off"
+          />
+          {/* Dropdown */}
+          {isOpen && (
+            <div
+              className="w-full bg-white border border-gray-200 rounded-md 
+                shadow-lg max-h-60 overflow-y-auto z-10"
+              style={{ top: "30%" }}
             >
-              <option value="">Select Upazila</option>
-              {upazilas.map((upazila) => (
-                <option
-                  key={upazila.fieldOfficeCode}
-                  value={upazila.fieldOfficeCode}
-                >
-                  {upazila.upazilaOfficeName}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium">Upazila ID</label>
-            <input
-              type="text"
-              name="upazilaId"
-              value={formData.upazilaId}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded"
-              required
-              disabled
-            />
-          </div>
-        </form>
+              {filteredItems.length > 0 ? (
+                filteredItems.map((item) => (
+                  <div
+                    key={item.fieldOfficeCode}
+                    onClick={() => handleSelect(item)}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    {item.upazilaOfficeName}
+                  </div>
+                ))
+              ) : (
+                <div className="px-4 py-2 text-gray-500">No results found</div>
+              )}
+            </div>
+          )}
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium">Upazila ID</label>
+          <input
+            type="text"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            readOnly
+            value={selectedUpazilaCode}
+            required
+            autoComplete="on"
+          />
+        </div>
+      </form>
 
-        <div className="overflow-x-auto mb-4">
-          <table className="table w-full border border-gray-300">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-4 text-left">Serial</th>
-                <th className="p-4 text-left">Economic Code</th>
-                <th className="p-4 text-left">Code Name</th>
-                <th className="p-4 text-left">Budget to Distribute</th>
-                <th className="p-4 text-left">Available Budget</th>
+      <div className="overflow-x-auto mb-4">
+        <table className="table w-full border border-gray-300">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-4 text-left">Serial</th>
+              <th className="p-4 text-left">Economic Code</th>
+              <th className="p-4 text-left">Code Name</th>
+              <th className="p-4 text-left">Budget to Distribute</th>
+              <th className="p-4 text-left">Available Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            {budgets.map((budget, index) => (
+              <tr key={budget.economicCode}>
+                <td className="p-4">{index + 1}</td>
+                <td className="p-4">{budget.economicCode}</td>
+                <td className="p-4">{budget.codeName}</td>
+                <td className="p-4">
+                  <input
+                    type="number"
+                    value={distributions[budget.economicCode] || ""}
+                    onChange={(e) => handleBudgetChange(e, budget.economicCode)}
+                    className="w-full p-2 border rounded"
+                    min="0"
+                  />
+                </td>
+                <td className="p-4">
+                  {budget.totalBudget - budget.distributedBudget}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {budgets.map((budget, index) => (
-                <tr key={budget.economicCode}>
-                  <td className="p-4">{index + 1}</td>
-                  <td className="p-4">{budget.economicCode}</td>
-                  <td className="p-4">{budget.codeName}</td>
-                  <td className="p-4">
-                    <input
-                      type="number"
-                      value={distributions[budget.economicCode] || ""}
-                      onChange={(e) =>
-                        handleBudgetChange(e, budget.economicCode)
-                      }
-                      className="w-full p-2 border rounded"
-                      min="0"
-                    />
-                  </td>
-                  <td className="p-4">
-                    {budget.totalBudget - budget.distributedBudget}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-        <div className="text-right font-bold mb-4">
-          Total Budget To Distribute: {totalDistributed}
-        </div>
+      <div className="text-right font-bold mb-4">
+        Total Budget To Distribute: {totalDistributed}
+      </div>
 
       <button onClick={handleDistributeBudget} className="btn btn-accent">
         Distribute Budget

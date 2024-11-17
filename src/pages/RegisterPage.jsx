@@ -1,8 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Helmet } from "react-helmet-async";
+import useAxiosPublic from "../hooks/useAxios";
 
 const RegisterPage = () => {
   const { registerWithEmail } = useContext(AuthContext);
@@ -11,16 +12,83 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [phone, setPhoneNumber] = useState("");
-  const [name, setName] = useState("");
-  const [upazilaCode, setUpazilaCode] = useState("");
+  const [userName, setUserName] = useState("");
   const [error, setError] = useState(null); // To store error message if registration fails
+  const [searchUpazilaName, setSearchUpazilaName] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
+  const [items, setItems] = useState([]);
+  const [selectedUpazilaCode, setSelectedUpazilaCode] = useState("");
+
+  const axiosInstance = useAxiosPublic();
+
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const upazilasResponse = await axiosInstance.get("/upazila");
+        setItems(upazilasResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        toast.error("Failed to load data. Please try again.");
+      }
+    };
+
+    fetchData();
+  }, [axiosInstance]);
+
+  // Filter items based on the search term
+  const filteredItems = items.filter((item) =>
+    item.upazilaOfficeName
+      .toLowerCase()
+      .includes(searchUpazilaName.toLowerCase())
+  );
+
+  // Handle input change and show dropdown
+  const handleSearch = (event) => {
+    setSearchUpazilaName(event.target.value);
+    setIsOpen(true);
+    setSelectedUpazilaCode("");
+  };
+
+  // Handle item selection
+  const handleSelect = (item) => {
+    setSelectedItem(item.upazilaOfficeName); // Set the selected item into the input
+    setSearchUpazilaName(item.upazilaOfficeName); // Show selected item in the input
+    setSelectedUpazilaCode(item.fieldOfficeCode);
+    setIsOpen(false); // Close dropdown
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if the click is outside the dropdown
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleEmailRegister = async (e) => {
     e.preventDefault();
     setError(null); // Reset any previous errors
 
     try {
-      await registerWithEmail(email, password, name, phone, upazilaCode);
+      await registerWithEmail(
+        searchUpazilaName,
+        selectedUpazilaCode,
+        userName,
+        password,
+        email,
+        phone
+      );
+      console.log("clicking");
     } catch (err) {
       setError(err.message); // Capture and display error message
       console.error(err.message);
@@ -45,30 +113,69 @@ const RegisterPage = () => {
             {/* Display error message */}
             {error && <p className="text-red-500 text-center">{error}</p>}
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Upazila Code</span>
-              </label>
-              <input
-                type="number"
-                placeholder="Enter user upazila code"
-                className="input input-bordered"
-                value={upazilaCode}
-                onChange={(e) => setUpazilaCode(e.target.value)}
-                required
-                autoComplete="on"
-              />
-            </div>
-            <div className="form-control">
+            <div className="form-control" ref={dropdownRef}>
               <label className="label">
                 <span className="label-text">Upazila Name</span>
               </label>
               <input
                 type="text"
-                placeholder="Enter user name"
+                value={searchUpazilaName}
+                onChange={handleSearch}
+                onFocus={() => setIsOpen(true)}
+                placeholder="Search User Upazila Name"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                autoComplete="off"
+              />
+              {/* Dropdown */}
+              {isOpen && (
+                <div
+                  className="w-full bg-white border border-gray-200 rounded-md 
+                shadow-lg max-h-60 overflow-y-auto z-10"
+                  style={{ top: "30%" }}
+                >
+                  {filteredItems.length > 0 ? (
+                    filteredItems.map((item) => (
+                      <div
+                        key={item.fieldOfficeCode}
+                        onClick={() => handleSelect(item)}
+                        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                      >
+                        {item.upazilaOfficeName}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="px-4 py-2 text-gray-500">
+                      No results found
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Upazila Code</span>
+              </label>
+              <input
+                type="text"
                 className="input input-bordered"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                readOnly
+                value={selectedUpazilaCode}
+                required
+                autoComplete="on"
+              />
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">User Name</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter User Name"
+                className="input input-bordered"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
                 required
                 autoComplete="on"
               />
@@ -127,7 +234,7 @@ const RegisterPage = () => {
             </div>
 
             <div className="form-control mt-6">
-              <button className="btn btn-accent w-full">Add</button>
+              <button className="btn btn-accent w-full">Add User</button>
             </div>
           </form>
         </div>

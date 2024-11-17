@@ -25,11 +25,12 @@ const AuthProvider = ({ children }) => {
   const registerWithEmail = async (
     email,
     password,
-    name,
+    userName,
     phone,
     photo,
     address,
-    upazilaCode
+    upazilaCode,
+    upazilaName
   ) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -43,13 +44,14 @@ const AuthProvider = ({ children }) => {
       const response = await axiosInstance.post("/users", {
         uid: newUser.uid,
         email: newUser.email,
-        displayName: name || "User",
-        phone: phone,
+        displayName: userName || "User",
+        phone: phone || "01700101010",
         photoUrl: photo || "https://i.ibb.co/k6hTYW1/Alien-Dev.jpg",
         address: address,
         isAdmin: false, // Default role
         isBlocked: false, // Default status
         upazilaCode,
+        upazilaName,
       });
       console.log(response);
       loginWithEmail("rajanidas.ict@gmail.com", "123456");
