@@ -152,7 +152,6 @@ const BudgetDistribution = () => {
 
   const handleDistributeBudget = async () => {
     try {
-      // Prepare the distribution data for the upazilaCodewiseBudget collection
       const distributionData = {
         upazilaId: selectedUpazilaCode,
         upazilaName: searchUpazilaName,
@@ -161,42 +160,18 @@ const BudgetDistribution = () => {
           amount,
         })),
       };
-
-      // Send the distribution data to update the upazilaCodewiseBudget collection
-      const upazilaResponse = await axiosInstance.post(
+      console.log(distributionData);
+      const response = await axiosInstance.post(
         "/upazilaCodewiseBudget",
         distributionData
       );
 
-      // Iterate over each economic code to update the economicCodes collection
-      const economicCodeUpdates = Object.entries(distributions).map(
-        async ([code, amount]) => {
-          // Prepare the update data for economicCodes collection
-          const economicCodeData = {
-            economicCode: code,
-            distributedAmount: amount,
-          };
-
-          try {
-            // Update the economicCodes collection by incrementing the distributed budget
-            await axiosInstance.post("/economicCodes", economicCodeData);
-          } catch (error) {
-            console.error(`Error updating economic code ${code}:`, error);
-          }
-        }
-      );
-
-      // Wait for all economic code updates to finish
-      await Promise.all(economicCodeUpdates);
-
-      // Success: notify user and reset data
-      toast.success("Budgets distributed successfully!");
+      toast.success(response.data.message);
       setDistributions({});
       setTotalDistributed(0);
 
-      // After successful distribution, fetch updated budgets
+      // Refresh budget data
       const updatedBudgetsResponse = await axiosInstance.get("/economicCodes");
-      console.log(updatedBudgetsResponse.data); // Log to check the updated data
       setBudgets(updatedBudgetsResponse.data);
     } catch (error) {
       console.error("Error distributing budget:", error);
@@ -272,6 +247,7 @@ const BudgetDistribution = () => {
             value={selectedUpazilaCode}
             required
             autoComplete="on"
+            placeholder="Upazila Code Will Appear Here"
           />
         </div>
       </form>

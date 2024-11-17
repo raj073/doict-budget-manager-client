@@ -163,6 +163,7 @@ const RegisterPage = () => {
                 value={selectedUpazilaCode}
                 required
                 autoComplete="on"
+                placeholder="Upazila Code Will Appear Here"
               />
             </div>
 
