@@ -163,6 +163,15 @@ const DashboardSidebarContent = () => {
             <span className="font-bold text-cyan-700 ">Budget Report</span>
 
             <NavLink
+              to="/dashboard/upazilaBudgetDetails"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <MdOutlineAnalytics className="inline mr-2" />
+              Budget Details
+            </NavLink>
+            <NavLink
               to="/dashboard/allocatedCodeWiseBudget"
               className={({ isActive }) =>
                 isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
