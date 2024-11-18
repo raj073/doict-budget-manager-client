@@ -22,6 +22,7 @@ import AddEconomicCode from "../pages/dashboardPages/AddEconomicCode";
 import AllocatedCodewiseBudget from "../pages/dashboardPages/userDashboardPages/AllocatedCodewiseBudget";
 import CodewiseBudgetDemand from "../pages/dashboardPages/userDashboardPages/CodewiseBudgetDemand";
 import AddExpense from "../pages/dashboardPages/userDashboardPages/AddExpense";
+import BudgetDetails from "../pages/dashboardPages/userDashboardPages/BudgetDetails";
 
 // Component to conditionally render the appropriate dashboard based on user role
 const DashboardHome = () => {
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
       {
         path: "codeWiseBudgetDemand",
         element: <CodewiseBudgetDemand />,
+      },
+      {
+        path: "upazilaBudgetDetails",
+        element: <BudgetDetails />,
       },
     ],
   },
