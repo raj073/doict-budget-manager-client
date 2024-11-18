@@ -34,9 +34,9 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
             axiosInstance.get("/economicCodes"),
             axiosInstance.get("/upazilaCodewiseBudget"),
           ]);
-        setUpazilas(upazilasResponse.data);
-        setBudgets(budgetsResponse.data);
-        setUpazilaBudgets(upazilaBudgetsResponse.data);
+        setUpazilas(upazilasResponse?.data);
+        setBudgets(budgetsResponse?.data);
+        setUpazilaBudgets(upazilaBudgetsResponse?.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Failed to load data. Please try again.");
@@ -47,33 +47,33 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
   }, [axiosInstance]);
 
   const getAllocationAmount = (upazilaId, economicCode) => {
-    const upazilaData = upazilaBudgets.find((ub) => ub.upazilaId === upazilaId);
+    const upazilaData = upazilaBudgets?.find((ub) => ub.upazilaId === upazilaId);
     if (!upazilaData) return 0;
-    const allocation = upazilaData.allocations.find(
-      (alloc) => alloc.economicCode === economicCode
+    const allocation = upazilaData?.allocations?.find(
+      (alloc) => alloc?.economicCode === economicCode
     );
-    return allocation ? allocation.amount : 0;
+    return allocation ? allocation?.amount : 0;
   };
 
   const calculateRowTotal = (upazilaId) => {
-    return budgets.reduce(
+    return budgets?.reduce(
       (total, budget) =>
-        total + getAllocationAmount(upazilaId, budget.economicCode),
+        total + getAllocationAmount(upazilaId, budget?.economicCode),
       0
     );
   };
 
   const calculateColumnTotal = (economicCode) => {
-    return upazilas.reduce(
+    return upazilas?.reduce(
       (total, upazila) =>
-        total + getAllocationAmount(upazila.fieldOfficeCode, economicCode),
+        total + getAllocationAmount(upazila?.fieldOfficeCode, economicCode),
       0
     );
   };
 
   const calculateOverallTotal = () => {
-    return upazilas.reduce(
-      (total, upazila) => total + calculateRowTotal(upazila.fieldOfficeCode),
+    return upazilas?.reduce(
+      (total, upazila) => total + calculateRowTotal(upazila?.fieldOfficeCode),
       0
     );
   };
@@ -88,24 +88,24 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
           <thead>
             <tr>
               <th className="text-center">Upazila Name</th>
-              {budgets.map((budget) => (
-                <th key={budget.code} className="text-center text-red-800">
-                  {budget.codeName}
+              {budgets?.map((budget) => (
+                <th key={budget?.code} className="text-center text-red-800">
+                  {budget?.codeName}
                 </th>
               ))}
               <th className="text-center font-bold text-blue-800">Total</th>
             </tr>
           </thead>
           <tbody>
-            {upazilas.map((upazila) => (
+            {upazilas?.map((upazila) => (
               <tr key={upazila.id}>
                 <td className="text-center font-medium text-lime-800">
-                  {upazila.upazilaOfficeName}
+                  {upazila?.upazilaOfficeName}
                 </td>
-                {budgets.map((budget) => {
+                {budgets?.map((budget) => {
                   const amount = getAllocationAmount(
-                    upazila.fieldOfficeCode,
-                    budget.economicCode
+                    upazila?.fieldOfficeCode,
+                    budget?.economicCode
                   );
                   return (
                     <td key={budget.code} className="text-center">
@@ -118,7 +118,7 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
                   );
                 })}
                 <td className="text-center font-bold text-blue-800">
-                  {calculateRowTotal(upazila.fieldOfficeCode)}
+                  {calculateRowTotal(upazila?.fieldOfficeCode)}
                 </td>
               </tr>
             ))}
@@ -126,12 +126,12 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
           <tfoot>
             <tr>
               <td className="text-center font-bold text-blue-800">Total</td>
-              {budgets.map((budget) => (
+              {budgets?.map((budget) => (
                 <td
                   key={budget.code}
                   className="text-center font-bold text-blue-800"
                 >
-                  {calculateColumnTotal(budget.economicCode)}
+                  {calculateColumnTotal(budget?.economicCode)}
                 </td>
               ))}
               <td className="text-center font-bold text-blue-800">
