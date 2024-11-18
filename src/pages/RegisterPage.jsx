@@ -1,13 +1,10 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { AuthContext } from "../provider/AuthProvider";
-import { Link, useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Helmet } from "react-helmet-async";
 import useAxiosPublic from "../hooks/useAxios";
 
 const RegisterPage = () => {
   const { registerWithEmail } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -83,9 +80,9 @@ const RegisterPage = () => {
       await registerWithEmail(
         searchUpazilaName,
         selectedUpazilaCode,
-        userName,
-        password,
         email,
+        password,
+        userName,
         phone
       );
       console.log("clicking");
@@ -105,7 +102,7 @@ const RegisterPage = () => {
                 className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
       bg-clip-text text-transparent mb-4 text-center"
               >
-                Add New User !
+                Create new user
               </h2>
               <hr className="border-cyan-400" />
             </div>
@@ -169,14 +166,14 @@ const RegisterPage = () => {
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">User Name</span>
+                <span className="label-text">Email</span>
               </label>
               <input
-                type="text"
-                placeholder="Enter User Name"
+                type="email"
+                placeholder="Enter user email"
                 className="input input-bordered"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete="on"
               />
@@ -207,21 +204,21 @@ const RegisterPage = () => {
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text">User Name</span>
               </label>
               <input
-                type="email"
-                placeholder="Enter user email"
+                type="text"
+                placeholder="Enter User Name"
                 className="input input-bordered"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
                 required
                 autoComplete="on"
               />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Phone</span>
+                <span className="label-text">Phone Number</span>
               </label>
               <input
                 type="tel"
