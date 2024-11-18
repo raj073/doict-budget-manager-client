@@ -23,14 +23,14 @@ const AuthProvider = ({ children }) => {
 
   // Register with email and send data to backend
   const registerWithEmail = async (
+    upazilaName,
+    upazilaCode,
     email,
     password,
     userName,
     phone,
     photo,
-    address,
-    upazilaCode,
-    upazilaName
+    address
   ) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
