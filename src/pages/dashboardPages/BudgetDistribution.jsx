@@ -155,11 +155,11 @@ const BudgetDistribution = () => {
       const distributionData = {
         upazilaId: selectedUpazilaCode,
         upazilaName: searchUpazilaName,
-        allocations: Object.entries(distributions).map(([code, amount]) => ({
-          economicCode: code,
-          amount,
-        })),
-      };
+          allocations: Object.entries(distributions).map(([code, amount]) => ({
+            economicCode: code,
+            amount,
+          })),
+        };
       console.log(distributionData);
       const response = await axiosInstance.post(
         "/upazilaCodewiseBudget",
@@ -218,7 +218,7 @@ const BudgetDistribution = () => {
           {/* Dropdown */}
           {isOpen && (
             <div
-              className="w-full bg-white border border-gray-200 rounded-md 
+              className="w-full bg-white border border-gray-200 rounded-md
                 shadow-lg max-h-60 overflow-y-auto z-10"
               style={{ top: "30%" }}
             >
