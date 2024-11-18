@@ -85,7 +85,6 @@ const RegisterPage = () => {
         userName,
         phone
       );
-      console.log("clicking");
     } catch (err) {
       setError(err.message); // Capture and display error message
       console.error(err.message);
