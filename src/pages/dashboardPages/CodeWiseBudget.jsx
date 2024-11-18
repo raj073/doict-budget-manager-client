@@ -30,6 +30,7 @@ const CodeWiseBudget = () => {
               <th className="p-4 text-left">Serial</th>
               <th className="p-4 text-left">Economic Code</th>
               <th className="p-4 text-left">Code Name</th>
+              <th className="p-4 text-left">Total Budget</th>
               <th className="p-4 text-left">Distributed Budget</th>
               <th className="p-4 text-left">Remaining Budget</th>
             </tr>
@@ -40,6 +41,7 @@ const CodeWiseBudget = () => {
                 <td className="p-4">{index + 1}</td>
                 <td className="p-4 text-red-800">{budget.economicCode}</td>
                 <td className="p-4 text-blue-500">{budget.codeName}</td>
+                <td className="p-4">{budget.totalBudget}</td>
                 <td className="p-4">{budget.distributedBudget}</td>
                 <td className="p-4">
                   {budget.totalBudget - budget.distributedBudget}

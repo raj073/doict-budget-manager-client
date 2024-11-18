@@ -14,13 +14,14 @@ import CreateMessage from "../pages/dashboardPages/CreateMessages";
 import MessageDetails from "../pages/dashboardPages/MessageDetails";
 import CodeWiseBudget from "../pages/dashboardPages/CodeWiseBudget";
 import BudgetDistribution from "../pages/dashboardPages/BudgetDistribution";
-import AddExpense from "../pages/dashboardPages/AddExpense";
 import AddUpazila from "../pages/dashboardPages/AddUpazila";
 import UpazilaDetails from "../pages/dashboardPages/UpazilaDetails";
-import AllocatedCodewiseBudget from "../pages/dashboardPages/AllocatedCodewiseBudget";
 import CodewiseDistributedBudgetToAllUpazila from "../pages/dashboardPages/CodewiseDistributedBudgetToAllUpazila";
 import AllUpazilaList from "../pages/dashboardPages/AllUpazilaList";
 import AddEconomicCode from "../pages/dashboardPages/AddEconomicCode";
+import AllocatedCodewiseBudget from "../pages/dashboardPages/userDashboardPages/AllocatedCodewiseBudget";
+import CodewiseBudgetDemand from "../pages/dashboardPages/userDashboardPages/CodewiseBudgetDemand";
+import AddExpense from "../pages/dashboardPages/userDashboardPages/AddExpense";
 
 // Component to conditionally render the appropriate dashboard based on user role
 const DashboardHome = () => {
@@ -114,6 +115,10 @@ const router = createBrowserRouter([
       {
         path: "allocatedCodeWiseBudget",
         element: <AllocatedCodewiseBudget />,
+      },
+      {
+        path: "codeWiseBudgetDemand",
+        element: <CodewiseBudgetDemand />,
       },
     ],
   },

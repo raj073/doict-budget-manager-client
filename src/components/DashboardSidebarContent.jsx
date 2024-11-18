@@ -160,7 +160,8 @@ const DashboardSidebarContent = () => {
               <MdOutlineLibraryBooks className="inline mr-2" />
               Important Notices
             </NavLink>
-            <span className="font-bold text-cyan-700 ">Budget Executions</span>
+            <span className="font-bold text-cyan-700 ">Budget Report</span>
+
             <NavLink
               to="/dashboard/allocatedCodeWiseBudget"
               className={({ isActive }) =>
@@ -168,7 +169,17 @@ const DashboardSidebarContent = () => {
               }
             >
               <MdOutlineAnalytics className="inline mr-2" />
-              Allocated Codewise Budget
+              Allocated Budget
+            </NavLink>
+            <span className="font-bold text-cyan-700 ">Budget Executions</span>
+            <NavLink
+              to="/dashboard/codeWiseBudgetDemand"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <MdOutlineAnalytics className="inline mr-2" />
+              Budget Demand
             </NavLink>
             <NavLink
               to="/dashboard/addExpense"

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import useAxiosPublic from "../../hooks/useAxios";
+import useAxiosPublic from "../../../hooks/useAxios";
 
 const AddExpense = () => {
   const [formData, setFormData] = useState({
