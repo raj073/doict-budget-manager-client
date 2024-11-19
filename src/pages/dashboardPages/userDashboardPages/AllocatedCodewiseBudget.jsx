@@ -84,7 +84,6 @@ const AllocatedCodewiseBudget = () => {
                 <span className="font-bold">
                   {allocation?.amount?.toLocaleString() || 0}
                 </span>{" "}
-                BDT
               </td>
             </tr>
           ))}
