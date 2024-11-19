@@ -16,6 +16,7 @@ import {
   MdOutlineLibraryBooks,
   MdApproval,
   MdCoPresent,
+  MdOndemandVideo,
 } from "react-icons/md";
 import { FaBox, FaBriefcase, FaHome, FaMinusSquare } from "react-icons/fa";
 import { VscRequestChanges } from "react-icons/vsc";
@@ -85,6 +86,15 @@ const DashboardSidebarContent = () => {
             >
               <FaBox className="inline mr-2" />
               All Upazila Budget
+            </NavLink>
+            <NavLink
+              to="/dashboard/upazilaDemands"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <MdOndemandVideo className="inline mr-2" />
+              Upazila Demands
             </NavLink>
 
             <NavLink
