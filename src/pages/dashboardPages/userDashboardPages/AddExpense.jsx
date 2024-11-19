@@ -1,95 +1,24 @@
-// import { useState } from "react";
-// import { toast } from "react-toastify";
-// import useAxiosPublic from "../../../hooks/useAxios";
-
-// const AddExpense = () => {
-//   const [formData, setFormData] = useState({
-//     economicCode: "",
-//     expenseAmount: "",
-//   });
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({ ...prevData, [name]: value }));
-//   };
-//   const axiosInstance = useAxiosPublic();
-//   const handleExpenseSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       await axiosInstance.post("/expenses", formData);
-//       toast.success("Expense added successfully!");
-//       setFormData({ economicCode: "", expenseAmount: "" });
-//     } catch (error) {
-//       console.error("Error adding expense:", error);
-//       toast.error("Failed to add expense. Please try again.");
-//     }
-//   };
-
-//   return (
-//     <div className="p-6 bg-white rounded shadow-md">
-//       <div className="mb-5">
-//         <h2
-//           className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800
-//       bg-clip-text text-transparent mb-4 text-center"
-//         >
-//           Add Expense
-//         </h2>
-//         <hr className="border-cyan-400" />
-//       </div>
-//       <form onSubmit={handleExpenseSubmit}>
-//         <div className="mb-4">
-//           <label className="block text-sm font-medium">Economic Code</label>
-//           <input
-//             type="text"
-//             name="economicCode"
-//             value={formData.economicCode}
-//             onChange={handleInputChange}
-//             className="w-full p-2 border rounded"
-//             required
-//           />
-//         </div>
-//         <div className="mb-4">
-//           <label className="block text-sm font-medium">Expense Amount</label>
-//           <input
-//             type="number"
-//             name="expenseAmount"
-//             value={formData.expenseAmount}
-//             onChange={handleInputChange}
-//             className="w-full p-2 border rounded"
-//             required
-//           />
-//         </div>
-//         <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-//           Add Expense
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default AddExpense;
-
-import { useEffect, useState, useContext } from "react";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useContext, useEffect, useState } from "react";
 import useAxiosPublic from "../../../hooks/useAxios";
 import { AuthContext } from "../../../provider/AuthProvider";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import toast from "react-hot-toast";
 
 const AddExpense = () => {
   const [details, setDetails] = useState(null);
   const [economicCodes, setEconomicCodes] = useState({});
+  const [expenses, setExpenses] = useState({});
   const axiosInstance = useAxiosPublic();
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchUpazilaDetails = async () => {
       try {
-        // Fetch upazila budget details
         const response = await axiosInstance.get(
           `/upazilaCodewiseBudget/${user?.upazilaCode}`
         );
         setDetails(response.data);
 
-        // Fetch economic codes and create a mapping
         const econResponse = await axiosInstance.get("/economicCodes");
         const codeMapping = econResponse.data.reduce((acc, econ) => {
           acc[econ.economicCode] = econ.codeName;
@@ -104,6 +33,61 @@ const AddExpense = () => {
     fetchUpazilaDetails();
   }, [user, axiosInstance]);
 
+  const handleExpenseChange = (code, value) => {
+    const numericValue = Math.max(0, Number(value)); // Ensure the value is a number and non-negative
+    const updatedExpenses = {
+      ...expenses,
+      [code]: numericValue,
+    };
+
+    // Validate if the expense exceeds the allocated budget
+    const allocation = details.allocations.find(
+      (allocation) => allocation.economicCode === code
+    );
+    if (allocation && numericValue > allocation.amount) {
+      toast.error("Expense exceeds the allocated budget for this code.", {
+        position: "top-center",
+        autoClose: 5000,
+      });
+    }
+
+    setExpenses(updatedExpenses);
+  };
+
+  const handleAddExpense = async () => {
+    const expenseData = (details.allocations || []).map((allocation) => {
+      const economicCode = allocation.economicCode;
+      return {
+        economicCode,
+        codeName: economicCodes[economicCode] || "Unknown Code",
+        allocatedBudget: allocation.amount,
+        expenseBudget: expenses[economicCode] || 0,
+      };
+    });
+
+    const isValid = expenseData.every(
+      (item) => item.expenseBudget <= item.allocatedBudget
+    );
+
+    if (!isValid) {
+      toast.error("Expense exceeds allocated budget for one or more codes.");
+      return;
+    }
+
+    try {
+      const payload = {
+        upazilaCode: user?.upazilaCode,
+        upazilaName: details?.upazilaName,
+        expenseCollections: expenseData,
+      };
+      await axiosInstance.post("/upazilaBudgetExpense", payload);
+      toast.success("Expenses added successfully!");
+    } catch (error) {
+      console.error("Error adding expenses:", error);
+      toast.error("Failed to add expenses. Please try again.");
+    }
+  };
+
   if (!details)
     return (
       <div className="flex items-center justify-center h-full min-h-screen">
@@ -111,6 +95,12 @@ const AddExpense = () => {
         <p className="ml-3 text-lg">Loading upazila details...</p>
       </div>
     );
+
+  // Calculate the total expense here
+  const totalExpense = Object.values(expenses).reduce(
+    (acc, expense) => acc + expense,
+    0
+  );
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -148,7 +138,6 @@ const AddExpense = () => {
               </td>
               <td className="p-4 text-md font-medium text-gray-800">
                 <span className="font-bold">
-                  {" "}
                   {allocation?.amount?.toLocaleString() || 0}
                 </span>{" "}
                 BDT
@@ -159,12 +148,27 @@ const AddExpense = () => {
                   placeholder="Enter amount"
                   className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                   min="0"
+                  value={expenses[allocation.economicCode] || ""}
+                  onChange={(e) =>
+                    handleExpenseChange(allocation.economicCode, e.target.value)
+                  }
                 />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div className="flex justify-between items-center mt-6">
+        <h3 className="text-xl font-bold">
+          Total Expense: {totalExpense.toLocaleString()} BDT
+        </h3>
+        <button
+          className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600"
+          onClick={handleAddExpense}
+        >
+          Add Expense
+        </button>
+      </div>
     </div>
   );
 };
