@@ -8,12 +8,14 @@ const AddExpense = () => {
   const [details, setDetails] = useState(null);
   const [economicCodes, setEconomicCodes] = useState({});
   const [expenses, setExpenses] = useState({});
+  const [expensedData, setExpensedData] = useState({});
   const axiosInstance = useAxiosPublic();
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchUpazilaDetails = async () => {
       try {
+        // Fetching upazila budget and existing expense data
         const response = await axiosInstance.get(
           `/upazilaCodewiseBudget/${user?.upazilaCode}`
         );
@@ -25,6 +27,24 @@ const AddExpense = () => {
           return acc;
         }, {});
         setEconomicCodes(codeMapping);
+
+        // Fetching existing expenses
+        const expenseResponse = await axiosInstance.get(
+          "/upazilaBudgetExpense"
+        );
+        const currentExpense = expenseResponse.data.find(
+          (expense) => expense.upazilaCode === user?.upazilaCode
+        );
+        if (currentExpense) {
+          const expenseMap = currentExpense.expenseCollections.reduce(
+            (acc, item) => {
+              acc[item.economicCode] = item.expenseBudget;
+              return acc;
+            },
+            {}
+          );
+          setExpensedData(expenseMap);
+        }
       } catch (error) {
         console.error("Error fetching details:", error);
       }
@@ -80,6 +100,7 @@ const AddExpense = () => {
         upazilaName: details?.upazilaName,
         expenseCollections: expenseData,
       };
+
       await axiosInstance.post("/upazilaBudgetExpense", payload);
       toast.success("Expenses added successfully!");
     } catch (error) {
@@ -118,44 +139,63 @@ const AddExpense = () => {
               Allocated Budget
             </th>
             <th className="p-4 text-left text-lg font-semibold">
-              Expense Budget
+              Expensed Budget
             </th>
+            <th className="p-4 text-left text-lg font-semibold">
+              Remaining Budget
+            </th>
+            <th className="p-4 text-left text-lg font-semibold">Add Expense</th>
           </tr>
         </thead>
         <tbody>
-          {(details.allocations || []).map((allocation, index) => (
-            <tr
-              key={index}
-              className={`${
-                index % 2 === 0 ? "bg-white" : "bg-gray-50"
-              } hover:bg-gray-100 transition duration-200`}
-            >
-              <td className="p-4 text-md font-medium text-gray-700">
-                {allocation?.economicCode || "N/A"}
-              </td>
-              <td className="p-4 text-md font-medium text-gray-700">
-                {economicCodes[allocation?.economicCode] || "Unknown Code"}
-              </td>
-              <td className="p-4 text-md font-medium text-gray-800">
-                <span className="font-bold">
-                  {allocation?.amount?.toLocaleString() || 0}
-                </span>{" "}
-                BDT
-              </td>
-              <td className="p-4">
-                <input
-                  type="number"
-                  placeholder="Enter amount"
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  min="0"
-                  value={expenses[allocation.economicCode] || ""}
-                  onChange={(e) =>
-                    handleExpenseChange(allocation.economicCode, e.target.value)
-                  }
-                />
-              </td>
-            </tr>
-          ))}
+          {(details.allocations || []).map((allocation, index) => {
+            const expensed = expensedData[allocation.economicCode] || 0;
+            const remaining = allocation.amount - expensed;
+
+            return (
+              <tr
+                key={index}
+                className={`${
+                  index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                } hover:bg-gray-100 transition duration-200`}
+              >
+                <td className="p-4 text-md font-medium text-gray-700">
+                  {allocation?.economicCode || "N/A"}
+                </td>
+                <td className="p-4 text-md font-medium text-gray-700">
+                  {economicCodes[allocation?.economicCode] || "Unknown Code"}
+                </td>
+
+                <td className="p-4 text-md font-medium text-gray-800">
+                  <span className="font-bold">
+                    {allocation?.amount?.toLocaleString() || 0}
+                  </span>{" "}
+                </td>
+                <td className="p-4 text-md font-medium text-gray-700">
+                  {expensed.toLocaleString()}
+                </td>
+                <td className="p-4 text-md font-medium text-gray-700">
+                  {remaining > 0 ? remaining.toLocaleString() : "0"}
+                </td>
+                <td className="p-4">
+                  <input
+                    type="number"
+                    placeholder="Enter amount"
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    min="0"
+                    value={expenses[allocation.economicCode] || ""}
+                    onChange={(e) =>
+                      handleExpenseChange(
+                        allocation.economicCode,
+                        e.target.value
+                      )
+                    }
+                    disabled={remaining === 0} // Disable if remaining budget is 0
+                  />
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <div className="flex justify-between items-center mt-6">
