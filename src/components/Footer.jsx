@@ -50,7 +50,7 @@ const Footer = () => {
           <p className="text-xs">ICT Tower, Agargaon, Dhaka-1207</p>
         </div>
       </footer>
-      <div className="text-xs text-gray-700 py-2 px-4 w-full lg:w-3/4 mx-auto text-center">
+      <div className="text-xs text-gray-700 py-2 px-4 w-full lg:w-3/4 mx-auto">
         &copy; {new Date().getFullYear()} Department of ICT. All rights
         reserved.
       </div>
