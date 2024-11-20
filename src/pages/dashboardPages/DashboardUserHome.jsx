@@ -80,7 +80,7 @@ const UserDashboardHome = () => {
           {/* Progress for Distributed Budget */}
           <div className="w-full">
             <label className="font-semibold">
-              Distributed Budget - {expensePercentage.toFixed(1)}%
+              Total Expense - {expensePercentage.toFixed(1)}%
             </label>
             <progress
               className="progress progress-warning w-full"
