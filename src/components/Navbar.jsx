@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar flex items-center justify-between noto-sans-bengali">
-      <div className="navbar-start flex items-center space-x-2">
+      <div className="navbar-start flex justify-start items-center space-x-2">
         {/* <GiMoneyStack className="text-3xl text-cyan-600" /> */}
         <a
           href="https://doict.gov.bd/"
@@ -49,7 +49,7 @@ const Navbar = () => {
             title="Login"
           >
             <IoMdLogIn className="w-7 h-7" />
-            <span>লগ ইন</span>
+            <span>Login</span>
           </Link>
         )}
       </div>

@@ -155,11 +155,11 @@ const BudgetDistribution = () => {
       const distributionData = {
         upazilaId: selectedUpazilaCode,
         upazilaName: searchUpazilaName,
-          allocations: Object.entries(distributions).map(([code, amount]) => ({
-            economicCode: code,
-            amount,
-          })),
-        };
+        allocations: Object.entries(distributions).map(([code, amount]) => ({
+          economicCode: code,
+          amount,
+        })),
+      };
       console.log(distributionData);
       const response = await axiosInstance.post(
         "/upazilaCodewiseBudget",
@@ -181,19 +181,23 @@ const BudgetDistribution = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold mb-4">Budget Distribution</h2>
-
+      <h2 className="text-3xl font-bold mb-6">Budget Distribution</h2>
+      <div className="text-cyan-700 font-bold mb-4">
+        Upload budget distribution excel file
+      </div>
       <div className="flex justify-between items-center mb-10">
-        <input
-          type="file"
-          onChange={handleFileChange}
-          accept=".csv"
-          ref={fileInputRef}
-          className="file-input file-input-bordered file-input-primary w-full max-w-md"
-        />
-        <button onClick={handleDelete} className="btn btn-error text-white">
-          Delete
-        </button>
+        <div className="flex items-center gap-1">
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept=".csv"
+            ref={fileInputRef}
+            className="file-input file-input-bordered file-input-primary w-full max-w-md"
+          />
+          <button onClick={handleDelete} className="btn btn-error text-white">
+            Delete
+          </button>
+        </div>
         <button onClick={handleUpload} className="btn btn-active btn-primary">
           Distribute Budget
         </button>
@@ -201,8 +205,10 @@ const BudgetDistribution = () => {
       {message && <p className="mt-4 font-bold text-lime-700">{message}</p>}
       {error && <p className="mt-4 font-bold text-orange-600">{error}</p>}
 
-      <hr />
-
+      <div className="divider">OR</div>
+      <div className="text-cyan-700 font-bold my-4">
+        Input budget distibution manually
+      </div>
       <form className="mb-6 mt-10">
         <div className="mb-4" ref={dropdownRef}>
           <label className="block text-sm font-medium">Select Upazila</label>
