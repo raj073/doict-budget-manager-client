@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useAxiosPublic from "../../hooks/useAxios";
 
-const UpazilaDemandsToAdmin = () => {
+const CodewiseBudgetDemandToAdmin = () => {
   const [economicCodes, setEconomicCodes] = useState([]);
   const [selectedEconomicCode, setSelectedEconomicCode] = useState("");
   const [selectedEconomicCodeName, setSelectedEconomicCodeName] = useState("");
@@ -71,8 +71,8 @@ const UpazilaDemandsToAdmin = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold text-center mb-6">
-        Upazila Demands
+      <h2 className="text-3xl font-bold mb-6">
+        Code-wise budget demands of upazila offices
       </h2>
 
       {/* Economic Code Dropdown */}
@@ -99,7 +99,7 @@ const UpazilaDemandsToAdmin = () => {
       </div>
 
       {/* Search Button */}
-      <div className="mb-6 text-center">
+      <div className="mb-6 ">
         <button
           className="btn btn-primary"
           onClick={handleSearchDemand}
@@ -146,4 +146,4 @@ const UpazilaDemandsToAdmin = () => {
   );
 };
 
-export default UpazilaDemandsToAdmin;
+export default CodewiseBudgetDemandToAdmin;

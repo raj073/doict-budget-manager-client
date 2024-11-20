@@ -76,6 +76,26 @@ const DashboardSidebarContent = () => {
               Send Notice
             </NavLink>
             <hr />
+            <span className="font-bold text-cyan-700 ">Budget demands</span>
+            <NavLink
+              to="/dashboard/codewiseDemands"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <MdOndemandVideo className="inline mr-2" />
+              Code-wise Demands
+            </NavLink>
+            <NavLink
+              to="/dashboard/upazilawiseDemands"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
+              }
+            >
+              <MdOndemandVideo className="inline mr-2" />
+              Upazila-wise Demands
+            </NavLink>
+            <hr />
             <span className="font-bold text-cyan-700 ">Budget reports</span>
 
             <NavLink
@@ -86,15 +106,6 @@ const DashboardSidebarContent = () => {
             >
               <FaBox className="inline mr-2" />
               All Upazila Budget
-            </NavLink>
-            <NavLink
-              to="/dashboard/upazilaDemands"
-              className={({ isActive }) =>
-                isActive ? "text-blue-600" : "text-gray-600 hover:text-blue-500"
-              }
-            >
-              <MdOndemandVideo className="inline mr-2" />
-              Upazila Demands
             </NavLink>
 
             <NavLink
