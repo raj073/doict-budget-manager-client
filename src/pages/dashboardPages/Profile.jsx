@@ -226,7 +226,10 @@ const Profile = () => {
         address: formData.address,
       };
 
-      const response = await axiosInstance.put(`/user/${user._id}`, updatedUser);
+      const response = await axiosInstance.put(
+        `/user/${user._id}`,
+        updatedUser
+      );
 
       if (!response.status === 200) {
         throw new Error("Failed to update user information");
@@ -287,20 +290,28 @@ const Profile = () => {
       </div>
 
       <div className="mt-6 bg-white p-6 rounded-lg shadow-lg">
-        <h3 className="text-xl font-bold text-gray-700 mb-4">Profile Details</h3>
+        <h3 className="text-xl font-bold text-gray-700 mb-4">
+          Profile Details
+        </h3>
         <div className="grid grid-cols-3 gap-y-1 text-gray-600">
           {/* Tabular Details */}
           <div className="font-medium col-span-1">Role:</div>
-          <div className="text-red-600 col-span-2">{user?.isAdmin ? "Admin" : "User"}</div>
+          <div className="text-red-600 col-span-2">
+            {user?.isAdmin ? "Admin" : "User"}
+          </div>
 
-          <div className="font-medium">Upazila Name:</div> 
+          <div className="font-medium">User Name:</div>
           <div className="col-span-2">{user?.displayName || "N/A"}</div>
+          <div className="font-medium">Upazila Name:</div>
+          <div className="col-span-2">{user?.upazilaName || "N/A"}</div>
 
-          <div className="font-medium">Upazila Code:</div> 
+          <div className="font-medium">Upazila Code:</div>
           <div className="col-span-2">{user?.upazilaCode || "N/A"}</div>
 
           <div className="font-medium">Address:</div>
-          <div className="col-span-2">{user?.address || "N/A"}</div>
+          <div className="col-span-2">
+            {user.isAdmin ? user?.address : user?.upazilaName}
+          </div>
 
           <div className="font-medium">Email:</div>
           <div className="col-span-2">{user?.email}</div>
@@ -308,8 +319,8 @@ const Profile = () => {
           <div className="font-medium">Phone:</div>
           <div className="col-span-2">{user?.phone || "N/A"}</div>
 
-          <div className="font-medium">Unique ID:</div>
-          <div className="col-span-2">{user?.uid}</div>
+          {/* <div className="font-medium">Unique ID:</div>
+          <div className="col-span-2">{user?.uid}</div> */}
         </div>
         <button className="mt-6 text-blue-600 hover:underline">
           Change Password

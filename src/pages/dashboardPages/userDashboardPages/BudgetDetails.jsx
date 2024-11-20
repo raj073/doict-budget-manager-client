@@ -203,7 +203,7 @@ const BudgetDetails = () => {
       <div className="mb-5">
         <h2 className="text-4xl font-extrabold ">Codewise Budget Details</h2>
       </div>
-      <table className="table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
+      <table className="text-sm font-semibold" table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
         <thead className="bg-gradient-to-r from-teal-500 to-blue-600 text-white">
           <tr>
             <th className="p-4 text-left text-lg font-semibold">#</th>
