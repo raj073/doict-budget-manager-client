@@ -41,6 +41,12 @@ const AllocatedCodewiseBudget = () => {
       </div>
     );
 
+  // Calculate total allocated budget
+  const totalAllocatedBudget = details?.allocations?.reduce(
+    (sum, allocation) => sum + (allocation?.amount || 0),
+    0
+  );
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="mb-5">
@@ -61,7 +67,7 @@ const AllocatedCodewiseBudget = () => {
           </tr>
         </thead>
         <tbody>
-          {(details.allocations || []).map((allocation, index) => (
+          {(details?.allocations || [])?.map((allocation, index) => (
             <tr
               key={index}
               className={`${
@@ -76,14 +82,22 @@ const AllocatedCodewiseBudget = () => {
               </td>
               <td className="p-4 text-md font-medium text-gray-800">
                 <span className="font-bold">
-                  {" "}
                   {allocation?.amount?.toLocaleString() || 0}
                 </span>{" "}
-                BDT
               </td>
             </tr>
           ))}
         </tbody>
+        <tfoot className="bg-gray-100">
+          <tr>
+            <td colSpan="2" className="p-4 text-right text-lg font-bold">
+              Total Allocated Budget:
+            </td>
+            <td className="p-4 text-md font-bold text-gray-800">
+              {totalAllocatedBudget?.toLocaleString() || 0} BDT
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );

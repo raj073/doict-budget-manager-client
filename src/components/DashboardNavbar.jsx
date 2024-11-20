@@ -6,7 +6,7 @@ const DashboardNavbar = () => {
   const { user } = useContext(AuthContext);
 
   return (
-    <div className="py-1 flex items-center justify-between border-b-2">
+    <div className="py-1 flex flex-col md:flex-row items-center justify-between border-b-2">
       <TitleLogo />
       <div className="flex items-center gap-1">
         {/* User Profile Info */}
@@ -15,7 +15,12 @@ const DashboardNavbar = () => {
           alt="User Profile"
           className="w-9 rounded-full"
         />
-        <span>{user?.displayName}</span>
+        <div className="flex flex-col text-xs">
+          <span>{user?.displayName}</span>
+          <span className="text-red-600">
+            {user?.isAdmin ? "Admin" : user?.upazilaName}
+          </span>
+        </div>
       </div>
     </div>
   );
