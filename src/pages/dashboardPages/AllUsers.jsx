@@ -40,7 +40,6 @@ const AllUsers = () => {
         ...selectedUser,
         isBlocked: !selectedUser?.isBlocked,
       };
-      
 
       await axiosInstance.put(`/user/${selectedUser._id}`, updatedUser); // Use axiosInstance
       fetchUsers(); // Reload users after update
@@ -99,7 +98,6 @@ const AllUsers = () => {
     setIsBlockModalOpen(true);
   };
 
-
   const handleClickedSetUserOrAdminRole = (user) => {
     setSelectedUser(user);
     setIsAdminToggleModalOpen(true);
@@ -107,16 +105,16 @@ const AllUsers = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold mb-4">Users List</h2>
-      <table className="min-w-full bg-white border">
+      <h2 className="text-3xl font-bold mb-4">User List</h2>
+      <table className="min-w-full bg-white border text-sm">
         <thead>
           <tr className="bg-gray-200 text-gray-600 text-left">
             <th className="py-2 px-4 border">#</th>
             <th className="py-2 px-4 border">Name</th>
             <th className="py-2 px-4 border">Email</th>
-            <th className="py-2 px-4 border">Image</th>
+            <th className="py-2 px-4 border">Phone</th>
+            <th className="py-2 px-4 border">Office</th>
             <th className="py-2 px-4 border">Role</th>
-            <th className="py-2 px-4 border">Status</th>
             <th className="py-2 px-4 border">Actions</th>
           </tr>
         </thead>
@@ -126,21 +124,27 @@ const AllUsers = () => {
               <td className="py-2 px-4 border">{index + 1}</td>
               <td className="py-2 px-4 border">{user?.displayName || "N/A"}</td>
               <td className="py-2 px-4 border">{user?.email}</td>
-              <td className="py-2 px-4 border">
+              {/* <td className="py-2 px-4 border">
                 <img
                   src={user?.photoUrl || "https://via.placeholder.com/50"}
                   alt="user"
                   className="w-10 rounded-full"
                 />
+              </td> */}
+              <td className="py-2 px-4 border">{user?.phone}</td>
+              <td className="py-2 px-4 border">
+                {" "}
+                {user.isAdmin ? "Head office, Dhaka" : user?.upazilaName}
               </td>
+
               <td className="py-2 px-4 border">
                 {user.isAdmin ? "Admin" : "User"}
               </td>
-              <td className="py-2 px-4 border">
+              {/* <td className="py-2 px-4 border">
                 {user.isBlocked ? "Blocked" : "Active"}
-              </td>
-              <td className="py-2 px-4 border">
-                <button
+              </td> */}
+              <td className="py-2 px-4 border text-xs">
+                {/* <button
                   onClick={() => handleClickedSetUserOrAdminRole(user)}
                   className={`mr-2 p-2 rounded-full text-white ${
                     user.isAdmin ? "bg-green-500" : "bg-blue-500"
@@ -153,7 +157,7 @@ const AllUsers = () => {
                   disabled={user.email === "super-admin@dev-master.com"}
                 >
                   <FaUserShield />
-                </button>
+                </button> */}
 
                 <button
                   onClick={() => openEditModal(user)}
@@ -162,7 +166,7 @@ const AllUsers = () => {
                 >
                   <FaEdit />
                 </button>
-                <button
+                {/* <button
                   onClick={() => handleClickedSetBlock(user)}
                   className={`p-2 rounded-full bg-red-500 text-white ${
                     user.email === "super-admin@dev-master.com"
@@ -173,7 +177,7 @@ const AllUsers = () => {
                   disabled={user.email === "super-admin@dev-master.com"}
                 >
                   <ImBlocked />
-                </button>
+                </button> */}
               </td>
             </tr>
           ))}

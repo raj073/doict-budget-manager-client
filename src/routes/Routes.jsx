@@ -23,7 +23,8 @@ import AllocatedCodewiseBudget from "../pages/dashboardPages/userDashboardPages/
 import CodewiseBudgetDemand from "../pages/dashboardPages/userDashboardPages/CodewiseBudgetDemand";
 import AddExpense from "../pages/dashboardPages/userDashboardPages/AddExpense";
 import BudgetDetails from "../pages/dashboardPages/userDashboardPages/BudgetDetails";
-import UpazilaDemandsToAdmin from "../pages/dashboardPages/UpazilaDemandsToAdmin";
+import CodewiseBudgetDemandToAdmin from "../pages/dashboardPages/CodewiseBudgetDemandToAdmin";
+import UpazilawiseBudgetDemandToAdmin from "../pages/dashboardPages/UpazilawiseBudgetDemandToAdmin";
 
 // Component to conditionally render the appropriate dashboard based on user role
 const DashboardHome = () => {
@@ -99,8 +100,13 @@ const router = createBrowserRouter([
         element: <CodewiseDistributedBudgetToAllUpazila />,
       },
       {
-        path: "upazilaDemands",
-        element: <UpazilaDemandsToAdmin />,
+        path: "codewiseDemands",
+        element: <CodewiseBudgetDemandToAdmin />,
+      },
+
+      {
+        path: "upazilawiseDemands",
+        element: <UpazilawiseBudgetDemandToAdmin />,
       },
       {
         path: "upazila/:fieldOfficeCode",
