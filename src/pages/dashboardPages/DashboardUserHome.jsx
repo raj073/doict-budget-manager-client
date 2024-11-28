@@ -1,80 +1,78 @@
-import React, { useState, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import useAxiosPublic from "../../hooks/useAxios";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const UserDashboardHome = () => {
-  const [budgets, setBudgets] = useState({
-    totalBudget: 0,
-    totalDistributed: 0,
-    remainingBudget: 0,
-  });
-  const [upazilas, setUpazilas] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [upazilaData, setUpazilaData] = useState(null);
   const axiosInstance = useAxiosPublic();
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUpazilaDetails = async () => {
       try {
-        const budgetsResponse = await axiosInstance.get("/economicCodes");
-        const upazilasResponse = await axiosInstance.get("/upazila");
+        // Fetching upazila budget and expense data
+        const response = await axiosInstance.get(`/upazilaBudgetExpense`);
+        const currentUpazila = response.data.find(
+          (expense) => expense.upazilaCode === user?.upazilaCode
+        );
 
-        setUpazilas(upazilasResponse.data);
-
-        // Reset total budget and distributed budget to 0 before recalculating
-        let totalBudget = 0,
-          totalDistributed = 0;
-        console.log(budgetsResponse.data);
-        budgetsResponse?.data?.forEach((item) => {
-          totalBudget += parseInt(item?.totalBudget) || 0;
-          totalDistributed += parseInt(item?.distributedBudget) || 0;
-        });
-
-        // Calculate remaining budget
-        const remainingBudget = totalBudget - totalDistributed;
-        console.log({ totalBudget });
-        console.log({ totalDistributed });
-        console.log({ remainingBudget });
-
-        // Set the calculated budget values to the state
-        setBudgets({ totalBudget, totalDistributed, remainingBudget });
+        if (currentUpazila) {
+          setUpazilaData(currentUpazila);
+        } else {
+          console.error("Upazila data not found.");
+        }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching upazila details:", error);
       }
     };
 
-    const fetchUsers = async () => {
-      try {
-        const response = await axiosInstance.get("/users");
-        setUsers(response.data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
+    fetchUpazilaDetails();
+  }, [user, axiosInstance]);
 
-    fetchData();
-    fetchUsers();
-  }, [axiosInstance]);
+  if (!upazilaData)
+    return (
+      <div className="flex items-center justify-center h-full min-h-screen">
+        <AiOutlineLoading3Quarters className="animate-spin text-teal-500 text-4xl" />
+        <p className="ml-3 text-lg">Loading upazila details...</p>
+      </div>
+    );
 
-  // Ensure percentages are valid and handle cases where totalBudget is zero to avoid NaN
-  const distributedPercentage = budgets?.totalBudget
-    ? (budgets.totalDistributed / budgets.totalBudget) * 100
-    : 0;
+  // Calculate total allocated, total expense, and remaining budget
+  const totalAllocatedBudget = upazilaData.expenseCollections.reduce(
+    (acc, item) => acc + item.allocatedBudget,
+    0
+  );
 
-  const remainingPercentage = budgets?.totalBudget
-    ? (budgets?.remainingBudget / budgets?.totalBudget) * 100
-    : 0;
-  console.log({ distributedPercentage });
-  console.log({ remainingPercentage });
+  const totalExpense = upazilaData.expenseCollections.reduce(
+    (acc, item) => acc + item.expenseBudget,
+    0
+  );
+
+  const totalRemainingBudget = totalAllocatedBudget - totalExpense;
+
+  // Calculate progress percentages
+  const allocatedPercentage =
+    (totalAllocatedBudget / totalAllocatedBudget) * 100;
+  const expensePercentage = (totalExpense / totalAllocatedBudget) * 100;
+  const remainingPercentage =
+    (totalRemainingBudget / totalAllocatedBudget) * 100;
+
   return (
-    <div className="p-6">
+    <div className="p-6 max-w-4xl mx-auto">
+      <h2 className="text-3xl font-extrabold mb-6">Upazila Budget Dashboard</h2>
+
       <div className="col-span-3 mb-6">
         {/* Progress Bars Section */}
         <div className="flex flex-col items-start gap-4">
-          {/* Progress for Total Budget (100%) */}
+          {/* Progress for Allocated Budget */}
           <div className="w-full">
-            <label className="font-semibold">Total Budget - 100%</label>
+            <label className="font-semibold">
+              Total Allocated Budget - {allocatedPercentage.toFixed(1)}%
+            </label>
             <progress
-              className="progress progress-info w-full"
-              value={100}
+              className="progress progress-success w-full"
+              value={allocatedPercentage}
               max="100"
             ></progress>
           </div>
@@ -82,11 +80,11 @@ const UserDashboardHome = () => {
           {/* Progress for Distributed Budget */}
           <div className="w-full">
             <label className="font-semibold">
-              Distributed Budget - {distributedPercentage.toFixed(1)}%
+              Total Expense - {expensePercentage.toFixed(1)}%
             </label>
             <progress
-              className="progress progress-info w-full"
-              value={distributedPercentage}
+              className="progress progress-warning w-full"
+              value={expensePercentage}
               max="100"
             ></progress>
           </div>
@@ -97,7 +95,7 @@ const UserDashboardHome = () => {
               Remaining Budget - {remainingPercentage.toFixed(1)}%
             </label>
             <progress
-              className="progress progress-info w-full"
+              className="progress progress-error w-full"
               value={remainingPercentage}
               max="100"
             ></progress>
@@ -105,23 +103,25 @@ const UserDashboardHome = () => {
         </div>
       </div>
 
-      {/* Budget and User Data Cards */}
+      {/* Budget Data Cards */}
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {/* Total Budget Card */}
-        <div className="bg-blue-100 p-4 rounded-lg shadow-md text-center">
-          <h3 className="text-lg font-semibold text-blue-600">Total Budget</h3>
+        {/* Total Allocated Budget Card */}
+        <div className="bg-teal-100 p-4 rounded-lg shadow-md text-center">
+          <h3 className="text-lg font-semibold text-teal-600">
+            Total Allocated Budget
+          </h3>
           <p className="text-2xl font-bold">
-            {budgets.totalBudget.toLocaleString()} BDT
+            {totalAllocatedBudget.toLocaleString()} BDT
           </p>
         </div>
 
-        {/* Total Distributed Card */}
-        <div className="bg-green-100 p-4 rounded-lg shadow-md text-center">
-          <h3 className="text-lg font-semibold text-green-600">
-            Total Distributed
+        {/* Total Expense Card */}
+        <div className="bg-orange-100 p-4 rounded-lg shadow-md text-center">
+          <h3 className="text-lg font-semibold text-orange-600">
+            Total Expense
           </h3>
           <p className="text-2xl font-bold">
-            {budgets.totalDistributed.toLocaleString()} BDT
+            {totalExpense.toLocaleString()} BDT
           </p>
         </div>
 
@@ -131,22 +131,8 @@ const UserDashboardHome = () => {
             Remaining Budget
           </h3>
           <p className="text-2xl font-bold">
-            {budgets.remainingBudget.toLocaleString()} BDT
+            {totalRemainingBudget.toLocaleString()} BDT
           </p>
-        </div>
-
-        {/* Total Upazila Offices Card */}
-        <div className="bg-indigo-100 p-4 rounded-lg shadow-md text-center">
-          <h3 className="text-lg font-semibold text-indigo-600">
-            Total Upazila Offices
-          </h3>
-          <p className="text-2xl font-bold">{upazilas.length}</p>
-        </div>
-
-        {/* Total Users Card */}
-        <div className="bg-pink-100 p-4 rounded-lg shadow-md text-center">
-          <h3 className="text-lg font-semibold text-pink-600">Total Users</h3>
-          <p className="text-2xl font-bold">{users.length}</p>
         </div>
       </div>
     </div>
