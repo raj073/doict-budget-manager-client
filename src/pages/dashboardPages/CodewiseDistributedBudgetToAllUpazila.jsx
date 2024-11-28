@@ -47,7 +47,9 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
   }, [axiosInstance]);
 
   const getAllocationAmount = (upazilaId, economicCode) => {
-    const upazilaData = upazilaBudgets?.find((ub) => ub.upazilaId === upazilaId);
+    const upazilaData = upazilaBudgets?.find(
+      (ub) => ub.upazilaId === upazilaId
+    );
     if (!upazilaData) return 0;
     const allocation = upazilaData?.allocations?.find(
       (alloc) => alloc?.economicCode === economicCode
@@ -81,7 +83,7 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
   return (
     <div className="p-6">
       <h2 className="text-3xl font-bold mb-4">
-        Code-wise Distributed Budget To All Upazila
+        Code-wise distributed budget to all upazila
       </h2>
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full border rounded-lg shadow-lg">
@@ -99,7 +101,7 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
           <tbody>
             {upazilas?.map((upazila) => (
               <tr key={upazila.id}>
-                <td className="text-center font-medium text-lime-800">
+                <td className="text-left font-medium text-lime-800">
                   {upazila?.upazilaOfficeName}
                 </td>
                 {budgets?.map((budget) => {
@@ -108,7 +110,7 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
                     budget?.economicCode
                   );
                   return (
-                    <td key={budget.code} className="text-center">
+                    <td key={budget.code} className="text-right">
                       {amount !== 0 ? (
                         <span>{amount}</span>
                       ) : (
@@ -117,7 +119,7 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
                     </td>
                   );
                 })}
-                <td className="text-center font-bold text-blue-800">
+                <td className="text-right font-bold text-blue-800">
                   {calculateRowTotal(upazila?.fieldOfficeCode)}
                 </td>
               </tr>
@@ -125,16 +127,16 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
           </tbody>
           <tfoot>
             <tr>
-              <td className="text-center font-bold text-blue-800">Total</td>
+              <td className="text-right font-bold text-blue-800">Total</td>
               {budgets?.map((budget) => (
                 <td
                   key={budget.code}
-                  className="text-center font-bold text-blue-800"
+                  className="text-right font-bold text-blue-800"
                 >
                   {calculateColumnTotal(budget?.economicCode)}
                 </td>
               ))}
-              <td className="text-center font-bold text-blue-800">
+              <td className="text-right font-bold text-blue-800">
                 {calculateOverallTotal()}
               </td>
             </tr>
