@@ -93,8 +93,15 @@ const AddEconomicCode = () => {
         </div>
       )}
 
-      <h2 className="text-3xl font-bold mb-4">Add Economic Field</h2>
-
+      <div className="mb-5">
+        <h2
+          className="text-4xl font-extrabold bg-gradient-to-bl from-cyan-400 to-cyan-800 
+      bg-clip-text text-transparent mb-4 text-center"
+        >
+          Add new economic field
+        </h2>
+        <hr className="border-cyan-400" />
+      </div>
       <form onSubmit={handleAddEconomicField}>
         <div className="mb-4">
           <label className="block text-sm font-medium">Economic Code</label>
@@ -129,7 +136,7 @@ const AddEconomicCode = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-accent">
+        <button type="submit" className="btn btn-accent w-full">
           Add Economic Field
         </button>
       </form>

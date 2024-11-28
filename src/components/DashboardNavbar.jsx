@@ -4,7 +4,7 @@ import TitleLogo from "./shared/TitleLogo";
 
 const DashboardNavbar = () => {
   const { user } = useContext(AuthContext);
-
+  console.log({ user });
   return (
     <div className="py-1 flex flex-col md:flex-row items-start md:items-center justify-start md:justify-between gap-5 border-b-2">
       <div className="flex justify-start">

@@ -7,6 +7,7 @@ const UpazilaDemandView = () => {
   const [selectedUpazilaCode, setSelectedUpazilaCode] = useState("");
   const [selectedUpazilaData, setSelectedUpazilaData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [totalDemandedAmount, setTotalDemandedAmount] = useState(0);
 
   const axiosInstance = useAxiosPublic();
 
@@ -37,18 +38,32 @@ const UpazilaDemandView = () => {
   };
 
   // Fetch demands for selected upazila
-  const handleSearchDemand = () => {
+  const handleSearchDemand = async () => {
     if (!selectedUpazilaCode) return;
 
     setIsLoading(true);
 
-    // Find selected upazila data
-    const upazilaData = upazilas.find(
-      (upazila) => upazila.upazilaCode === selectedUpazilaCode
-    );
+    try {
+      // Find selected upazila data
+      const upazilaData = upazilas.find(
+        (upazila) => upazila.upazilaCode === selectedUpazilaCode
+      );
 
-    setSelectedUpazilaData(upazilaData || null);
-    setIsLoading(false);
+      if (upazilaData) {
+        setSelectedUpazilaData(upazilaData);
+
+        // Calculate total demanded amount
+        const total = upazilaData.demandCollections.reduce(
+          (sum, demand) => sum + demand.amountDemanded,
+          0
+        );
+        setTotalDemandedAmount(total);
+      }
+    } catch (error) {
+      console.error("Error fetching demands:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -79,9 +94,9 @@ const UpazilaDemandView = () => {
       </div>
 
       {/* Search Button */}
-      <div className="mb-6 ">
+      <div className="mb-6">
         <button
-          className="btn btn-primary"
+          className="btn bg-red-800 hover:bg-red-600 text-white"
           onClick={handleSearchDemand}
           disabled={!selectedUpazilaCode}
         >
@@ -112,10 +127,22 @@ const UpazilaDemandView = () => {
                 </tr>
               ))}
             </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan="2" className="font-bold text-right text-red-700">
+                  Total Demanded Amount:
+                </td>
+                <td className="font-bold text-red-700">
+                  {totalDemandedAmount.toLocaleString()} BDT
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       ) : (
-        ""
+        !isLoading && (
+          <p className="text-center text-gray-500">No data available.</p>
+        )
       )}
     </div>
   );

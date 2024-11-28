@@ -10,11 +10,11 @@ const DashboardLayout = () => {
         <title>Budget Manager | Dashboard</title>
       </Helmet>
       <div className="font-popppins">
-        <div className="shadow-md bg-slate-100">
+        <div className="shadow-md ">
           <DashboardNavbar />
         </div>
         <div className="block lg:flex">
-          <div className="min-w-64 shadow-md bg-slate-100">
+          <div className="min-w-64 shadow-md">
             <DashboardSidebarContent />
           </div>
           <div className="w-full md:w-3/4 min-h-screen p-10">
