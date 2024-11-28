@@ -168,7 +168,7 @@ const AllUpazilas = () => {
             <tr>
               <th className="text-center">Upazila Name</th>
               {budgets.map((budget) => (
-                <th key={budget.code} className="text-center text-red-800">
+                <th key={budget.code} className="text-left text-red-800">
                   {budget.codeName}
                 </th>
               ))}
@@ -177,7 +177,7 @@ const AllUpazilas = () => {
           <tbody>
             {upazilas.map((upazila) => (
               <tr key={upazila.id}>
-                <td className="text-center font-medium text-lime-800">
+                <td className="text-left font-medium text-lime-800">
                   {upazila.upazilaOfficeName}
                 </td>
                 {budgets.map((budget) => {
@@ -267,4 +267,3 @@ const AllUpazilas = () => {
 };
 
 export default AllUpazilas;
-

@@ -68,7 +68,7 @@ const UpazilaDemandView = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold mb-6">Upazila-wise Budget Demands</h2>
+      <h2 className="text-3xl font-bold mb-6">Upazila-wise budget demands</h2>
 
       {/* Upazila Dropdown */}
       <div className="mb-6">
