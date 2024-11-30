@@ -54,7 +54,7 @@ const AllocatedCodewiseBudget = () => {
           Budget allocation for {details?.upazilaName || "Unknown Upazila"}
         </h2>
       </div>
-      <table className="table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
+      <table className="table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden text-sm font-semibold">
         <thead className="bg-gradient-to-r from-teal-500 to-blue-600 text-white">
           <tr>
             <th className="p-4 text-left text-lg font-semibold">

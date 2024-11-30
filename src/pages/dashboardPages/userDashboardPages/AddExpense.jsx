@@ -15,12 +15,13 @@ const AddExpense = () => {
   useEffect(() => {
     const fetchUpazilaDetails = async () => {
       try {
-        // Fetching upazila budget and existing expense data
+        // Fetching upazila budget details
         const response = await axiosInstance.get(
           `/upazilaCodewiseBudget/${user?.upazilaCode}`
         );
         setDetails(response.data);
 
+        // Fetching economic codes
         const econResponse = await axiosInstance.get("/economicCodes");
         const codeMapping = econResponse.data.reduce((acc, econ) => {
           acc[econ.economicCode] = econ.codeName;
@@ -47,6 +48,7 @@ const AddExpense = () => {
         }
       } catch (error) {
         console.error("Error fetching details:", error);
+        toast.error("Failed to load data. Please try again.");
       }
     };
 
@@ -54,36 +56,28 @@ const AddExpense = () => {
   }, [user, axiosInstance]);
 
   const handleExpenseChange = (code, value) => {
-    const numericValue = Math.max(0, Number(value)); // Ensure the value is a number and non-negative
-    const updatedExpenses = {
-      ...expenses,
-      [code]: numericValue,
-    };
-
-    // Validate if the expense exceeds the allocated budget
+    const numericValue = Math.max(0, Number(value));
     const allocation = details.allocations.find(
       (allocation) => allocation.economicCode === code
     );
+
     if (allocation && numericValue > allocation.amount) {
-      toast.error("Expense exceeds the allocated budget for this code.", {
-        position: "top-center",
-        autoClose: 5000,
+      toast.error("Expense exceeds the allocated budget for this code.");
+    } else {
+      setExpenses({
+        ...expenses,
+        [code]: numericValue,
       });
     }
-
-    setExpenses(updatedExpenses);
   };
 
   const handleAddExpense = async () => {
-    const expenseData = (details.allocations || []).map((allocation) => {
-      const economicCode = allocation.economicCode;
-      return {
-        economicCode,
-        codeName: economicCodes[economicCode] || "Unknown Code",
-        allocatedBudget: allocation.amount,
-        expenseBudget: expenses[economicCode] || 0,
-      };
-    });
+    const expenseData = (details.allocations || []).map((allocation) => ({
+      economicCode: allocation.economicCode,
+      codeName: economicCodes[allocation.economicCode] || "Unknown Code",
+      allocatedBudget: allocation.amount,
+      expenseBudget: expenses[allocation.economicCode] || 0,
+    }));
 
     const isValid = expenseData.every(
       (item) => item.expenseBudget <= item.allocatedBudget
@@ -109,15 +103,15 @@ const AddExpense = () => {
     }
   };
 
-  if (!details)
+  if (!details) {
     return (
       <div className="flex items-center justify-center h-full min-h-screen">
         <AiOutlineLoading3Quarters className="animate-spin text-teal-500 text-4xl" />
         <p className="ml-3 text-lg">Loading upazila details...</p>
       </div>
     );
+  }
 
-  // Calculate the total expense here
   const totalExpense = Object.values(expenses).reduce(
     (acc, expense) => acc + expense,
     0
@@ -148,7 +142,7 @@ const AddExpense = () => {
           </tr>
         </thead>
         <tbody>
-          {(details.allocations || []).map((allocation, index) => {
+          {details.allocations.map((allocation, index) => {
             const expensed = expensedData[allocation.economicCode] || 0;
             const remaining = allocation.amount - expensed;
 
@@ -160,16 +154,13 @@ const AddExpense = () => {
                 } hover:bg-gray-100 transition duration-200`}
               >
                 <td className="p-4 text-md font-medium text-gray-700">
-                  {allocation?.economicCode || "N/A"}
+                  {allocation.economicCode || "N/A"}
                 </td>
                 <td className="p-4 text-md font-medium text-gray-700">
-                  {economicCodes[allocation?.economicCode] || "Unknown Code"}
+                  {economicCodes[allocation.economicCode] || "Unknown Code"}
                 </td>
-
                 <td className="p-4 text-md font-medium text-gray-800">
-                  <span className="font-bold">
-                    {allocation?.amount?.toLocaleString() || 0}
-                  </span>{" "}
+                  {allocation.amount?.toLocaleString() || 0}
                 </td>
                 <td className="p-4 text-md font-medium text-gray-700">
                   {expensed.toLocaleString()}
@@ -190,7 +181,7 @@ const AddExpense = () => {
                         e.target.value
                       )
                     }
-                    disabled={remaining === 0} // Disable if remaining budget is 0
+                    disabled={remaining === 0}
                   />
                 </td>
               </tr>

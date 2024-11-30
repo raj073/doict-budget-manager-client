@@ -1,85 +1,3 @@
-// import { useEffect, useState } from "react";
-// import { AiOutlineLoading3Quarters } from "react-icons/ai";
-// import useAxiosPublic from "../../../hooks/useAxios";
-
-// const CodewiseBudgetDemand = () => {
-//   const [economicCodes, setEconomicCodes] = useState([]);
-//   const axiosInstance = useAxiosPublic();
-
-//   useEffect(() => {
-//     const fetchEconomicCodes = async () => {
-//       try {
-//         const econResponse = await axiosInstance.get("/economicCodes");
-//         setEconomicCodes(econResponse.data);
-//       } catch (error) {
-//         console.error("Error fetching economic codes:", error);
-//       }
-//     };
-
-//     fetchEconomicCodes();
-//   }, [axiosInstance]);
-
-//   if (!economicCodes.length)
-//     return (
-//       <div className="flex items-center justify-center h-full min-h-screen">
-//         <AiOutlineLoading3Quarters className="animate-spin text-teal-500 text-4xl" />
-//         <p className="ml-3 text-lg">Loading economic codes...</p>
-//       </div>
-//     );
-
-//   return (
-//     <div className="p-6 max-w-4xl mx-auto">
-//       <div className="mb-5">
-//         <h2 className="text-4xl font-extrabold">Codewise Budget Demand</h2>
-//       </div>
-//       <table className="table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
-//         <thead className="bg-gradient-to-r from-teal-500 to-blue-600 text-white">
-//           <tr>
-//             <th className="p-4 text-left text-lg font-semibold">#</th>
-//             <th className="p-4 text-left text-lg font-semibold">
-//               Economic Code
-//             </th>
-//             <th className="p-4 text-left text-lg font-semibold">Code Name</th>
-//             <th className="p-4 text-left text-lg font-semibold">
-//               Budget Demand
-//             </th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {economicCodes.map((code, index) => (
-//             <tr
-//               key={code._id}
-//               className={`${
-//                 index % 2 === 0 ? "bg-white" : "bg-gray-50"
-//               } hover:bg-gray-100 transition duration-200`}
-//             >
-//               <td className="p-4 text-md font-medium text-gray-700">
-//                 {index + 1}
-//               </td>
-//               <td className="p-4 text-md font-medium text-gray-700">
-//                 {code.economicCode || "N/A"}
-//               </td>
-//               <td className="p-4 text-md font-medium text-gray-700">
-//                 {code.codeName || "N/A"}
-//               </td>
-//               <td className="p-4">
-//                 <input
-//                   type="number"
-//                   placeholder="Enter demand"
-//                   className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-//                   min="0"
-//                 />
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default CodewiseBudgetDemand;
-
 import { useEffect, useState, useContext } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import useAxiosPublic from "../../../hooks/useAxios";
@@ -161,9 +79,9 @@ const CodewiseBudgetDemand = () => {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="mb-5">
-        <h2 className="text-4xl font-extrabold">Codewise Budget Demand</h2>
+        <h2 className="text-4xl font-extrabold">Codewise budget demand</h2>
       </div>
-      <table className="table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
+      <table className=" table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
         <thead className="bg-gradient-to-r from-teal-500 to-blue-600 text-white">
           <tr>
             <th className="p-4 text-left text-lg font-semibold">#</th>

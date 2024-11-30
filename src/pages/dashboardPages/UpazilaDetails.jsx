@@ -17,7 +17,7 @@ const UpazilaDetails = () => {
         const response = await axiosInstance.get(
           `/upazilaCodewiseBudget/${fieldOfficeCode}`
         );
-        
+
         setDetails(response.data);
       } catch (error) {
         console.error("Error fetching upazila details:", error);
@@ -58,7 +58,7 @@ const UpazilaDetails = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold mb-4">Budget Distribution Details</h2>
+      <h2 className="text-3xl font-bold mb-4">Budget distribution details</h2>
 
       <div className="mb-4 text-sm">
         <h2 className=" font-semibold text-gray-800">

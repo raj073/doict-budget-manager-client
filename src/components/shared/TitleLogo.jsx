@@ -3,11 +3,7 @@ const TitleLogo = () => {
   return (
     <div className="flex justify-start items-center gap-1">
       <a href="https://doict.gov.bd/" target="_blank" rel="noopener noreferrer">
-        <img
-          src={DoICTLogo}
-          alt="DoICT Logo"
-          className="w-16 h-16 rounded-full border"
-        />
+        <img src={DoICTLogo} alt="DoICT Logo" className="w-16 h-16" />
       </a>
 
       <div className="text-xl font-black flex justify-start items-left gap-1">

@@ -7,6 +7,8 @@ const CodewiseBudgetDemandToAdmin = () => {
   const [selectedEconomicCodeName, setSelectedEconomicCodeName] = useState("");
   const [demands, setDemands] = useState([]);
   const [totalDemandedAmount, setTotalDemandedAmount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const axiosInstance = useAxiosPublic();
 
@@ -16,8 +18,9 @@ const CodewiseBudgetDemandToAdmin = () => {
       try {
         const response = await axiosInstance.get("/economicCodes");
         setEconomicCodes(response.data);
-      } catch (error) {
-        console.error("Error fetching economic codes:", error);
+      } catch (err) {
+        console.error("Error fetching economic codes:", err);
+        setError("Failed to load economic codes.");
       }
     };
 
@@ -37,15 +40,15 @@ const CodewiseBudgetDemandToAdmin = () => {
 
   // Fetch demands when search button is clicked
   const handleSearchDemand = async () => {
+    setIsLoading(true);
+    setError(null); // Reset error state
     try {
       const response = await axiosInstance.get("/upazilaBudgetDemand");
-
       const filteredDemands = response.data
         .map((upazila) => {
           const matchedDemand = upazila.demandCollections.find(
             (demand) => demand.economicCode === selectedEconomicCode
           );
-
           return matchedDemand
             ? {
                 upazilaCode: upazila.upazilaCode,
@@ -57,15 +60,14 @@ const CodewiseBudgetDemandToAdmin = () => {
         .filter((item) => item !== null);
 
       setDemands(filteredDemands);
-
-      // Calculate total demanded amount
-      const total = filteredDemands.reduce(
-        (sum, demand) => sum + demand.amountDemanded,
-        0
+      setTotalDemandedAmount(
+        filteredDemands.reduce((sum, demand) => sum + demand.amountDemanded, 0)
       );
-      setTotalDemandedAmount(total);
-    } catch (error) {
-      console.error("Error fetching demands:", error);
+    } catch (err) {
+      console.error("Error fetching demands:", err);
+      setError("Failed to fetch demands. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -99,15 +101,30 @@ const CodewiseBudgetDemandToAdmin = () => {
       </div>
 
       {/* Search Button */}
-      <div className="mb-6 ">
+      <div className="mb-6">
         <button
-          className="btn btn-primary"
+          className={`btn ${
+            selectedEconomicCode
+              ? "bg-red-800 hover:bg-red-600 text-white"
+              : "bg-gray-400 text-white"
+          }`}
           onClick={handleSearchDemand}
           disabled={!selectedEconomicCode}
         >
           Search Demand
         </button>
       </div>
+
+      {/* Error Message */}
+      {error && <p className="text-center text-red-600">{error}</p>}
+
+      {/* Loading State */}
+      {isLoading && <p className="text-center">Loading...</p>}
+
+      {/* No Data Available */}
+      {!isLoading && demands.length === 0 && (
+        <p className="text-center text-gray-500">No data available.</p>
+      )}
 
       {/* Demands Table */}
       {demands.length > 0 && (
@@ -131,10 +148,10 @@ const CodewiseBudgetDemandToAdmin = () => {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan="2" className="font-bold text-right">
+                <td colSpan="2" className="font-bold text-right text-red-700">
                   Total Demanded Amount:
                 </td>
-                <td className="font-bold">
+                <td className="font-bold text-red-700">
                   {totalDemandedAmount.toLocaleString()} BDT
                 </td>
               </tr>

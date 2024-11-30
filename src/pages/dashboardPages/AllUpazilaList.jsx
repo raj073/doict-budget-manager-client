@@ -5,6 +5,7 @@ import useAxiosPublic from "../../hooks/useAxios";
 const AllUpazilaList = () => {
   const [upazilas, setUpazilas] = useState([]);
   const [budgets, setBudgets] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search input
   const axiosInstance = useAxiosPublic();
 
   useEffect(() => {
@@ -24,26 +25,47 @@ const AllUpazilaList = () => {
   }, [axiosInstance]);
 
   const getTotalDistributedBudget = (fieldOfficeCode) => {
-    // Find the budget object that matches the fieldOfficeCode
     const budget = budgets.find(
       (budget) => budget.upazilaId === fieldOfficeCode
     );
-
-    // If a matching budget is found, calculate the total distributed amount from allocations
     if (budget && budget.allocations) {
       return budget.allocations.reduce(
         (acc, allocation) => acc + (allocation.amount || 0),
         0
       );
     }
-
-    // If no matching budget or allocations found, return 0
     return 0;
   };
+
+  // Calculate the total distributed budget for all upazilas
+  const totalDistributedBudget = upazilas.reduce(
+    (total, upazila) =>
+      total + getTotalDistributedBudget(upazila.fieldOfficeCode),
+    0
+  );
+
+  // Filter upazilas based on search query
+  const filteredUpazilas = upazilas.filter(
+    (upazila) =>
+      upazila.upazilaOfficeName
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      upazila.fieldOfficeCode.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="p-6">
       <h2 className="text-3xl font-bold mb-4">All Upazila Offices</h2>
+      {/* Search input */}
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search by Upazila Name or Field Office Code"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="p-2 border border-gray-300 rounded-lg w-full"
+        />
+      </div>
       <div className="overflow-x-auto">
         <table className="table w-full border border-gray-300">
           <thead>
@@ -56,7 +78,7 @@ const AllUpazilaList = () => {
             </tr>
           </thead>
           <tbody>
-            {upazilas.map((upazila, index) => (
+            {filteredUpazilas.map((upazila, index) => (
               <tr
                 key={upazila.id}
                 className={`${
@@ -90,6 +112,17 @@ const AllUpazilaList = () => {
               </tr>
             ))}
           </tbody>
+          <tfoot>
+            <tr className="bg-gray-100 text-red-600 font-bold text-sm">
+              <td colSpan="3" className="p-4 text-right border">
+                Total Distributed Budget:
+              </td>
+              <td className="p-4 border">
+                {totalDistributedBudget.toLocaleString()} BDT
+              </td>
+              <td></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>
