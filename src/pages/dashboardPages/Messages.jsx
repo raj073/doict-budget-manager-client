@@ -6,20 +6,23 @@ import useAxiosPublic from "../../hooks/useAxios";
 const Messages = () => {
   const [messages, setMessages] = useState([]);
   const navigate = useNavigate();
-  const axiosInstance = useAxiosPublic(); // Create an axios instance using the custom hook
+  const axiosInstance = useAxiosPublic();
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axiosInstance.get("/messages"); // Use axiosInstance for the request
-        setMessages(response.data); // Assuming the data structure is consistent
+        const response = await axiosInstance.get("/messages");
+        const sortedMessages = response.data.sort(
+          (a, b) => new Date(b.sentTime) - new Date(a.sentTime)
+        );
+        setMessages(sortedMessages);
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
     };
 
     fetchMessages();
-  }, [axiosInstance]); // Include axiosInstance as a dependency
+  }, [axiosInstance]);
 
   const handleViewDetails = (id) => {
     navigate(`/dashboard/messages/${id}`);
@@ -36,20 +39,33 @@ const Messages = () => {
         </h2>
         <hr className="border-cyan-400" />
       </div>
-      <table className="min-w-full bg-white">
+      <table className="min-w-full bg-white border border-gray-300">
         <thead>
-          <tr>
-            <th className="py-2 text-left">Title</th>
-            <th className="py-2 text-left">Sender</th>
-            <th className="py-2 text-left">Actions</th>
+          <tr className="bg-gray-100">
+            <th className="py-2 px-3 text-left">SI</th>
+            <th className="py-2 px-3 text-left">Message Title</th>
+            <th className="py-2 px-3 text-left">Message Preview</th>
+            <th className="py-2 px-3 text-left">Sent Time</th>
+            <th className="py-2 px-3 text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {messages.map((message) => (
-            <tr key={message._id}>
-              <td className="py-2">{message.title}</td>
-              <td className="py-2">{message.email}</td>
-              <td className="py-2">
+          {messages.map((message, index) => (
+            <tr
+              key={message._id}
+              className={`${
+                message.isRead ? "bg-white" : "bg-red-100"
+              } hover:bg-gray-50`}
+            >
+              <td className="py-2 px-3">{index + 1}</td>
+              <td className="py-2 px-3 font-semibold">{message.title}</td>
+              <td className="py-2 px-3 text-gray-600">
+                {message.message.split(" ").slice(0, 7).join(" ")}...
+              </td>
+              <td className="py-2 px-3">
+                {new Date(message.createdAt).toLocaleString()}
+              </td>
+              <td className="py-2 px-3">
                 <button
                   onClick={() => handleViewDetails(message._id)}
                   className="text-blue-500 hover:text-blue-600"

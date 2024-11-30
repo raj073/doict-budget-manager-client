@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { FiEdit } from "react-icons/fi";
 import useAxiosPublic from "../../hooks/useAxios";
+import { toast, ToastContainer } from "react-toastify";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -12,22 +13,29 @@ const Profile = () => {
     photoUrl: "",
     address: "",
   });
-  const axiosInstance = useAxiosPublic(); // Axios instance for API calls
+  const axiosInstance = useAxiosPublic();
 
   // Handle profile update
+  
   const handleUpdate = async () => {
     try {
-      const updatedUser = {
-        ...user,
-        displayName: formData.displayName,
-        phone: formData.phone,
-        photoUrl: formData.photoUrl,
-        address: formData.address,
+      const updatedFields = {
+        ...(formData.displayName && { displayName: formData.displayName }),
+        ...(formData.phone && { phone: formData.phone }),
+        ...(formData.photoUrl && { photoUrl: formData.photoUrl }),
+        ...(formData.address && { address: formData.address }),
       };
 
-      const response = await axiosInstance.put(
-        `/user/${user._id}`,
-        updatedUser
+      // Ensure there is at least one field to update
+      if (Object.keys(updatedFields).length === 0) {
+        toast.error("No changes to update.");
+        return;
+      }
+
+      // Send PATCH request to update only the changed fields
+      const response = await axiosInstance.patch(
+        `/user/${user?.uid}`,
+        updatedFields
       );
 
       if (response.status !== 200) {
@@ -36,15 +44,19 @@ const Profile = () => {
 
       // Update successful
       setIsEditModalOpen(false);
-      alert("Profile updated successfully!");
+      toast.success("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("There was an error updating the profile. Please try again.");
+      toast.error("There was an error updating the profile. Please try again.");
     }
   };
 
   // Open the edit modal
   const handleOpenEditModal = () => {
+    if (!user) {
+      toast.error("User data not available");
+      return;
+    }
     setFormData({
       displayName: user?.displayName || "",
       phone: user?.phone || "",
@@ -203,6 +215,8 @@ const Profile = () => {
           </div>
         </div>
       )}
+      {/* Toast Notifications */}
+      <ToastContainer />
     </div>
   );
 };
