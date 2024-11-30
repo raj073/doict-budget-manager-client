@@ -30,10 +30,10 @@ const DashboardSidebarContent = () => {
   const { user, logOutUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logOutUser();
-    navigate("/");
-  };
+  // const handleLogout = () => {
+  //   logOutUser();
+  //   navigate("/");
+  // };
 
   return (
     <div className="p-4 font-semibold">
@@ -239,14 +239,14 @@ const DashboardSidebarContent = () => {
         )}
 
         {/* Logout */}
-        <hr />
-        <button
+        {/* <hr /> */}
+        {/* <button
           onClick={handleLogout}
           className="text-red-600 text-base hover:underline flex items-center"
         >
           <MdOutlineLogout className="inline mr-2 w-5 h-5" />
           Logout
-        </button>
+        </button> */}
       </nav>
     </div>
   );
