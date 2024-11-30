@@ -1,6 +1,7 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxios";
+import { FaArrowLeft } from "react-icons/fa";
 
 const UpazilaDetails = () => {
   const { fieldOfficeCode } = useParams();
@@ -10,7 +11,7 @@ const UpazilaDetails = () => {
   const [details, setDetails] = useState([]);
   const [economicCodes, setEconomicCodes] = useState([]);
   const axiosInstance = useAxiosPublic();
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchUpazilaDetails = async () => {
       try {
@@ -55,15 +56,24 @@ const UpazilaDetails = () => {
   };
 
   if (!details) return <p>Oops! Upazila details not found...</p>;
-
+  const handleBack = () => {
+    navigate("/dashboard/upazilaAllList");
+  };
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold mb-4">Budget distribution details</h2>
+      <button
+        onClick={handleBack}
+        className="flex items-center gap-2 mb-4 text-cyan-600 hover:text-cyan-800"
+      >
+        <FaArrowLeft />
+        Back to All Upazila List
+      </button>
 
+      <h2 className="text-3xl font-bold mb-4">Budget distribution details</h2>
       <div className="mb-4 text-sm">
-        <h2 className=" font-semibold text-gray-800">
+        <h2 className=" font-bold text-gray-800">
           Upazila Name:{" "}
-          <span className="font-bold">
+          <span className="font-black">
             {upazilaName || "Unknown Upazila Name"}
           </span>
         </h2>
