@@ -16,7 +16,7 @@ const Profile = () => {
   const axiosInstance = useAxiosPublic();
 
   // Handle profile update
-  
+
   const handleUpdate = async () => {
     try {
       const updatedFields = {
@@ -123,11 +123,22 @@ const Profile = () => {
 
           <div className="font-medium">User Name:</div>
           <div className="col-span-2">{user?.displayName || "N/A"}</div>
-          <div className="font-medium">Upazila Name:</div>
-          <div className="col-span-2">{user?.upazilaName || "N/A"}</div>
+          {user?.isAdmin ? (
+            <>
+              <div className="font-medium">Office Name:</div>
+              <div className="col-span-2">Head Office, DoICT</div>
+              <div className="font-medium">Office Code:</div>
+              <div className="col-span-2">1280201</div>{" "}
+            </>
+          ) : (
+            <>
+              <div className="font-medium">Upazila Name:</div>
+              <div className="col-span-2">{user?.upazilaName || "N/A"}</div>
 
-          <div className="font-medium">Upazila Code:</div>
-          <div className="col-span-2">{user?.upazilaCode || "N/A"}</div>
+              <div className="font-medium">Upazila Code:</div>
+              <div className="col-span-2">{user?.upazilaCode || "N/A"}</div>
+            </>
+          )}
 
           <div className="font-medium">Address:</div>
           <div className="col-span-2">
