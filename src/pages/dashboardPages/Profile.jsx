@@ -2,12 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { FiEdit } from "react-icons/fi";
 import useAxiosPublic from "../../hooks/useAxios";
-import {
-  EmailAuthProvider,
-  getAuth,
-  reauthenticateWithCredential,
-  updatePassword,
-} from "firebase/auth";
+import { getAuth, updatePassword } from "firebase/auth";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
