@@ -194,9 +194,7 @@ const Profile = () => {
           <div className="font-medium">Phone:</div>
           <div className="col-span-2">{user?.phone || "N/A"}</div>
         </div>
-        {/* <button className="mt-6 text-blue-600 hover:underline">
-          Change Password
-        </button> */}
+
         <button
           className="mt-6 btn btn-outline rounded-tl-sm rounded-br-sm"
           onClick={handleChangePasswordModal}
