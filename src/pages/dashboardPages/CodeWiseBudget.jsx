@@ -19,7 +19,7 @@ const CodeWiseBudget = () => {
 
     fetchBudgets();
   }, [axiosInstance]);
-
+  console.log({ budgets });
   // Calculate totals with proper number handling
   const grandTotalBudget = budgets.reduce(
     (sum, budget) => sum + (parseFloat(budget.totalBudget) || 0), // Ensure parsing as number
