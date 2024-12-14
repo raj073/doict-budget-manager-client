@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosPublic = axios.create({
   baseURL: "https://doict-budget-manager-server-two.vercel.app",
-  // "http://localhost:5000",
+  // baseURL: "http://localhost:5000",
 });
 
 const useAxiosPublic = () => {

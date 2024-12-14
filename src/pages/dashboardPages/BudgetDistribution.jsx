@@ -166,6 +166,23 @@ const BudgetDistribution = () => {
         distributionData
       );
 
+      // To update economic code wise budget distribution
+      const allocations = Object.entries(distributions).map(
+        ([economicCode, amount]) => ({
+          economicCode,
+          amount,
+        })
+      );
+
+      console.log("Allocations:", allocations);
+
+      const responseEconomicCodewise = await axiosInstance.post(
+        "/economicCodes",
+        {
+          allocations,
+        }
+      );
+      console.log(responseEconomicCodewise);
       toast.success(response.data.message);
       setDistributions({});
       setTotalDistributed(0);
@@ -178,7 +195,7 @@ const BudgetDistribution = () => {
       toast.error("Failed to distribute budget. Please try again.");
     }
   };
-
+  console.log({ budgets });
   return (
     <div className="p-6">
       <h2 className="text-3xl font-bold mb-6">Budget Distribution</h2>

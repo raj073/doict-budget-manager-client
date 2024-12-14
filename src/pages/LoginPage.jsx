@@ -102,7 +102,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen font-sans p-2">
+      <div className="flex items-center justify-center min-h-screen font-sans p-2 shadow-lg rounded-lg">
         <div className="w-full max-w-xl">
           <div className="mb-6">
             <div className="flex justify-start items-center">

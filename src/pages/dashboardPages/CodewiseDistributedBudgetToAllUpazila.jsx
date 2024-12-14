@@ -45,7 +45,7 @@ const CodewiseDistributedBudgetToAllUpazila = () => {
     };
     fetchData();
   }, [axiosInstance]);
-
+  console.log({ upazilaBudgets });
   const getAllocationAmount = (upazilaId, economicCode) => {
     const upazilaData = upazilaBudgets?.find(
       (ub) => ub.upazilaId === upazilaId
