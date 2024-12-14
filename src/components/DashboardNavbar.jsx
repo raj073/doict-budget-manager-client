@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import TitleLogo from "./shared/TitleLogo";
 import { MdOutlineLogout } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const DashboardNavbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOutUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   // console.log({ user });
   const handleLogout = () => {
     logOutUser();
@@ -33,7 +35,7 @@ const DashboardNavbar = () => {
         <div>
           <button
             onClick={handleLogout}
-            className="text-red-600 text-base hover:underline flex items-center"
+            className="text-red-600 text-sm font-bold hover:underline flex items-center"
           >
             <MdOutlineLogout className="inline mr-2 w-5 h-5" />
             Logout

@@ -105,10 +105,10 @@ const CodewiseBudgetDemand = () => {
               <td className="p-4 text-md font-medium text-gray-700">
                 {index + 1}
               </td>
-              <td className="p-4 text-md font-medium text-gray-700">
+              <td className="p-4 text-md font-semibold text-gray-700">
                 {code.economicCode || "N/A"}
               </td>
-              <td className="p-4 text-md font-medium text-gray-700">
+              <td className="p-4 text-md font-bold text-gray-700">
                 {code.codeName || "N/A"}
               </td>
               <td className="p-4">

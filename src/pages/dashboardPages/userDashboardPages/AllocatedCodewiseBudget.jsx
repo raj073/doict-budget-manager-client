@@ -60,7 +60,7 @@ const AllocatedCodewiseBudget = () => {
             <th className="p-4 text-left text-lg font-semibold">
               Economic Code
             </th>
-            <th className="p-4 text-left text-lg font-semibold">Code Name</th>
+            <th className="p-4 text-left text-lg font-bold">Code Name</th>
             <th className="p-4 text-left text-lg font-semibold">
               Allocated Budget
             </th>
@@ -74,10 +74,10 @@ const AllocatedCodewiseBudget = () => {
                 index % 2 === 0 ? "bg-white" : "bg-gray-50"
               } hover:bg-gray-100 transition duration-200`}
             >
-              <td className="p-4 text-md font-medium text-gray-700">
+              <td className="p-4 text-md font-semibold text-gray-700">
                 {allocation?.economicCode || "N/A"}
               </td>
-              <td className="p-4 text-md font-medium text-gray-700">
+              <td className="p-4 text-md font-bold text-gray-700">
                 {economicCodes[allocation?.economicCode] || "Unknown Code"}
               </td>
               <td className="p-4 text-md font-medium text-gray-800">

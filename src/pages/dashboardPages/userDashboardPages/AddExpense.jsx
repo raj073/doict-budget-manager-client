@@ -34,12 +34,12 @@ const AddExpense = () => {
           "/upazilaBudgetExpense"
         );
         const currentExpense = expenseResponse.data.find(
-          (expense) => expense.upazilaCode === user?.upazilaCode
+          (expense) => expense?.upazilaCode === user?.upazilaCode
         );
         if (currentExpense) {
-          const expenseMap = currentExpense.expenseCollections.reduce(
+          const expenseMap = currentExpense?.expenseCollections?.reduce(
             (acc, item) => {
-              acc[item.economicCode] = item.expenseBudget;
+              acc[item?.economicCode] = item?.expenseBudget;
               return acc;
             },
             {}
@@ -48,7 +48,7 @@ const AddExpense = () => {
         }
       } catch (error) {
         console.error("Error fetching details:", error);
-        toast.error("Failed to load data. Please try again.");
+        // toast.error("Failed to load data. Please try again.");
       }
     };
 
@@ -122,23 +122,16 @@ const AddExpense = () => {
       <div className="mb-5">
         <h2 className="text-3xl font-extrabold">Add Codewise Budget Expense</h2>
       </div>
-      <table className="table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
-        <thead className="bg-gradient-to-r from-teal-500 to-blue-600 text-white">
+      <table className="table-auto w-full overflow-hidden text-sm">
+        <thead>
           <tr>
-            <th className="p-4 text-left text-lg font-semibold">
-              Economic Code
-            </th>
-            <th className="p-4 text-left text-lg font-semibold">Code Name</th>
-            <th className="p-4 text-left text-lg font-semibold">
-              Allocated Budget
-            </th>
-            <th className="p-4 text-left text-lg font-semibold">
-              Expensed Budget
-            </th>
-            <th className="p-4 text-left text-lg font-semibold">
-              Remaining Budget
-            </th>
-            <th className="p-4 text-left text-lg font-semibold">Add Expense</th>
+            <th className="py-4 text-left">#</th>
+            <th className="py-4 text-left">Economic Code</th>
+            <th className="py-4 text-left ">Code Name</th>
+            <th className="py-4 text-left ">Allocated</th>
+            <th className="py-4 text-left ">Expensed</th>
+            <th className="py-4 text-left ">Remaining</th>
+            <th className="py-4 text-left ">Add Expense</th>
           </tr>
         </thead>
         <tbody>
@@ -153,22 +146,23 @@ const AddExpense = () => {
                   index % 2 === 0 ? "bg-white" : "bg-gray-50"
                 } hover:bg-gray-100 transition duration-200`}
               >
-                <td className="p-4 text-md font-medium text-gray-700">
+                <td className="py-1 text-gray-700">{index + 1}</td>
+                <td className="py-1 text-gray-700">
                   {allocation.economicCode || "N/A"}
                 </td>
-                <td className="p-4 text-md font-medium text-gray-700">
+                <td className="py-1  text-gray-700">
                   {economicCodes[allocation.economicCode] || "Unknown Code"}
                 </td>
-                <td className="p-4 text-md font-medium text-gray-800">
+                <td className="py-1  text-gray-800">
                   {allocation.amount?.toLocaleString() || 0}
                 </td>
-                <td className="p-4 text-md font-medium text-gray-700">
+                <td className="py-1  text-gray-700">
                   {expensed.toLocaleString()}
                 </td>
-                <td className="p-4 text-md font-medium text-gray-700">
+                <td className="py-1  text-gray-700">
                   {remaining > 0 ? remaining.toLocaleString() : "0"}
                 </td>
-                <td className="p-4">
+                <td className="py-1">
                   <input
                     type="number"
                     placeholder="Enter amount"
