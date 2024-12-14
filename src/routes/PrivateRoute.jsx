@@ -8,7 +8,7 @@ const PrivateRoute = ({ children }) => {
   if (user) {
     return children;
   }
-  return navigate("/login");
+  return navigate("/");
 };
 
 export default PrivateRoute;

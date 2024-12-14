@@ -2,18 +2,27 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { FiEdit } from "react-icons/fi";
 import useAxiosPublic from "../../hooks/useAxios";
+import { getAuth, updatePassword } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] =
+    useState(false);
   const [formData, setFormData] = useState({
     displayName: "",
     phone: "",
     photoUrl: "",
     address: "",
   });
-  const axiosInstance = useAxiosPublic();
+
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [message, setMessage] = useState("");
+
+  const axiosInstance = useAxiosPublic(); // Axios instance for API calls
 
   // Handle profile update
 
@@ -64,6 +73,40 @@ const Profile = () => {
       address: user?.address || "",
     });
     setIsEditModalOpen(true);
+  };
+
+  const handleChangePasswordModal = () => {
+    setIsChangePasswordModalOpen(true);
+  };
+
+  const handleChangePassword = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      setMessage("No User is LoggedIn.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setMessage("Password do not Match.");
+      return;
+    }
+
+    try {
+      //Update the Password
+      await updatePassword(user, newPassword);
+      setMessage("Password Updated Successfully");
+
+      setNewPassword("");
+      setConfirmPassword("");
+      setTimeout(() => {
+        setIsChangePasswordModalOpen(false);
+        setMessage("");
+      }, 3000);
+    } catch (error) {
+      setMessage(`Error During Password Change: ${error.message}`);
+    }
   };
 
   if (!user) {
@@ -151,7 +194,11 @@ const Profile = () => {
           <div className="font-medium">Phone:</div>
           <div className="col-span-2">{user?.phone || "N/A"}</div>
         </div>
-        <button className="mt-6 text-blue-600 hover:underline">
+
+        <button
+          className="mt-6 btn btn-outline rounded-tl-sm rounded-br-sm"
+          onClick={handleChangePasswordModal}
+        >
           Change Password
         </button>
       </div>
@@ -217,6 +264,61 @@ const Profile = () => {
                 <button
                   type="button"
                   onClick={() => setIsEditModalOpen(false)}
+                  className="ml-2 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Change Password Modal */}
+      {isChangePasswordModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+            <h3 className="text-xl font-bold mb-4">Change Password</h3>
+            <form>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">
+                  Enter New Password:
+                </label>
+                <input
+                  type="password"
+                  placeholder="Enter New Password"
+                  className="w-full p-2 border rounded focus:outline-blue-500"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">
+                  Confirm New Password:
+                </label>
+                <input
+                  type="password"
+                  placeholder="Confirm New Password"
+                  className="w-full p-2 border rounded focus:outline-blue-500"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+
+              <p className="text-red-500 mb-2">{message}</p>
+
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={handleChangePassword}
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                  Change Password
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsChangePasswordModalOpen(false)}
                   className="ml-2 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
                 >
                   Cancel

@@ -2,16 +2,24 @@ import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import TitleLogo from "./shared/TitleLogo";
 import { MdOutlineLogout } from "react-icons/md";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const DashboardNavbar = () => {
   const { user, logOutUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  // console.log({ user });
+
   const handleLogout = () => {
-    logOutUser();
-    navigate("/");
+    logOutUser()
+      .then(() => {
+        toast.success("User Signed Out Successfully");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
+
   return (
     <div className="py-1 flex flex-col md:flex-row items-start md:items-center justify-start md:justify-between gap-5 border-b-2">
       <div className="flex justify-start">
