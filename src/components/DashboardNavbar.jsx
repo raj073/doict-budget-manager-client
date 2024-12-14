@@ -43,7 +43,7 @@ const DashboardNavbar = () => {
         <div>
           <button
             onClick={handleLogout}
-            className="text-red-600 text-base hover:underline flex items-center"
+            className="text-red-600 text-sm font-bold hover:underline flex items-center"
           >
             <MdOutlineLogout className="inline mr-2 w-5 h-5" />
             Logout

@@ -2,18 +2,9 @@ import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import {
-  MdDashboard,
-  MdOutlineAttachMoney,
   MdOutlineCode,
-  MdOutlineMap,
   MdOutlineMailOutline,
-  MdOutlinePeople,
-  MdOutlinePersonAdd,
   MdPersonOutline,
-  MdOutlineLogout,
-  MdOutlineAnalytics,
-  MdAddShoppingCart,
-  MdOutlineLibraryBooks,
   MdApproval,
   MdCoPresent,
   MdOndemandVideo,
@@ -21,7 +12,6 @@ import {
 import { FaBox, FaBriefcase, FaHome, FaMinusSquare } from "react-icons/fa";
 import { VscRequestChanges } from "react-icons/vsc";
 import { IoIosAddCircleOutline, IoMdNotifications } from "react-icons/io";
-import { TbFileReport } from "react-icons/tb";
 import { CiBoxList } from "react-icons/ci";
 import { IoBagAddOutline, IoPersonAdd } from "react-icons/io5";
 import { PiUsersThreeBold } from "react-icons/pi";
@@ -30,15 +20,12 @@ const DashboardSidebarContent = () => {
   const { user, logOutUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // const handleLogout = () => {
-  //   logOutUser();
-  //   navigate("/");
-  // };
-
   return (
     <div className="p-4 font-semibold">
       {/* Sidebar Links */}
       <nav className="flex flex-col gap-4">
+        <span className="font-bold text-cyan-700 ">Summary</span>
+
         <NavLink
           to={`/dashboard/${user?.isAdmin ? "admin" : "user"}DashboardHome`}
           className={({ isActive }) =>
@@ -237,16 +224,6 @@ const DashboardSidebarContent = () => {
             </NavLink>
           </>
         )}
-
-        {/* Logout */}
-        {/* <hr /> */}
-        {/* <button
-          onClick={handleLogout}
-          className="text-red-600 text-base hover:underline flex items-center"
-        >
-          <MdOutlineLogout className="inline mr-2 w-5 h-5" />
-          Logout
-        </button> */}
       </nav>
     </div>
   );
